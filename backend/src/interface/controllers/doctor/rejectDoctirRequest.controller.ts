@@ -1,4 +1,4 @@
-import { IRejectDoctorRequestUseCase } from "../../../application/useCases/doctor/IRejectDoctorRequest.usecase";
+import { IRejectDoctorRequestUseCase } from "../../../application/repository/doctor/IRejectDoctorRequest.usecase";
 import HTTP_STATUS from "../../../shared/constants/httpStatusCode";
 import asyncHandler from "../../../shared/utils/asyncHandler";
 import { Request, Response } from "express";

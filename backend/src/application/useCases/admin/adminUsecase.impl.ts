@@ -5,8 +5,7 @@ import HTTP_STATUS from "../../../shared/constants/httpStatusCode";
 import AppError from "../../../shared/errors/appErrors";
 import { LoginRequestDTO } from "../../DTO/loginReq";
 import { LoginResposneDTO } from "../../DTO/loginRes";
-import { ILoginAdminUseCase } from "./ILoginAdminUsecase";
-
+import { ILoginAdminUseCase } from "../../repository/admin/ILoginAdminUsecase";
 
 export class AdminUseCase implements ILoginAdminUseCase {
   constructor(

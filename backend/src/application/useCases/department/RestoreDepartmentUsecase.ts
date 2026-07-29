@@ -2,7 +2,7 @@ import { IDepartmentRepo } from "../../../domain/repositories/department/IDepear
 import HTTP_STATUS from "../../../shared/constants/httpStatusCode";
 import AppError from "../../../shared/errors/appErrors";
 import { DeleteDepartmentDTO } from "../../DTO/department/deleteDepartmentDTO";
-import { IRestoreDepartmentUseCase } from "./IRestoreDepartment";
+import { IRestoreDepartmentUseCase } from "../../repository/department/IRestoreDepartment";
 
 export class RestoreDepaertment implements IRestoreDepartmentUseCase {
   constructor(private departmentRepo: IDepartmentRepo) {}

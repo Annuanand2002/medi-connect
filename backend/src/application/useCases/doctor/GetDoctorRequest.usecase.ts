@@ -1,6 +1,6 @@
 import DoctorRequest from "../../../domain/entities/doctor/doctorRequestEntity";
 import { IDoctorRequest } from "../../../domain/repositories/doctor/IDoctorRequest";
-import { IGetDoctorRequestUseCase } from "./IGetDoctorRequest.usecase";
+import { IGetDoctorRequestUseCase } from "../../repository/doctor/IGetDoctorRequest.usecase";
 
 export class GetDoctorRequestUseCase implements IGetDoctorRequestUseCase {
   constructor(private doctorReqRepo: IDoctorRequest) {}

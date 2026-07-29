@@ -1,8 +1,8 @@
-import { ICreateDepartmentUsecase } from "../../../application/useCases/department/ICreateDepartmentUsecase";
-import { IDeleteDepartmentUseCase } from "../../../application/useCases/department/IDeleteDepartmentUseCase";
-import { IGetDepartmentUseCase } from "../../../application/useCases/department/IGetDepartment";
-import { IRestoreDepartmentUseCase } from "../../../application/useCases/department/IRestoreDepartment";
-import { IUpdateDepartmentUseCase } from "../../../application/useCases/department/IUpdateDepartmentUseCase";
+import { ICreateDepartmentUsecase } from "../../../application/repository/department/ICreateDepartmentUsecase";
+import { IDeleteDepartmentUseCase } from "../../../application/repository/department/IDeleteDepartmentUseCase";
+import { IGetDepartmentUseCase } from "../../../application/repository/department/IGetDepartment";
+import { IRestoreDepartmentUseCase } from "../../../application/repository/department/IRestoreDepartment";
+import { IUpdateDepartmentUseCase } from "../../../application/repository/department/IUpdateDepartmentUseCase";
 import HTTP_STATUS from "../../../shared/constants/httpStatusCode";
 import asyncHandler from "../../../shared/utils/asyncHandler";
 import { Request, Response } from "express";
@@ -23,16 +23,16 @@ export class DepartmentController {
     res.status(HTTP_STATUS.OK).json({
       success: true,
       message: "department created succesfully",
-      result:departments,
+      result: departments,
     });
   });
   getAllDepartment = asyncHandler(async (req: Request, res: Response) => {
     const departments = await this.getDepartmentUsecase.execute();
-        console.log("depart",departments)
+    console.log("depart", departments);
     res.status(HTTP_STATUS.OK).json({
       success: true,
       message: "Departments fetched succesfully",
-      result:departments,
+      result: departments,
     });
   });
   updateDepartment = asyncHandler(async (req: Request, res: Response) => {

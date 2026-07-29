@@ -1,4 +1,4 @@
-import { ILoginAdminUseCase } from "../../../application/useCases/admin/ILoginAdminUsecase";
+import { ILoginAdminUseCase } from "../../../application/repository/admin/ILoginAdminUsecase";
 import asyncHandler from "../../../shared/utils/asyncHandler";
 import { Request, Response } from "express";
 import {
@@ -8,8 +8,8 @@ import {
 import HTTP_STATUS from "../../../shared/constants/httpStatusCode";
 import AppError from "../../../shared/errors/appErrors";
 
-import { IRefreshAdminUseCase } from "../../../application/useCases/admin/IRefreshAdminUseCase";
-import { ILogoutUseCase } from "../../../application/useCases/admin/ILogoutUseCase";
+import { IRefreshAdminUseCase } from "../../../application/repository/admin/IRefreshAdminUseCase";
+import { ILogoutUseCase } from "../../../application/repository/admin/ILogoutUseCase";
 
 export class AdminController {
   constructor(

@@ -5,7 +5,7 @@ import HTTP_STATUS from "../../../shared/constants/httpStatusCode";
 import AppError from "../../../shared/errors/appErrors";
 import { ApplyDoctorRequestDTO } from "../../DTO/doctorRequet/applyDoctorRequestDTO";
 import { IDoctorRequestFileService } from "../../services/IDoctorRequestFileService";
-import { IDcotorRequestUseCase } from "./IApplyDoctorRequestUsecase";
+import { IDcotorRequestUseCase } from "../../repository/doctor/IApplyDoctorRequestUsecase";
 
 export class DoctorRequestUsecase implements IDcotorRequestUseCase {
   constructor(

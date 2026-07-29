@@ -1,12 +1,11 @@
-import { IDcotorRequestUseCase } from "../../../application/useCases/doctor/IApplyDoctorRequestUsecase";
+import { IDcotorRequestUseCase } from "../../../application/repository/doctor/IApplyDoctorRequestUsecase";
 import { Request, Response } from "express";
 import asyncHandler from "../../../shared/utils/asyncHandler";
 import HTTP_STATUS from "../../../shared/constants/httpStatusCode";
 import AppError from "../../../shared/errors/appErrors";
-import { IGetAllDoctorRequedstUseCase } from "../../../application/useCases/doctor/IGetAllDoctorRequets";
+import { IGetAllDoctorRequedstUseCase } from "../../../application/repository/doctor/IGetAllDoctorRequets";
 import { DoctorRequestStatus } from "../../../shared/constants/doctorRequestStatus";
-import { IGetDoctorRequestUseCase } from "../../../application/useCases/doctor/IGetDoctorRequest.usecase";
-
+import { IGetDoctorRequestUseCase } from "../../../application/repository/doctor/IGetDoctorRequest.usecase";
 
 type DoctorRequestFiles = {
   profileImg?: {
@@ -92,16 +91,20 @@ export class DoctorRequestController {
   getAllDoctorRequest = asyncHandler(async (req: Request, res: Response) => {
     const status = req.query.status as DoctorRequestStatus | undefined;
     const search = req.query.search as string | undefined;
-    const page = Number(req.query.page)||1;
-    const limit = Number(req.query.limit)||10;
-    const result =
-      await this.getAllDoctorRequestUseCase.execute({page,limit,status,search});
+    const page = Number(req.query.page) || 1;
+    const limit = Number(req.query.limit) || 10;
+    const result = await this.getAllDoctorRequestUseCase.execute({
+      page,
+      limit,
+      status,
+      search,
+    });
     res
       .status(HTTP_STATUS.OK)
       .json({ success: true, messgae: "All requests fetched", result });
   });
   getDoctorReq = asyncHandler(async (req: Request, res: Response) => {
-    const id= req.params.id as string
+    const id = req.params.id as string;
     const result = await this.getDoctorRequestUseCase.execute(id);
     res.status(HTTP_STATUS.OK).json({
       success: true,

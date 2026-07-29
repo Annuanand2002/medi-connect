@@ -3,7 +3,7 @@ import { IDepartmentRepo } from "../../../domain/repositories/department/IDepear
 import HTTP_STATUS from "../../../shared/constants/httpStatusCode";
 import AppError from "../../../shared/errors/appErrors";
 import { UpdateDepartmentDTO } from "../../DTO/department/updateDepartmentDTO";
-import { IUpdateDepartmentUseCase } from "./IUpdateDepartmentUseCase";
+import { IUpdateDepartmentUseCase } from "../../repository/department/IUpdateDepartmentUseCase";
 
 export class UpdateDepartmentUseCase implements IUpdateDepartmentUseCase {
   constructor(private departmentRepo: IDepartmentRepo) {}

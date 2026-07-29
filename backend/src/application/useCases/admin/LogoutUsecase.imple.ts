@@ -3,7 +3,7 @@ import { JWTService } from "../../../infrastructure/services/ITokenService.impl"
 import HTTP_STATUS from "../../../shared/constants/httpStatusCode";
 import AppError from "../../../shared/errors/appErrors";
 import { LogoutReqDTO } from "../../DTO/logoutReq";
-import { ILogoutUseCase } from "./ILogoutUseCase";
+import { ILogoutUseCase } from "../../repository/admin/ILogoutUseCase";
 
 export class LogoutUseCase implements ILogoutUseCase {
   constructor(

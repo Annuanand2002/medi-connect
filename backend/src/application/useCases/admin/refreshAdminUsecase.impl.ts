@@ -5,7 +5,7 @@ import HTTP_STATUS from "../../../shared/constants/httpStatusCode";
 import AppError from "../../../shared/errors/appErrors";
 import { RefreshTokenReqDTO } from "../../DTO/refreshTokenReqDTo";
 import { RefreshTokenResultDTO } from "../../DTO/refreshTokenResultDTO";
-import { IRefreshAdminUseCase } from "./IRefreshAdminUseCase";
+import { IRefreshAdminUseCase } from "../../repository/admin/IRefreshAdminUseCase";
 
 export class RefreshAdminUseCase implements IRefreshAdminUseCase {
   constructor(
