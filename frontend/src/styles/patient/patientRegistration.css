@@ -1,0 +1,215 @@
+.patient-registration-page {
+  min-height: 100vh;
+  padding: 20px;
+  box-sizing: border-box;
+  background:
+    radial-gradient(circle at 12% 15%, rgba(93, 85, 183, 0.09), transparent 28%),
+    #eef2f8;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.patient-registration-shell {
+  width: 100%;
+  max-width: 1500px;
+  min-height: calc(100vh - 40px);
+  overflow: hidden;
+  border-radius: 24px;
+  background: #ffffff;
+  box-shadow: 0 25px 70px rgba(35, 28, 106, 0.12);
+  display: flex;
+}
+
+.patient-registration-panel {
+  min-width: 0;
+  flex: 1;
+  background: #ffffff;
+}
+
+.patient-registration-container {
+  width: 100%;
+  max-width: 780px;
+  margin: 0 auto;
+  padding: 54px 56px 42px;
+  box-sizing: border-box;
+}
+
+.patient-registration-header {
+  margin-bottom: 32px;
+}
+
+.patient-registration-label {
+  color: #7567db;
+  font-size: 10px;
+  font-weight: 750;
+  letter-spacing: 0.14em;
+}
+
+.patient-registration-header h1 {
+  margin: 12px 0 10px;
+  color: #201d4d;
+  font-size: clamp(28px, 2.5vw, 36px);
+  font-weight: 720;
+  line-height: 1.15;
+  letter-spacing: -0.04em;
+}
+
+.patient-registration-header p {
+  max-width: 530px;
+  margin: 0;
+  color: #77758b;
+  font-size: 13px;
+  line-height: 1.65;
+}
+
+.patient-registration-form {
+  display: flex;
+  flex-direction: column;
+  gap: 29px;
+}
+
+.patient-registration-section {
+  padding-top: 28px;
+  border-top: 1px solid #ececf4;
+}
+
+.patient-registration-section:first-of-type {
+  padding-top: 0;
+  border-top: 0;
+}
+
+.patient-registration-section-heading {
+  margin-bottom: 19px;
+  display: flex;
+  align-items: flex-start;
+  gap: 11px;
+}
+
+.patient-registration-section-heading > span {
+  width: 24px;
+  height: 24px;
+  flex: 0 0 24px;
+  border-radius: 7px;
+  color: #6657d2;
+  background: #f0efff;
+  font-size: 10px;
+  font-weight: 750;
+  line-height: 24px;
+  text-align: center;
+}
+
+.patient-registration-section-heading h2 {
+  margin: 1px 0 4px;
+  color: #2a274e;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.patient-registration-section-heading p {
+  margin: 0;
+  color: #878599;
+  font-size: 11px;
+  line-height: 1.45;
+}
+
+.patient-registration-fields {
+  display: grid;
+  gap: 17px;
+}
+
+.patient-registration-grid-two {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.patient-registration-grid-three {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.patient-registration-error {
+  padding: 13px 15px;
+  border: 1px solid #f1c5cc;
+  border-radius: 12px;
+  color: #ad3948;
+  background: #fff4f5;
+  font-size: 13px;
+  line-height: 1.45;
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.patient-registration-error span {
+  width: 19px;
+  height: 19px;
+  flex: 0 0 19px;
+  border-radius: 50%;
+  color: #ffffff;
+  background: #dc5d6b;
+  font-size: 12px;
+  font-weight: 800;
+  line-height: 19px;
+  text-align: center;
+}
+
+.patient-registration-error p {
+  margin: 0;
+}
+
+.patient-registration-submit {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.patient-registration-submit > button {
+  width: 100%;
+}
+
+.patient-registration-submit p {
+  margin: 0;
+  color: #9795a8;
+  font-size: 10px;
+  text-align: center;
+}
+
+@media (max-width: 980px) {
+  .patient-registration-page {
+    padding: 14px;
+  }
+
+  .patient-registration-container {
+    padding: 42px 34px;
+  }
+
+  .patient-registration-grid-three {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 700px) {
+  .patient-registration-page {
+    padding: 0;
+    background: #ffffff;
+  }
+
+  .patient-registration-shell {
+    min-height: 100vh;
+    border-radius: 0;
+    box-shadow: none;
+  }
+
+  /* Uses the existing responsive hiding behaviour of LoginDoctorBanner. */
+  .patient-registration-container {
+    padding: 36px 20px 30px;
+  }
+
+  .patient-registration-grid-two,
+  .patient-registration-grid-three {
+    grid-template-columns: 1fr;
+  }
+
+  .patient-registration-form {
+    gap: 26px;
+  }
+}

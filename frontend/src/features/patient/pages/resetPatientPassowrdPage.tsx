@@ -2,24 +2,32 @@ import { useEffect } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import {  ShieldCheck } from "lucide-react";
+
 import { useAppDispatch } from "@/hooks/hooks";
+import PasswordInput from "@/components/passwordInpur";
+import Button from "@/components/button";
+
 import {
   setPasswordSchema,
   type SetPasswordFormData,
 } from "@/features/doctor/validation/setPasswors.schema";
 import { resetPatientPasswordThunk } from "../redux/resetPassword.thunk";
 
+import "@/styles/patient/resetPatientPassword.css";
+
 const ResetPatientPasswordPage = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
   const [searchParams] = useSearchParams();
-
   const token = searchParams.get("token");
 
   useEffect(() => {
     if (!token) {
-      navigate("/patient/login");
+      navigate("/patient/login", {
+        replace: true,
+      });
     }
   }, [token, navigate]);
 
@@ -42,66 +50,88 @@ const ResetPatientPasswordPage = () => {
     );
 
     if (resetPatientPasswordThunk.fulfilled.match(resultAction)) {
-      navigate("/patient/login");
+      navigate("/patient/login", {
+        replace: true,
+      });
     }
   };
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-slate-100">
-      <div className="w-full max-w-md rounded-xl bg-white p-8 shadow-lg">
-        <h1 className="mb-2 text-2xl font-bold">Reset Password</h1>
+    <main className="patient-reset-password-page">
+      <div className="patient-reset-password-grid" />
+      <div className="patient-reset-password-glow patient-reset-password-glow-one" />
+      <div className="patient-reset-password-glow patient-reset-password-glow-two" />
 
-        <p className="mb-6 text-slate-500">
-          Enter your new password to reset your account password.
-        </p>
-
-        <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
-          <div>
-            <label className="mb-2 block text-sm font-medium">
-              New Password
-            </label>
-
-            <input
-              type="password"
-              {...register("password")}
-              className="w-full rounded-lg border p-3"
-            />
-
-            {errors.password && (
-              <p className="mt-1 text-sm text-red-500">
-                {errors.password.message}
-              </p>
-            )}
+      <section className="patient-reset-password-card">
+        <div className="patient-reset-password-brand">
+          <div className="patient-reset-password-brand-mark">
+            MC
           </div>
 
           <div>
-            <label className="mb-2 block text-sm font-medium">
-              Confirm Password
-            </label>
-
-            <input
-              type="password"
-              {...register("confirmPassword")}
-              className="w-full rounded-lg border p-3"
-            />
-
-            {errors.confirmPassword && (
-              <p className="mt-1 text-sm text-red-500">
-                {errors.confirmPassword.message}
-              </p>
-            )}
+            <strong>MediConnect</strong>
+            <span>Patient Portal</span>
           </div>
+        </div>
 
-          <button
+        <div className="patient-reset-password-icon">
+          <ShieldCheck
+            size={28}
+            strokeWidth={1.7}
+          />
+        </div>
+
+        <header className="patient-reset-password-header">
+          <span>PASSWORD RESET</span>
+
+          <h1>Choose a new password.</h1>
+
+          <p>
+            Set a strong password to regain secure access to your MediConnect
+            account.
+          </p>
+        </header>
+
+        <form
+          onSubmit={handleSubmit(onSubmit)}
+          className="patient-reset-password-form"
+        >
+          <PasswordInput
+            id="patient-new-password"
+            label="New Password"
+            placeholder="Enter your new password"
+            autoComplete="new-password"
+            {...register("password")}
+            error={errors.password?.message}
+          />
+
+          <PasswordInput
+            id="patient-confirm-password"
+            label="Confirm Password"
+            placeholder="Confirm your new password"
+            autoComplete="new-password"
+            {...register("confirmPassword")}
+            error={errors.confirmPassword?.message}
+          />
+
+          <Button
             type="submit"
-            disabled={isSubmitting}
-            className="w-full rounded-lg bg-blue-600 py-3 font-medium text-white hover:bg-blue-700 disabled:opacity-50"
+            loading={isSubmitting}
           >
-            Reset Password
-          </button>
+            {isSubmitting ? "Resetting Password..." : "Reset Password"}
+          </Button>
         </form>
-      </div>
-    </div>
+
+        <div className="patient-reset-password-security">
+          <ShieldCheck
+            size={14}
+            strokeWidth={1.8}
+          />
+
+          <span>Your account security is our priority.</span>
+        </div>
+      </section>
+    </main>
   );
 };
 

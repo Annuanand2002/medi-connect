@@ -1,14 +1,16 @@
-import LoginDoctorBanner from "@/features/doctor/auth/components/loginDoctorBanner";
 import RequestResetPatientPasswordForm from "../components/reqResetPassword.Form";
+
+import "@/styles/patient/patientRequestReset.css";
+import LoginPatientBanner from "../auth/components/loginPatientBanner";
 
 const RequestResetPatientPasswordPage = () => {
   return (
-    <div className="min-h-screen bg-[#EEF2F8]">
-      <div className="mx-auto flex min-h-screen max-w-[1600px] overflow-hidden bg-white shadow-2xl">
-        <LoginDoctorBanner />
+    <main className="patient-reset-page">
+      <section className="patient-reset-shell">
+        <LoginPatientBanner />
         <RequestResetPatientPasswordForm />
-      </div>
-    </div>
+      </section>
+    </main>
   );
 };
 

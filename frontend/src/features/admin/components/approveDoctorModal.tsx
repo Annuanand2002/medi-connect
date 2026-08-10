@@ -19,12 +19,14 @@ interface ApproveDoctorModalProps {
   open: boolean;
   doctorRequestId: string;
   onClose: () => void;
+  onSuccess: () => void;
 }
 
 const ApproveDoctorModal = ({
   open,
   doctorRequestId,
   onClose,
+  onSuccess
 }: ApproveDoctorModalProps) => {
   const dispatch = useAppDispatch();
 
@@ -92,6 +94,7 @@ const ApproveDoctorModal = ({
         resultAction,
       )
     ) {
+      onSuccess()
       onClose();
     }
   };

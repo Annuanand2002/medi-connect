@@ -1,17 +1,19 @@
-import LoginDoctorBanner from "@/features/doctor/auth/components/loginDoctorBanner"
-import PatientOtp from "../components/patientOTP"
+import PatientOtp from "../components/patientOTP";
+import "@/styles/patient/patientOtp.css";
+import LoginPatientBanner from "../auth/components/loginPatientBanner";
 
-const VerifyOTPPage = ()=>{
-    return(
-        <>
-         <div className="min-h-screen bg-[#EEF2F8]">
-      <div className="mx-auto flex min-h-screen max-w-[1600px] overflow-hidden bg-white shadow-2xl">
-        <LoginDoctorBanner/>
-        < PatientOtp/>
-      </div>
-    </div>
-        </>
-    )
-}
+const VerifyOTPPage = () => {
+  return (
+    <main className="patient-otp-page">
+      <section className="patient-otp-shell">
+        <LoginPatientBanner />
 
-export default VerifyOTPPage
+        <section className="patient-otp-panel">
+          <PatientOtp />
+        </section>
+      </section>
+    </main>
+  );
+};
+
+export default VerifyOTPPage;

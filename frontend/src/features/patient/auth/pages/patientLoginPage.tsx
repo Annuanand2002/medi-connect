@@ -1,15 +1,16 @@
 import LoginPatientBanner from "../components/loginPatientBanner";
 import LoginPatientForm from "../components/loginPatientForm";
-import "@/styles/admin/adminLogin.css";
+
+import "@/styles/patient/patientLogin.css";
 
 const LoginPatientPage = () => {
   return (
-    <div className="min-h-screen bg-[#EEF2F8]">
-      <div className="mx-auto flex min-h-screen max-w-[1600px] overflow-hidden bg-white shadow-2xl">
+    <main className="patient-login-page">
+      <section className="patient-login-shell">
         <LoginPatientBanner />
         <LoginPatientForm />
-      </div>
-    </div>
+      </section>
+    </main>
   );
 };
 

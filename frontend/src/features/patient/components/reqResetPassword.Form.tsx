@@ -1,16 +1,21 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { forgotPasswordSchema, type ForgotPasswordFormData } from "@/features/doctor/validation/requestResetPassword";
-import { resetPatientPasswordRequest } from "../api/request-resetPssword.patient";
 import axios from "axios";
-import Input from "@/components/Input";
 import { Mail } from "lucide-react";
+
+import {
+  forgotPasswordSchema,
+  type ForgotPasswordFormData,
+} from "@/features/doctor/validation/requestResetPassword";
+import { resetPatientPasswordRequest } from "../api/request-resetPssword.patient";
+import Input from "@/components/Input";
 import Button from "@/components/button";
 
 const RequestResetPatientPasswordForm = () => {
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
+
   const {
     register,
     handleSubmit,
@@ -19,11 +24,14 @@ const RequestResetPatientPasswordForm = () => {
     resolver: zodResolver(forgotPasswordSchema),
     mode: "all",
   });
+
   const onSubmitted = async (data: ForgotPasswordFormData) => {
     try {
       setError("");
       setMessage("");
+
       const response = await resetPatientPasswordRequest(data.email);
+
       setMessage(response.message);
     } catch (error) {
       if (axios.isAxiosError(error)) {
@@ -33,53 +41,84 @@ const RequestResetPatientPasswordForm = () => {
       }
     }
   };
+
   return (
-    <div className="flex w-full items-center justify-center bg-[#F8FAFC] lg:w-[55%]">
-      <div className="w-full max-w-[470px] bg-white p-12">
-        <h4 className="text-sm font-bold tracking-widest text-[#241C84]">
-          REQUEST PASSWORD RESET
-        </h4>
+    <section className="patient-reset-form-panel">
+      <div className="patient-reset-form-container">
+        <div className="patient-reset-icon">
+          <Mail
+            size={24}
+            strokeWidth={1.7}
+          />
+        </div>
 
-        <h1 className="serif mt-3 text-[52px] leading-[60px] text-gray-900">
-          Welcome back,
-          <br />
-          Please enter your email to receive a password reset link
-        </h1>
+        <header className="patient-reset-header">
+          <span className="patient-reset-label">
+            PASSWORD RESET
+          </span>
 
-        <form onSubmit={handleSubmit(onSubmitted)} className="mt-10 space-y-7">
+          <h1>Reset your password.</h1>
+
+          <p>
+            Enter the email address linked to your account and we’ll send you
+            a secure reset link.
+          </p>
+        </header>
+
+        {error && (
+          <div
+            className="patient-reset-alert patient-reset-alert-error"
+            role="alert"
+          >
+            <span>!</span>
+            <p>{error}</p>
+          </div>
+        )}
+
+        {message && (
+          <div
+            className="patient-reset-alert patient-reset-alert-success"
+            role="status"
+          >
+            <span>✓</span>
+            <p>{message}</p>
+          </div>
+        )}
+
+        <form
+          onSubmit={handleSubmit(onSubmitted)}
+          className="patient-reset-form"
+        >
           <Input
+            id="patient-reset-email"
             label="Email Address"
             type="email"
             placeholder="Enter your email"
-            leftIcon={<Mail size={20} />}
+            autoComplete="email"
+            leftIcon={<Mail size={19} />}
             error={errors.email?.message}
             {...register("email")}
           />
-          {error && (
-            <div className="rounded-lg bg-red-50 px-4 py-3">
-              <p className="text-sm text-red-600">{error}</p>
-            </div>
-          )}
-          {message && (
-            <div className="rounded-lg bg-green-50 px-4 py-3">
-              <p className="text-sm text-green-600">{message}</p>
-            </div>
-          )}
 
-          <Button type="submit" loading={isSubmitting}>
-            {isSubmitting ? "Sending..." : "SEND RESET LINK"}
+          <Button
+            type="submit"
+            loading={isSubmitting}
+          >
+            {isSubmitting ? "Sending Reset Link..." : "Send Reset Link"}
           </Button>
         </form>
 
-        <div className="mt-10 text-center">
-          <p className="text-sm text-gray-400">
-            © 2026 MediConnect Patient Portal
-          </p>
-        </div>
+        <p className="patient-reset-security-note">
+          For your security, reset links are sent only to registered email
+          addresses.
+        </p>
+
+        <footer className="patient-reset-footer">
+          © 2026 MediConnect Patient Portal
+        </footer>
       </div>
-    </div>
+    </section>
   );
 };
 
 export default RequestResetPatientPasswordForm;
-

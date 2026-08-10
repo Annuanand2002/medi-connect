@@ -1,19 +1,21 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useAppDispatch } from "@/hooks/hooks";
 import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
+import { Mail } from "lucide-react";
+
+import { useAppDispatch } from "@/hooks/hooks";
+import Input from "@/components/Input";
+import PasswordInput from "@/components/passwordInpur";
+import Button from "@/components/button";
+
 import {
   loginPatientSchema,
   type LoginPatientFormData,
 } from "../schema/loginPatient.svhema";
 import { loginPatientSuccess } from "../redux/patient.auth.slice";
 import { loginPatient } from "../api/login.patient";
-import axios from "axios";
-import Input from "@/components/Input";
-import { Mail } from "lucide-react";
-import PasswordInput from "@/components/passwordInpur";
-import Button from "@/components/button";
 
 const LoginPatientForm = () => {
   const [loginError, setLoginError] = useState("");
@@ -58,11 +60,10 @@ const LoginPatientForm = () => {
   };
 
   return (
-    <section className="login-form-section">
-      <div className="login-form-container">
-        {/* Mobile Brand */}
-        <div className="mobile-brand">
-          <div className="mobile-brand-mark">MC</div>
+    <section className="patient-login-form-panel">
+      <div className="patient-login-form-container">
+        <div className="patient-login-mobile-brand">
+          <div className="patient-login-mobile-mark">MC</div>
 
           <div>
             <strong>MediConnect</strong>
@@ -70,25 +71,20 @@ const LoginPatientForm = () => {
           </div>
         </div>
 
-        {/* Header */}
-        <header className="login-header">
-          <div className="login-label">
-            <span />
-            PATIENT SIGN IN
-          </div>
+        <header className="patient-login-header">
+          <span className="patient-login-label">PATIENT SIGN IN</span>
 
-          <h1>
-            Welcome back<span>,</span>
-          </h1>
+          <h1>Welcome back.</h1>
 
-          <p>Sign in to continue to your MediConnect patient dashboard.</p>
+          <p>
+            Sign in to manage your appointments and stay connected to your
+            healthcare journey.
+          </p>
         </header>
 
-        {/* Login Form */}
-        <form onSubmit={handleSubmit(onSubmit)} className="login-form">
-          {/* Email */}
+        <form onSubmit={handleSubmit(onSubmit)} className="patient-login-form">
           <Input
-            id="admin-email"
+            id="patient-email"
             label="Email Address"
             type="email"
             placeholder="Enter your email"
@@ -98,9 +94,8 @@ const LoginPatientForm = () => {
             {...register("email")}
           />
 
-          {/* Password */}
           <PasswordInput
-            id="admin-password"
+            id="patient-password"
             label="Password"
             placeholder="Enter your password"
             autoComplete="current-password"
@@ -108,24 +103,24 @@ const LoginPatientForm = () => {
             {...register("password")}
           />
 
-          {/* Login Error */}
-          {loginError && (
-            <div className="login-error" role="alert">
-              <div className="error-icon">!</div>
+          <div className="patient-login-options">
+            <Link to="/patient/request-reset">Forgot password?</Link>
+          </div>
 
+          {loginError && (
+            <div className="patient-login-error" role="alert">
+              <span>!</span>
               <p>{loginError}</p>
             </div>
           )}
 
-          {/* Submit */}
           <Button type="submit" loading={isSubmitting}>
-            {isSubmitting ? "Signing In..." : "SIGN IN"}
+            {isSubmitting ? "Signing In..." : "Sign In"}
           </Button>
         </form>
-<Link to={"/patient/request-reset"}>Forget Password</Link>
-        {/* Security */}
-        <div className="security-note">
-          <span className="security-icon">
+
+        <div className="patient-login-security-note">
+          <span>
             <svg
               width="14"
               height="14"
@@ -134,15 +129,14 @@ const LoginPatientForm = () => {
               aria-hidden="true"
             >
               <path
-                d="M12 3L20 6V11C20 16.1 16.6 20.5 12 22C7.4 20.5 4 16.1 4 11V6L12 3Z"
+                d="M12 3 20 6v5c0 5.1-3.4 9.5-8 11-4.6-1.5-8-5.9-8-11V6l8-3Z"
                 stroke="currentColor"
                 strokeWidth="1.8"
                 strokeLinecap="round"
                 strokeLinejoin="round"
               />
-
               <path
-                d="M9 12L11 14L15 10"
+                d="m9 12 2 2 4-4"
                 stroke="currentColor"
                 strokeWidth="1.8"
                 strokeLinecap="round"
@@ -150,8 +144,7 @@ const LoginPatientForm = () => {
               />
             </svg>
           </span>
-
-          <span>Secure patient access</span>
+          Secure patient access
         </div>
       </div>
     </section>

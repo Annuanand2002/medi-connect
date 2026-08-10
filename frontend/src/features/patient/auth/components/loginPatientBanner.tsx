@@ -3,77 +3,48 @@ import logo from "@/assets/logo/mediconnect-logo.jpeg";
 
 const LoginPatientBanner = () => {
   return (
-    <section className="login-banner">
+    <aside className="patient-login-banner">
+      <div className="patient-login-banner-grid" />
+      <div className="patient-login-banner-orb patient-login-banner-orb-one" />
+      <div className="patient-login-banner-orb patient-login-banner-orb-two" />
 
-      {/* Decorative background */}
-      <div className="banner-glow banner-glow-one" />
-      <div className="banner-glow banner-glow-two" />
+      <div className="patient-login-brand">
+        <img src={logo} alt="MediConnect" className="patient-login-logo" />
 
-      <div className="banner-grid" />
-
-      <span className="banner-dot banner-dot-one" />
-      <span className="banner-dot banner-dot-two" />
-      <span className="banner-dot banner-dot-three" />
-      <span className="banner-dot banner-dot-four" />
-
-      <div className="banner-content">
-
-        {/* Brand */}
-        <div className="brand">
-          <div className="brand-logo">
-            <img
-              src={logo}
-              alt="MediConnect logo"
-            />
-          </div>
-
-          <div className="brand-info">
-            <h2>MediConnect</h2>
-            <span>Healthcare Platform</span>
-          </div>
+        <div>
+          <strong>MediConnect</strong>
+          <span>Patient Portal</span>
         </div>
+      </div>
 
-        {/* Illustration */}
-        <div className="banner-illustration">
+      <div className="patient-login-banner-copy">
 
-          <div className="illustration-ring illustration-ring-one" />
-          <div className="illustration-ring illustration-ring-two" />
-
-          <div className="illustration-glow" />
-
-          <img
-            src={bannerImage}
-            alt="MediConnect AI healthcare assistant"
-            className="robot-image"
-          />
-
-        </div>
-
-        {/* Bottom Content */}
-        <div className="banner-message">
-
-          <span className="banner-eyebrow">
-            PATIENT PORTAL
-          </span>
-
-          <h1>
-            Smarter healthcare.
-            <br />
-            <span>Simplified.</span>
-          </h1>
-
-          <p>
-            Everything you need to manage
-            your healthcare platform, in one place.
-          </p>
-
-        </div>
 
       </div>
-    </section>
+
+      <div className="patient-login-robot-wrap">
+        <div className="patient-login-robot-halo" />
+        <span className="patient-login-orbit patient-login-orbit-one" />
+        <span className="patient-login-orbit patient-login-orbit-two" />
+
+        <img
+          src={bannerImage}
+          alt="MediConnect AI healthcare assistant"
+          className="patient-login-robot"
+        />
+      </div>
+
+      <div className="patient-login-banner-card">
+        <span className="patient-login-banner-card-icon">✓</span>
+
+        <div>
+          <strong></strong>
+          <p>  Manage appointments, access your care, and stay connected to what
+          matters most.</p>
+        </div>
+      </div>
+    </aside>
   );
 };
-
-
 
 export default LoginPatientBanner;

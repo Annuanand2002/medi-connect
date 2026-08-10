@@ -26,7 +26,11 @@
 /* =========================================================
    BACK LINK
    ========================================================= */
-
+.doctor-approve-button:disabled,
+.doctor-reject-button:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
 .doctor-details-back {
   display: inline-flex;
 

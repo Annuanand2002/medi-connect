@@ -303,7 +303,9 @@ const DoctorRequestDetailsPage = () => {
 
           <div className="doctor-decision-actions">
             <button
-            disabled = {request.status === "APPROVED"}
+              disabled={
+                request.status === "APPROVED" || request.status === "REJECTED"
+              }
               type="button"
               onClick={() => setShowRejectModal(true)}
               className="doctor-reject-button"
@@ -312,7 +314,9 @@ const DoctorRequestDetailsPage = () => {
             </button>
 
             <button
-              disabled={request.status === "APPROVED"}
+              disabled={
+                request.status === "APPROVED" || request.status === "REJECTED"
+              }
               type="button"
               onClick={() => setShowApproveModal(true)}
               className="doctor-approve-button"
@@ -322,22 +326,25 @@ const DoctorRequestDetailsPage = () => {
           </div>
         </section>
 
-        {/* =================================================
-            MODALS
-        ================================================= */}
-
         <RejectDoctorModal
           open={showRejectModal}
           doctorRequestId={request.id}
           onClose={() => setShowRejectModal(false)}
+          onSuccess={() => {
+            dispatch(getDoctorRequestDetailsThunk(request.id));
+            setShowRejectModal(false);
+          }}
         />
 
         <ApproveDoctorModal
           open={showApproveModal}
           doctorRequestId={request.id}
           onClose={() => setShowApproveModal(false)}
+          onSuccess={() => {
+            dispatch(getDoctorRequestDetailsThunk(request.id));
+            setShowApproveModal(false);
+          }}
         />
-
         <ImagePreviewModal
           isOpen={preview.isOpen}
           imageUrl={preview.imageUrl}

@@ -13,12 +13,14 @@ interface RejectDoctorModalProps {
   open: boolean;
   doctorRequestId: string;
   onClose: () => void;
+  onSuccess :()=>void;
 }
 
 const RejectDoctorModal = ({
   open,
   doctorRequestId,
   onClose,
+  onSuccess
 }: RejectDoctorModalProps) => {
   const dispatch = useAppDispatch();
 
@@ -47,6 +49,7 @@ const RejectDoctorModal = ({
       )
     ) {
       setReason("");
+      onSuccess()
       onClose();
     }
   };

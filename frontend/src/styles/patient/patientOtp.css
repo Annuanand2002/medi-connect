@@ -1,0 +1,217 @@
+.patient-otp-page {
+  min-height: 100vh;
+  padding: 20px;
+  box-sizing: border-box;
+  background:
+    radial-gradient(circle at 12% 15%, rgba(93, 85, 183, 0.09), transparent 28%),
+    #eef2f8;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.patient-otp-shell {
+  width: 100%;
+  max-width: 1500px;
+  min-height: calc(100vh - 40px);
+  overflow: hidden;
+  border-radius: 24px;
+  background: #ffffff;
+  box-shadow: 0 25px 70px rgba(35, 28, 106, 0.12);
+  display: flex;
+}
+
+.patient-otp-panel {
+  min-width: 0;
+  flex: 1;
+  padding: 42px;
+  box-sizing: border-box;
+  background:
+    radial-gradient(circle at 85% 12%, rgba(119, 105, 220, 0.07), transparent 25%),
+    #ffffff;
+  display: grid;
+  place-items: center;
+}
+
+.patient-otp-content {
+  width: 100%;
+  max-width: 430px;
+}
+
+.patient-otp-icon {
+  width: 52px;
+  height: 52px;
+  margin-bottom: 24px;
+  border: 1px solid #dedaff;
+  border-radius: 16px;
+  color: #6657d2;
+  background: #f1f0ff;
+  display: grid;
+  place-items: center;
+  box-shadow: 0 8px 20px rgba(91, 76, 192, 0.1);
+}
+
+.patient-otp-icon svg {
+  width: 25px;
+  height: 25px;
+}
+
+.patient-otp-header {
+  margin-bottom: 23px;
+}
+
+.patient-otp-label {
+  color: #7567db;
+  font-size: 10px;
+  font-weight: 750;
+  letter-spacing: 0.14em;
+}
+
+.patient-otp-header h1 {
+  margin: 11px 0 10px;
+  color: #201d4d;
+  font-size: clamp(29px, 2.5vw, 37px);
+  font-weight: 720;
+  line-height: 1.12;
+  letter-spacing: -0.045em;
+}
+
+.patient-otp-header p {
+  margin: 0;
+  color: #77758b;
+  font-size: 13px;
+  line-height: 1.65;
+}
+
+.patient-otp-email {
+  margin-bottom: 25px;
+  padding: 14px 16px;
+  border: 1px solid #e4e1ff;
+  border-radius: 13px;
+  background: #f7f6ff;
+}
+
+.patient-otp-email span,
+.patient-otp-email strong {
+  display: block;
+}
+
+.patient-otp-email span {
+  margin-bottom: 4px;
+  color: #89869e;
+  font-size: 10px;
+  font-weight: 600;
+}
+
+.patient-otp-email strong {
+  overflow: hidden;
+  color: #40358e;
+  font-size: 13px;
+  font-weight: 700;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.patient-otp-error {
+  margin-bottom: 20px;
+  padding: 13px 15px;
+  border: 1px solid #f1c5cc;
+  border-radius: 12px;
+  color: #ad3948;
+  background: #fff4f5;
+  font-size: 13px;
+  line-height: 1.45;
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.patient-otp-error span {
+  width: 19px;
+  height: 19px;
+  flex: 0 0 19px;
+  border-radius: 50%;
+  color: #ffffff;
+  background: #dc5d6b;
+  font-size: 12px;
+  font-weight: 800;
+  line-height: 19px;
+  text-align: center;
+}
+
+.patient-otp-error p {
+  margin: 0;
+}
+
+.patient-otp-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.patient-otp-form > button {
+  width: 100%;
+}
+
+.patient-otp-resend {
+  min-height: 22px;
+  margin-top: 22px;
+  font-size: 12px;
+  text-align: center;
+}
+
+.patient-otp-resend p {
+  margin: 0;
+  color: #8c899d;
+}
+
+.patient-otp-resend p span {
+  color: #5144bb;
+  font-weight: 700;
+}
+
+.patient-otp-resend button {
+  padding: 0;
+  border: 0;
+  color: #5144bb;
+  background: transparent;
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.patient-otp-resend button:hover {
+  color: #34278f;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.patient-otp-security-note {
+  margin: 28px 0 0;
+  padding-top: 20px;
+  border-top: 1px solid #eeedf4;
+  color: #9b98a9;
+  font-size: 10px;
+  text-align: center;
+}
+
+@media (max-width: 700px) {
+  .patient-otp-page {
+    padding: 0;
+    background: #ffffff;
+  }
+
+  .patient-otp-shell {
+    min-height: 100vh;
+    border-radius: 0;
+    box-shadow: none;
+  }
+
+  .patient-otp-panel {
+    padding: 32px 20px;
+  }
+
+  .patient-otp-content {
+    max-width: 460px;
+  }
+}

@@ -1,0 +1,177 @@
+.patient-reset-page {
+  min-height: 100vh;
+  padding: 20px;
+  box-sizing: border-box;
+  background:
+    radial-gradient(circle at 12% 15%, rgba(93, 85, 183, 0.09), transparent 28%),
+    #eef2f8;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.patient-reset-shell {
+  width: 100%;
+  max-width: 1500px;
+  min-height: calc(100vh - 40px);
+  overflow: hidden;
+  border-radius: 24px;
+  background: #ffffff;
+  box-shadow: 0 25px 70px rgba(35, 28, 106, 0.12);
+  display: flex;
+}
+
+.patient-reset-form-panel {
+  min-width: 0;
+  flex: 1;
+  padding: 42px;
+  box-sizing: border-box;
+  background:
+    radial-gradient(circle at 89% 12%, rgba(115, 101, 220, 0.07), transparent 25%),
+    #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.patient-reset-form-container {
+  width: 100%;
+  max-width: 440px;
+}
+
+.patient-reset-icon {
+  width: 52px;
+  height: 52px;
+  margin-bottom: 24px;
+  border: 1px solid #dedaff;
+  border-radius: 16px;
+  color: #6657d2;
+  background: #f1f0ff;
+  display: grid;
+  place-items: center;
+  box-shadow: 0 8px 20px rgba(91, 76, 192, 0.1);
+}
+
+.patient-reset-header {
+  margin-bottom: 27px;
+}
+
+.patient-reset-label {
+  color: #7567db;
+  font-size: 10px;
+  font-weight: 750;
+  letter-spacing: 0.14em;
+}
+
+.patient-reset-header h1 {
+  margin: 12px 0 10px;
+  color: #201d4d;
+  font-size: clamp(29px, 2.5vw, 37px);
+  font-weight: 720;
+  line-height: 1.12;
+  letter-spacing: -0.045em;
+}
+
+.patient-reset-header p {
+  max-width: 410px;
+  margin: 0;
+  color: #77758b;
+  font-size: 13px;
+  line-height: 1.65;
+}
+
+.patient-reset-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.patient-reset-form > button {
+  width: 100%;
+}
+
+.patient-reset-alert {
+  margin-bottom: 20px;
+  padding: 13px 15px;
+  border: 1px solid;
+  border-radius: 12px;
+  font-size: 13px;
+  line-height: 1.45;
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.patient-reset-alert > span {
+  width: 19px;
+  height: 19px;
+  flex: 0 0 19px;
+  border-radius: 50%;
+  color: #ffffff;
+  font-size: 12px;
+  font-weight: 800;
+  line-height: 19px;
+  text-align: center;
+}
+
+.patient-reset-alert p {
+  margin: 0;
+}
+
+.patient-reset-alert-error {
+  border-color: #f1c5cc;
+  color: #ad3948;
+  background: #fff4f5;
+}
+
+.patient-reset-alert-error > span {
+  background: #dc5d6b;
+}
+
+.patient-reset-alert-success {
+  border-color: #bce8d2;
+  color: #23734d;
+  background: #effbf4;
+}
+
+.patient-reset-alert-success > span {
+  background: #35a66f;
+}
+
+.patient-reset-security-note {
+  margin: 26px 0 0;
+  color: #9693a5;
+  font-size: 11px;
+  line-height: 1.55;
+  text-align: center;
+}
+
+.patient-reset-footer {
+  margin-top: 26px;
+  padding-top: 20px;
+  border-top: 1px solid #eeedf4;
+  color: #aaa7b5;
+  font-size: 10px;
+  text-align: center;
+}
+
+@media (max-width: 700px) {
+  .patient-reset-page {
+    padding: 0;
+    background: #ffffff;
+  }
+
+  .patient-reset-shell {
+    min-height: 100vh;
+    border-radius: 0;
+    box-shadow: none;
+  }
+
+  .patient-reset-form-panel {
+    padding: 32px 20px;
+  }
+
+  .patient-reset-form-container {
+    max-width: 460px;
+  }
+}
