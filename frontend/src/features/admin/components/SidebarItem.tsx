@@ -7,6 +7,7 @@ interface SidebarItemProps {
   label: string;
   badge?: number;
   onClick?: () => void;
+  onNavigate?: () => void;
 }
 
 const SidebarItem = ({
@@ -15,17 +16,28 @@ const SidebarItem = ({
   label,
   badge,
   onClick,
+  onNavigate,
 }: SidebarItemProps) => {
   const content = (
     <>
-      <div className="flex items-center gap-3">
-        <Icon size={20} />
-        <span className="font-medium">{label}</span>
-      </div>
+      <span className="sidebar-item-content">
 
-      {badge && (
-        <span className="flex h-5 min-w-5 items-center justify-center rounded-full bg-red-500 px-1 text-xs text-white">
-          {badge}
+        <span className="sidebar-item-icon">
+          <Icon
+            size={19}
+            strokeWidth={1.8}
+          />
+        </span>
+
+        <span className="sidebar-item-label">
+          {label}
+        </span>
+
+      </span>
+
+      {badge !== undefined && (
+        <span className="sidebar-badge">
+          {badge > 99 ? "99+" : badge}
         </span>
       )}
     </>
@@ -36,7 +48,7 @@ const SidebarItem = ({
       <button
         type="button"
         onClick={onClick}
-        className="flex w-full items-center justify-between rounded-xl px-4 py-3 text-slate-300 transition-colors hover:bg-white/10 hover:text-white"
+        className="sidebar-item sidebar-button"
       >
         {content}
       </button>
@@ -46,11 +58,12 @@ const SidebarItem = ({
   return (
     <NavLink
       to={to!}
+      onClick={onNavigate}
       className={({ isActive }) =>
-        `flex items-center justify-between rounded-xl px-4 py-3 transition-colors ${
+        `sidebar-item ${
           isActive
-            ? "bg-blue-600 text-white"
-            : "text-slate-300 hover:bg-white/10 hover:text-white"
+            ? "sidebar-item-active"
+            : ""
         }`
       }
     >

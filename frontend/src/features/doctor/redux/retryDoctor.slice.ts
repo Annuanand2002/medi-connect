@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { getRetryDoctorRequestThunk } from "./retryDoctor.thunk";
-import type { RetryDoctorRequest } from "../../../entites/doctor/retryDoctorRequest.type";
+import type { RetryDoctorRequest } from "../types/retryDoctorRequest.type";
 
 interface RetryDoctorState {
   loading: boolean;

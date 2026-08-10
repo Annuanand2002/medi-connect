@@ -1,7 +1,7 @@
-import axiosInstance from "@/shared/api/axios";
+import axiosInstance from "@/services/axios";
 import type { LoginFormData } from "../schemas/loginSchema";
 
-import type { LoginResponse } from "../../../../entites/admin/authTypes";
+import type { LoginResponse } from "../types/authTypes";
 
 export const loginAdmin = async (
   credentials: LoginFormData,

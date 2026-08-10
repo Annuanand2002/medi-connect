@@ -1,4 +1,4 @@
-import type { Admin } from "@/entites/admin/authTypes";
+import type { Admin } from "@/features/admin/auth/types/authTypes";
 import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
 
 interface AuthState {

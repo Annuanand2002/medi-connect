@@ -1,16 +1,13 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { AxiosError } from "axios";
 
-import type { ApiResponse } from "@/entites/api";
-import {
-  getDepartments,
-  createDepartment,
-} from "../services/department.service";
+import type { ApiResponse } from "@/types/api";
+import { getDepartments, createDepartment } from "../api/department.service";
 
 import type {
   Department,
   CreateDepartmentPaylaod,
-} from "../../../entites/doctor/department.types";
+} from "../types/department.types";
 
 export const getDepartmentsThunk = createAsyncThunk<
   Department[],

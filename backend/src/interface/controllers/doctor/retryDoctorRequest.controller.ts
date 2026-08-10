@@ -1,8 +1,10 @@
+import { inject, injectable } from "inversify";
 import { RetryDoctorRequestDTO } from "../../../application/DTO/doctorRequet/retryDoctorRequest.update.DTO";
 import { IRetryDoctorRequestUseCase } from "../../../application/repository/doctor/IRetryDoctorRequest";
 import HTTP_STATUS from "../../../shared/constants/httpStatusCode";
 import asyncHandler from "../../../shared/utils/asyncHandler";
 import { Request, Response } from "express";
+import { TYPES } from "../../../di/types/types";
 
 type DoctorRequestFiles = {
   profileImg?: {
@@ -27,8 +29,12 @@ type DoctorRequestFiles = {
   }[];
 };
 
+@injectable()
 export class RetryDoctorRequestController {
-  constructor(private retyrDoctorRequestUsecase: IRetryDoctorRequestUseCase) {}
+  constructor(
+    @inject(TYPES.RetryDoctorRequestUseCase)
+    private _retryDoctorRequestUsecase: IRetryDoctorRequestUseCase,
+  ) {}
   handle = asyncHandler(async (req: Request, res: Response) => {
     const files = req.files as unknown as DoctorRequestFiles;
     const dto: RetryDoctorRequestDTO = {
@@ -65,14 +71,12 @@ export class RetryDoctorRequestController {
         originalName: file.originalname,
       })),
     };
-    const doctorRequest = await this.retyrDoctorRequestUsecase.execute(dto);
-    res
-      .status(HTTP_STATUS.OK)
-      .json({
-        success: true,
-        message:
-          "request updated succesfully.We will review it within 2-3 business days.Please check your mail.",
-        result: doctorRequest,
-      });
+    const doctorRequest = await this._retryDoctorRequestUsecase.execute(dto);
+    res.status(HTTP_STATUS.OK).json({
+      success: true,
+      message:
+        "request updated succesfully.We will review it within 2-3 business days.Please check your mail.",
+      result: doctorRequest,
+    });
   });
 }

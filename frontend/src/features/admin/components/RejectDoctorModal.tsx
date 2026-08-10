@@ -1,7 +1,13 @@
 import { useState } from "react";
-import { useAppDispatch } from "@/app/hooks/hooks";
-import { rejectDoctorThunk } from "../redux/rejectDoctorThunk";
+import {
+  AlertTriangle,
+  Send,
+  X,
+} from "lucide-react";
 
+import { useAppDispatch } from "@/hooks/hooks";
+
+import { rejectDoctorThunk } from "../redux/rejectDoctorThunk";
 
 interface RejectDoctorModalProps {
   open: boolean;
@@ -16,21 +22,30 @@ const RejectDoctorModal = ({
 }: RejectDoctorModalProps) => {
   const dispatch = useAppDispatch();
 
-  const [reason, setReason] = useState("");
+  const [reason, setReason] =
+    useState("");
 
-  if (!open) return null;
+  if (!open) {
+    return null;
+  }
 
   const handleReject = async () => {
-    if (!reason.trim()) return;
+    if (!reason.trim()) {
+      return;
+    }
 
     const resultAction = await dispatch(
       rejectDoctorThunk({
         doctorRequestId,
-        rejectReason: reason,
-      })
+        rejectReason: reason.trim(),
+      }),
     );
 
-    if (rejectDoctorThunk.fulfilled.match(resultAction)) {
+    if (
+      rejectDoctorThunk.fulfilled.match(
+        resultAction,
+      )
+    ) {
       setReason("");
       onClose();
     }
@@ -42,39 +57,93 @@ const RejectDoctorModal = ({
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 p-4">
-      <div className="w-full max-w-lg rounded-xl bg-white shadow-xl">
+    <div
+      className="doctor-modal-backdrop"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="reject-doctor-title"
+    >
+      <div className="doctor-modal">
 
-        <div className="border-b px-6 py-4">
-          <h2 className="text-xl font-semibold">
-            Reject Doctor Request
-          </h2>
+        <div className="doctor-modal-header">
 
-          <p className="mt-1 text-sm text-slate-500">
-            Provide a reason for rejection. This reason will be sent to the
-            doctor in the retry email.
-          </p>
-        </div>
+          <div className="doctor-modal-heading">
 
-        <div className="px-6 py-5">
-          <label className="mb-2 block text-sm font-medium">
-            Rejection Reason
-          </label>
+            <div className="doctor-modal-icon doctor-modal-icon-danger">
+              <AlertTriangle size={18} />
+            </div>
 
-          <textarea
-            rows={5}
-            value={reason}
-            onChange={(e) => setReason(e.target.value)}
-            placeholder="Explain why this application is being rejected..."
-            className="w-full resize-none rounded-lg border border-slate-300 p-3 outline-none transition focus:border-blue-500"
-          />
-        </div>
+            <div>
+              <span>
+                APPLICATION REVIEW
+              </span>
 
-        <div className="flex justify-end gap-3 border-t px-6 py-4">
+              <h2 id="reject-doctor-title">
+                Reject Application
+              </h2>
+            </div>
+
+          </div>
+
           <button
             type="button"
             onClick={handleClose}
-            className="rounded-lg border border-slate-300 px-5 py-2 transition hover:bg-slate-100"
+            className="doctor-modal-close"
+            aria-label="Close modal"
+          >
+            <X size={18} />
+          </button>
+
+        </div>
+
+
+        <div className="doctor-modal-body">
+
+          <div className="doctor-rejection-notice">
+
+            <AlertTriangle size={17} />
+
+            <p>
+              The rejection reason will be included
+              in the email sent to the doctor.
+            </p>
+
+          </div>
+
+
+          <div className="doctor-modal-field">
+
+            <label>
+              Rejection Reason
+            </label>
+
+            <textarea
+              rows={5}
+              value={reason}
+              onChange={(event) =>
+                setReason(
+                  event.target.value,
+                )
+              }
+              placeholder="Explain why this application is being rejected..."
+            />
+
+            <span className="doctor-field-hint">
+              Please provide a clear and professional
+              explanation.
+            </span>
+
+          </div>
+
+        </div>
+
+
+        <div className="doctor-modal-footer">
+
+          <button
+            type="button"
+            onClick={handleClose}
+            className="doctor-modal-cancel"
           >
             Cancel
           </button>
@@ -83,11 +152,14 @@ const RejectDoctorModal = ({
             type="button"
             disabled={!reason.trim()}
             onClick={handleReject}
-            className="rounded-lg bg-red-600 px-5 py-2 text-white transition hover:bg-red-700 disabled:cursor-not-allowed disabled:opacity-50"
+            className="doctor-modal-confirm doctor-modal-confirm-danger"
           >
-            Reject
+            <Send size={15} />
+            Reject Application
           </button>
+
         </div>
+
       </div>
     </div>
   );

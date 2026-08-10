@@ -1,5 +1,12 @@
 import { useEffect, useState } from "react";
-import { useAppDispatch, useAppSelector } from "@/app/hooks/hooks";
+import {
+  Check,
+  ChevronDown,
+  Plus,
+  X,
+} from "lucide-react";
+
+import { useAppDispatch, useAppSelector } from "@/hooks/hooks";
 
 import {
   getDepartmentsThunk,
@@ -21,10 +28,13 @@ const ApproveDoctorModal = ({
 }: ApproveDoctorModalProps) => {
   const dispatch = useAppDispatch();
 
-  const { departments, loading } = useAppSelector(
-    (state) => state.department
+  const {
+    departments,
+    loading,
+  } = useAppSelector(
+    (state) => state.department,
   );
-console.log("dep",departments)
+
   const [selectedDepartment, setSelectedDepartment] =
     useState("");
 
@@ -37,117 +47,202 @@ console.log("dep",departments)
     }
   }, [dispatch, open]);
 
-  if (!open) return null;
+  if (!open) {
+    return null;
+  }
 
   const handleCreateDepartment = async () => {
-    if (!newDepartment.trim()) return;
+    if (!newDepartment.trim()) {
+      return;
+    }
 
     const resultAction = await dispatch(
       createDepartmentThunk({
-        name: newDepartment,
-      })
+        name: newDepartment.trim(),
+      }),
     );
 
-    if (createDepartmentThunk.fulfilled.match(resultAction)) {
-      setSelectedDepartment(resultAction.payload.id);
+    if (
+      createDepartmentThunk.fulfilled.match(
+        resultAction,
+      )
+    ) {
+      setSelectedDepartment(
+        resultAction.payload.id,
+      );
+
       setNewDepartment("");
     }
   };
 
   const handleApprove = async () => {
-    if (!selectedDepartment) return;
+    if (!selectedDepartment) {
+      return;
+    }
+
     const resultAction = await dispatch(
-       
       approveDoctorThunk({
         doctorRequestId,
         departmentId: selectedDepartment,
-      })
+      }),
     );
 
-    if (approveDoctorThunk.fulfilled.match(resultAction)) {
+    if (
+      approveDoctorThunk.fulfilled.match(
+        resultAction,
+      )
+    ) {
       onClose();
     }
   };
 
+  const handleClose = () => {
+    setNewDepartment("");
+    setSelectedDepartment("");
+    onClose();
+  };
+
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40">
-      <div className="w-full max-w-lg rounded-xl bg-white p-6 shadow-xl">
+    <div
+      className="doctor-modal-backdrop"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="approve-doctor-title"
+    >
+      <div className="doctor-modal">
 
-        <h2 className="mb-6 text-xl font-semibold">
-          Approve Doctor
-        </h2>
+        <div className="doctor-modal-header">
 
-        <div className="space-y-4">
+          <div className="doctor-modal-heading">
 
-          <div>
-            <label className="mb-2 block text-sm font-medium">
+            <div className="doctor-modal-icon doctor-modal-icon-success">
+              <Check size={19} />
+            </div>
+
+            <div>
+              <span>
+                APPLICATION REVIEW
+              </span>
+
+              <h2 id="approve-doctor-title">
+                Approve Doctor
+              </h2>
+            </div>
+
+          </div>
+
+          <button
+            type="button"
+            onClick={handleClose}
+            className="doctor-modal-close"
+            aria-label="Close modal"
+          >
+            <X size={18} />
+          </button>
+
+        </div>
+
+
+        <div className="doctor-modal-body">
+
+          <p className="doctor-modal-description">
+            Select the department this doctor will
+            belong to before approving the application.
+          </p>
+
+
+          <div className="doctor-modal-field">
+
+            <label>
               Department
             </label>
 
-            <select
-              value={selectedDepartment}
-              onChange={(e) =>
-                setSelectedDepartment(e.target.value)
-              }
-              className="w-full rounded-lg border p-3"
-            >
-              <option value="">
-                Select Department
-              </option>
+            <div className="doctor-select-wrapper">
 
-              {departments.map((department) => (
-              
-                <option
-                  key={department.id}
-                  value={department.id}
-                >
-                  {department.name}
+              <select
+                value={selectedDepartment}
+                onChange={(event) =>
+                  setSelectedDepartment(
+                    event.target.value,
+                  )
+                }
+              >
+                <option value="">
+                  Select Department
                 </option>
-              ))}
-            </select>
+
+                {departments.map(
+                  (department) => (
+                    <option
+                      key={department.id}
+                      value={department.id}
+                    >
+                      {department.name}
+                    </option>
+                  ),
+                )}
+              </select>
+
+              <ChevronDown
+                size={16}
+              />
+
+            </div>
+
           </div>
 
-          <div className="flex items-center">
-            <div className="h-px flex-1 bg-slate-200" />
-            <span className="px-3 text-sm text-slate-500">
-              OR
-            </span>
-            <div className="h-px flex-1 bg-slate-200" />
+
+          <div className="doctor-modal-divider">
+            <span />
+            OR
+            <span />
           </div>
 
-          <div>
-            <label className="mb-2 block text-sm font-medium">
-              Add New Department
+
+          <div className="doctor-modal-field">
+
+            <label>
+              Create New Department
             </label>
 
-            <div className="flex gap-2">
+            <div className="doctor-create-department">
+
               <input
                 value={newDepartment}
-                onChange={(e) =>
-                  setNewDepartment(e.target.value)
+                onChange={(event) =>
+                  setNewDepartment(
+                    event.target.value,
+                  )
                 }
-                className="flex-1 rounded-lg border p-3"
-                placeholder="Department Name"
+                placeholder="Enter department name"
               />
 
               <button
                 type="button"
-                onClick={handleCreateDepartment}
-                className="rounded-lg bg-blue-600 px-4 text-white hover:bg-blue-700"
+                onClick={
+                  handleCreateDepartment
+                }
+                disabled={
+                  !newDepartment.trim()
+                }
               >
+                <Plus size={15} />
                 Create
               </button>
+
             </div>
+
           </div>
 
         </div>
 
-        <div className="mt-8 flex justify-end gap-3">
+
+        <div className="doctor-modal-footer">
 
           <button
             type="button"
-            onClick={onClose}
-            className="rounded-lg border px-5 py-2"
+            onClick={handleClose}
+            className="doctor-modal-cancel"
           >
             Cancel
           </button>
@@ -155,15 +250,21 @@ console.log("dep",departments)
           <button
             type="button"
             disabled={
-              loading || !selectedDepartment
+              loading ||
+              !selectedDepartment
             }
             onClick={handleApprove}
-            className="rounded-lg bg-green-600 px-5 py-2 text-white disabled:opacity-50"
+            className="doctor-modal-confirm doctor-modal-confirm-success"
           >
-            Approve
+            <Check size={16} />
+
+            {loading
+              ? "Approving..."
+              : "Approve Doctor"}
           </button>
 
         </div>
+
       </div>
     </div>
   );

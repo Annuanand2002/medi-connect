@@ -1,10 +1,14 @@
+import { injectable } from "inversify";
 import Admin from "../../../../domain/entities/admin/admin.entity";
 import { IAdminRepo } from "../../../../domain/repositories/admin/IAdmin.repo";
-import AdminModel from "../../../database/models/admin.model";
+import AdminModel, { AdminSchmea } from "../../../database/models/admin.model";
+import { BaseRepository } from "../../Base/base.repo.impl";
+import { AmdinMapper } from "../../../database/mappers/AdminMapper";
 
-export class AdminRepo implements IAdminRepo {
-  async findById(id: string): Promise<Admin | null> {
-    return await AdminModel.findById(id)
+@injectable()
+export class AdminRepo extends BaseRepository<AdminSchmea, Admin> implements IAdminRepo {
+  constructor(){
+    super(AdminModel,AmdinMapper.toDomain)
   }
   async findByEmail(email: string): Promise<Admin | null> {
     return await AdminModel.findOne({email})

@@ -1,18 +1,18 @@
 import Doctor from "../../../domain/entities/doctor/doctor.entity";
 import { IDoctorRepo } from "../../../domain/repositories/doctor/IDoctor";
 import DoctorMapper from "../../database/mappers/DoctorMapper";
-import DoctorModel from "../../database/models/doctor.model";
+import DoctorModel, { DoctorSchema } from "../../database/models/doctor.model";
+import { injectable } from "inversify";
+import { BaseRepository } from "../Base/base.repo.impl";
 
 
-
-export class DoctorRepo implements IDoctorRepo{
+@injectable()
+export class DoctorRepo extends BaseRepository<DoctorSchema,Doctor> implements IDoctorRepo{
+    constructor(){
+        super(DoctorModel,DoctorMapper.toDomain)
+    }
     async create(data: Partial<Doctor>): Promise<Doctor> {
         const doctor = await DoctorModel.create(data);
-        return DoctorMapper.toDomain(doctor)
-    }
-    async findById(id: string): Promise<Doctor | null> {
-        const doctor = await DoctorModel.findById(id)
-        if(!doctor)return null;
         return DoctorMapper.toDomain(doctor)
     }
     async findByEmail(email: string): Promise<Doctor | null> {

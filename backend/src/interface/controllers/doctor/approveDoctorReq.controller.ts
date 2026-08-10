@@ -1,16 +1,19 @@
+import { injectable,inject } from "inversify";
 import { IApproveDoctorRequestUsecase } from "../../../application/repository/doctor/IApproveDoctorRequestUsecase";
 import HTTP_STATUS from "../../../shared/constants/httpStatusCode";
 import asyncHandler from "../../../shared/utils/asyncHandler";
 import { Request, Response } from "express";
+import { TYPES } from "../../../di/types/types";
 
+@injectable()
 export default class ApproveDoctorRequestController {
   constructor(
-    private approveDoctorRequestUsecase: IApproveDoctorRequestUsecase,
+    @inject(TYPES.ApproveDoctorRequestUsecase)
+    private _approveDoctorRequestUsecase: IApproveDoctorRequestUsecase,
   ) {}
   handle = asyncHandler(async (req: Request, res: Response) => {
-    console.log("approve controller");
     const { doctorRequestId, departmentId } = req.body;
-    await this.approveDoctorRequestUsecase.execeute({
+    await this._approveDoctorRequestUsecase.execeute({
       doctorRequestId,
       departmentId,
     });

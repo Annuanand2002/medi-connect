@@ -7,15 +7,21 @@ import { RejectDoctorRequestDTO } from "../../DTO/doctorRequet/rejectDoctorReque
 import IEmailService from "../../services/IEmailService";
 import { IRejectDoctorRequestUseCase } from "../../repository/doctor/IRejectDoctorRequest.usecase";
 import crypto from "crypto";
+import { inject, injectable } from "inversify";
+import { TYPES } from "../../../di/types/types";
 
+@injectable()
 export class RejectdoctorRequestUseCase implements IRejectDoctorRequestUseCase {
   constructor(
-    private doctorReqRepo: IDoctorRequest,
-    private emailService: IEmailService,
-    private doctorRetryRepo: IDoctorRetryTokenRepo,
+    @inject(TYPES.DoctorRequestRepository)
+    private _doctorReqRepo: IDoctorRequest,
+    @inject(TYPES.EmailService)
+    private _emailService: IEmailService,
+    @inject(TYPES.DoctorRetryTokenRepository)
+    private _doctorRetryRepo: IDoctorRetryTokenRepo,
   ) {}
   async execute(dto: RejectDoctorRequestDTO): Promise<void> {
-    const doctorRequest = await this.doctorReqRepo.findById(
+    const doctorRequest = await this._doctorReqRepo.findById(
       dto.doctorRequestId,
     );
     if (!doctorRequest) {
@@ -29,7 +35,7 @@ export class RejectdoctorRequestUseCase implements IRejectDoctorRequestUseCase {
     }
     const rejectCount = doctorRequest.rejectCount + 1;
     const canRetry = rejectCount <= 1;
-    await this.doctorReqRepo.update(doctorRequest.id!, {
+    await this._doctorReqRepo.update(doctorRequest.id!, {
       status: "REJECTED",
       rejectReason: dto.rejectReason,
       rejectCount,
@@ -39,13 +45,13 @@ export class RejectdoctorRequestUseCase implements IRejectDoctorRequestUseCase {
     const retryLink = canRetry
       ? `${env.FRONTEND_URL}/doctor/retry?token=${token}`
       : "";
-    await this.doctorRetryRepo.deleteBydoctorRequest(doctorRequest.id!);
-    await this.doctorRetryRepo.create({
+    await this._doctorRetryRepo.deleteBydoctorRequest(doctorRequest.id!);
+    await this._doctorRetryRepo.create({
       doctorRequestId: doctorRequest.id!,
       token,
       expiresAt: expireAt,
     });
-    await this.emailService.sendDoctorRejectionemail({
+    await this._emailService.sendDoctorRejectionemail({
       name: doctorRequest.fullName,
       email: doctorRequest.email,
       rejectReason: dto.rejectReason,

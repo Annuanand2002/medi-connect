@@ -6,20 +6,28 @@ import AppError from "../../../shared/errors/appErrors";
 import { ApplyDoctorRequestDTO } from "../../DTO/doctorRequet/applyDoctorRequestDTO";
 import { IDoctorRequestFileService } from "../../services/IDoctorRequestFileService";
 import { IDcotorRequestUseCase } from "../../repository/doctor/IApplyDoctorRequestUsecase";
+import { inject, injectable } from "inversify";
+import { TYPES } from "../../../di/types/types";
 
+@injectable()
 export class DoctorRequestUsecase implements IDcotorRequestUseCase {
   constructor(
-    private doctorRepo: IDoctorRepo,
-    private doctorRequestRepo: IDoctorRequest,
-    private doctorRequestFileService: IDoctorRequestFileService,
+    @inject(TYPES.DoctorRepo)
+    private _doctorRepo: IDoctorRepo,
+    @inject(TYPES.DoctorRequestRepository)
+    private _doctorRequestRepo: IDoctorRequest,
+    @inject(TYPES.DoctorRequestFileService)
+    private _doctorRequestFileService: IDoctorRequestFileService,
   ) {}
 
   async execute(request: ApplyDoctorRequestDTO): Promise<DoctorRequest> {
-    const existingDoctor = await this.doctorRepo.findByEmail(request.email);
+    const existingDoctor = await this._doctorRepo.findByEmail(request.email);
     if (existingDoctor) {
       throw new AppError("Doctor already registered", HTTP_STATUS.CONFLICT);
     }
-    const existingReq = await this.doctorRequestRepo.findByEmail(request.email);
+    const existingReq = await this._doctorRequestRepo.findByEmail(
+      request.email,
+    );
     if (existingReq?.status === "PENDING") {
       throw new AppError(
         "Your application is already under review",
@@ -33,9 +41,9 @@ export class DoctorRequestUsecase implements IDcotorRequestUseCase {
       );
     }
     const { profileImg, governmentId, medicalLicense, degreeCertificates } =
-      await this.doctorRequestFileService.uploadFiles(request);
+      await this._doctorRequestFileService.uploadFiles(request);
     if (existingReq) {
-      const updated = await this.doctorRequestRepo.update(existingReq.id!, {
+      const updated = await this._doctorRequestRepo.update(existingReq.id!, {
         fullName: request.fullName,
         email: request.email,
         dateOfBirth: request.dateOfBirth,
@@ -57,7 +65,7 @@ export class DoctorRequestUsecase implements IDcotorRequestUseCase {
       }
       return updated;
     }
-    return await this.doctorRequestRepo.create({
+    return await this._doctorRequestRepo.create({
       fullName: request.fullName,
       email: request.email,
       dateOfBirth: request.dateOfBirth,

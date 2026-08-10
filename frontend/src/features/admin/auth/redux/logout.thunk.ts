@@ -1,6 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import type { AxiosError } from "axios";
-import type { ApiResponse } from "@/entites/api";
+import type { ApiResponse } from "@/types/api";
 import { logoutAdmin } from "../api/logout";
 
 export const logoutAdminThunk = createAsyncThunk(

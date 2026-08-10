@@ -5,7 +5,9 @@ import {
 } from "../../domain/services/ITokenService";
 import jwt from "jsonwebtoken";
 import env from "../../shared/config/env";
+import { injectable } from "inversify";
 
+@injectable()
 export class JWTService implements ITokenService {
   async generateTokens(paylaod: TokenPaylaod): Promise<TokenPair> {
     const accessToken = jwt.sign(paylaod, env.ACCESS_TOKEN_SECRET, {

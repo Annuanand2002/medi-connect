@@ -1,6 +1,8 @@
 import dotenv from "dotenv";
 dotenv.config();
 import logger from "./shared/loggers/logger";
+import "reflect-metadata"
+
 
 import app from "./app";
 import connectDB from "./infrastructure/database/db";

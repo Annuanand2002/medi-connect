@@ -5,7 +5,7 @@ const uploadFileSchema = new Schema({
     type: String,
     required: true,
   },
-  publicId: {
+  key: {
     type: String,
     required: true,
   },

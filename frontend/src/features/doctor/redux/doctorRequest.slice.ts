@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { applyDoctorRequestThunk } from "./doctorRequest.thunk";
-import type { ApiResponse } from "@/entites/api";
+import type { ApiResponse } from "@/types/api";
 
 interface DoctorRequestState {
   loading: boolean;

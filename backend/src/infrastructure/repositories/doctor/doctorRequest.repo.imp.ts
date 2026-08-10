@@ -1,24 +1,25 @@
+import { injectable } from "inversify";
 import { GetDoctorRequestDTO } from "../../../application/DTO/doctorRequet/GetAllDoctorsRequestDTO";
 import { PaginationDoctorRequestDTO } from "../../../application/DTO/doctorRequet/PaginationDoctorRequestDTO";
 import DoctorRequest from "../../../domain/entities/doctor/doctorRequestEntity";
 import { IDoctorRequest } from "../../../domain/repositories/doctor/IDoctorRequest";
 import { DoctorRequestMapper } from "../../database/mappers/DoctorRequestMapper";
-import DoctorRequestModel from "../../database/models/doctorRequest.model";
+import DoctorRequestModel, {  DoctorRequestSchmea } from "../../database/models/doctorRequest.model";
+import { BaseRepository } from "../Base/base.repo.impl";
 
-export class DoctorRequestRepository implements IDoctorRequest {
+
+@injectable()
+export class DoctorRequestRepository extends BaseRepository<DoctorRequestSchmea, DoctorRequest> implements IDoctorRequest {
+  constructor() {
+    super(DoctorRequestModel, DoctorRequestMapper.toDomain)
+  }
   async create(data: Partial<DoctorRequest>): Promise<DoctorRequest> {
     const document = await DoctorRequestModel.create(
       DoctorRequestMapper.toPersistence(data),
     );
     return DoctorRequestMapper.toDomain(document);
   }
-  async findById(id: string): Promise<DoctorRequest|null> {
-    console.log("repo id",id)
-    const document = await DoctorRequestModel.findById(id);
-    if (!document) return null;
-    return DoctorRequestMapper.toDomain(document);
-
-  }
+ 
   async findByEmail(email: string): Promise<DoctorRequest|null> {
     const document = await DoctorRequestModel.findOne({ email });
     if (!document) return null;

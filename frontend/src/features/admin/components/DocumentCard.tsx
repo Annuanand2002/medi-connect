@@ -1,61 +1,131 @@
-import { FileText } from "lucide-react";
+import axiosInstance from "@/services/axios";
+import {
+  ExternalLink,
+  FileCheck2,
+  FileText,
+  Image as ImageIcon,
+} from "lucide-react";
+import { useEffect, useState } from "react";
 
 interface DocumentCardProps {
   title: string;
-  url: string;
+  fileKey: string;
   type: "image" | "pdf";
   onImageClick?: (url: string, title: string) => void;
 }
 
 const DocumentCard = ({
   title,
-  url,
+  fileKey,
   type,
   onImageClick,
 }: DocumentCardProps) => {
-  return (
-    <div className="overflow-hidden rounded-xl border border-slate-200 bg-white shadow-sm transition hover:shadow-md">
-      {type === "image" ? (
-        <img
-          src={url}
-          alt={title}
-          className="h-52 w-full cursor-pointer object-cover"
-          onClick={() => onImageClick?.(url, title)}
-        />
-      ) : (
-        <div className="flex h-52 items-center justify-center bg-slate-100">
-          <FileText
-            size={70}
-            className="text-red-500"
-          />
-        </div>
-      )}
+  const [signedUrl, setSignedUrl] = useState<string | null>(null);
+  const [loading, setLoading] = useState(true);
 
-      <div className="p-4">
-        <h3 className="font-medium text-slate-800">
-          {title}
-        </h3>
+  useEffect(() => {
+    const getSignedUrl = async () => {
+      try {
+        setLoading(true);
+
+        const response = await axiosInstance.get("/admin/doctor-request/file", {
+          params: {
+            key: fileKey,
+          },
+        });
+
+        setSignedUrl(response.data.result.url);
+      } catch (error) {
+        console.error("Failed to get signed URL:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    if (fileKey) {
+      getSignedUrl();
+    }
+  }, [fileKey]);
+
+  return (
+    <article>
+      <div className="document-preview">
+        {type === "image" ? (
+          <button
+            type="button"
+            className="document-image-button"
+            disabled={!signedUrl}
+            onClick={() => {
+              if (signedUrl) {
+                onImageClick?.(signedUrl, title);
+              }
+            }}
+          >
+            {signedUrl ? (
+              <img src={signedUrl} alt={title} className="document-image" />
+            ) : (
+              <div className="document-image-loading">
+                {loading ? "Loading..." : "Unable to load image"}
+              </div>
+            )}
+
+            <span className="document-image-overlay">
+              <ImageIcon size={18} />
+              {loading ? "Loading..." : "View Preview"}
+            </span>
+          </button>
+        ) : (
+          <div className="document-pdf-preview">
+            <div className="document-pdf-icon">
+              <FileText size={27} />
+            </div>
+
+            <span>{loading ? "LOADING..." : "PDF DOCUMENT"}</span>
+          </div>
+        )}
+      </div>
+
+      <div className="document-content">
+        <div className="document-title-row">
+          <div>
+            <span className="document-type">
+              {type === "image" ? "IMAGE" : "PDF"}
+            </span>
+
+            <h3>{title}</h3>
+          </div>
+
+          <FileCheck2 size={17} className="document-check" />
+        </div>
 
         {type === "image" ? (
           <button
             type="button"
-            onClick={() => onImageClick?.(url, title)}
-            className="mt-2 text-sm font-medium text-blue-600 hover:underline"
+            disabled={!signedUrl}
+            onClick={() => signedUrl && onImageClick?.(signedUrl, title)}
+            className="document-action"
           >
             View Full Image
+            <ExternalLink size={13} />
           </button>
         ) : (
           <a
-            href={url}
+            href={signedUrl ?? "#"}
             target="_blank"
             rel="noopener noreferrer"
-            className="mt-2 inline-block text-sm font-medium text-blue-600 hover:underline"
+            className="document-action"
+            onClick={(e) => {
+              if (!signedUrl) {
+                e.preventDefault();
+              }
+            }}
           >
-            Open Document
+            {loading ? "Loading..." : "Open Document"}
+            <ExternalLink size={13} />
           </a>
         )}
       </div>
-    </div>
+    </article>
   );
 };
 

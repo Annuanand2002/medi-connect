@@ -1,36 +1,76 @@
-import bannerImage from "@/assets/images/robot.png"; // Adjust path as needed
-import logo from "@/assets/logo/mediconnect-logo.jpeg"; // Adjust path as needed
+import bannerImage from "@/assets/images/robot.png";
+import logo from "@/assets/logo/mediconnect-logo.jpeg";
 
 const LoginBanner = () => {
   return (
-    <div
-      className="hidden lg:flex lg:w-1/2 bg-gradient-to-br from-[#2D238C] to-[#4A3DB7]
-      flex-col justify-between p-12 text-white min-h-screen"
-    >
-      <div>
-        <div className="flex items-center gap-2">
-          <img src={logo} alt="MediConnect Logo" className="h-8 w-8" />
-          <h4 className="text-2xl font-bold tracking-tight">MediConnect</h4>
+    <section className="login-banner">
+
+      {/* Decorative background */}
+      <div className="banner-glow banner-glow-one" />
+      <div className="banner-glow banner-glow-two" />
+
+      <div className="banner-grid" />
+
+      <span className="banner-dot banner-dot-one" />
+      <span className="banner-dot banner-dot-two" />
+      <span className="banner-dot banner-dot-three" />
+      <span className="banner-dot banner-dot-four" />
+
+      <div className="banner-content">
+
+        {/* Brand */}
+        <div className="brand">
+          <div className="brand-logo">
+            <img
+              src={logo}
+              alt="MediConnect logo"
+            />
+          </div>
+
+          <div className="brand-info">
+            <h2>MediConnect</h2>
+            <span>Healthcare Platform</span>
+          </div>
         </div>
+
+        {/* Illustration */}
+        <div className="banner-illustration">
+
+          <div className="illustration-ring illustration-ring-one" />
+          <div className="illustration-ring illustration-ring-two" />
+
+          <div className="illustration-glow" />
+
+          <img
+            src={bannerImage}
+            alt="MediConnect AI healthcare assistant"
+            className="robot-image"
+          />
+
+        </div>
+
+        {/* Bottom Content */}
+        <div className="banner-message">
+
+          <span className="banner-eyebrow">
+            ADMIN PORTAL
+          </span>
+
+          <h1>
+            Smarter healthcare.
+            <br />
+            <span>Simplified.</span>
+          </h1>
+
+          <p>
+            Everything you need to manage
+            your healthcare platform, in one place.
+          </p>
+
+        </div>
+
       </div>
-      
-      <div className="flex justify-center items-center py-8">
-        <img 
-          src={bannerImage} 
-          alt="Healthcare professionals" 
-          className="max-w-full h-auto max-h-64 object-contain"
-        />
-      </div>
-      
-      <div className="text-center space-y-4">
-        <h3 className="text-2xl font-semibold tracking-tight">Welcome back Admin</h3>
-        <p className="text-gray-200 max-w-sm mx-auto">
-          Access doctor details, patients and revenue details securely.
-        </p>
-        <hr className="border-gray-500/30 my-6 w-24 mx-auto" />
-        <p className="text-gray-300 text-sm tracking-wider">Your health, simplified</p>
-      </div>
-    </div>
+    </section>
   );
 };
 

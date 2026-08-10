@@ -6,6 +6,8 @@ import AppError from "../../../shared/errors/appErrors";
 import { IGetAllDoctorRequedstUseCase } from "../../../application/repository/doctor/IGetAllDoctorRequets";
 import { DoctorRequestStatus } from "../../../shared/constants/doctorRequestStatus";
 import { IGetDoctorRequestUseCase } from "../../../application/repository/doctor/IGetDoctorRequest.usecase";
+import { inject, injectable } from "inversify";
+import { TYPES } from "../../../di/types/types";
 
 type DoctorRequestFiles = {
   profileImg?: {
@@ -30,11 +32,15 @@ type DoctorRequestFiles = {
   }[];
 };
 
+@injectable()
 export class DoctorRequestController {
   constructor(
-    private readonly applyDoctorRequestUseCase: IDcotorRequestUseCase,
-    private readonly getAllDoctorRequestUseCase: IGetAllDoctorRequedstUseCase,
-    private readonly getDoctorRequestUseCase: IGetDoctorRequestUseCase,
+    @inject(TYPES.DoctorRequestUsecase)
+    private readonly _applyDoctorRequestUseCase: IDcotorRequestUseCase,
+    @inject(TYPES.GetAllDoctorRequestUseCase)
+    private readonly _getAllDoctorRequestUseCase: IGetAllDoctorRequedstUseCase,
+    @inject(TYPES.GetDoctorRequestUseCase)
+    private readonly _getDoctorRequestUseCase: IGetDoctorRequestUseCase,
   ) {}
 
   applyDoctorRequest = asyncHandler(
@@ -44,7 +50,7 @@ export class DoctorRequestController {
       }
       const files = req.files as unknown as DoctorRequestFiles;
 
-      const result = await this.applyDoctorRequestUseCase.execute({
+      const result = await this._applyDoctorRequestUseCase.execute({
         fullName: req.body.fullName,
         email: req.body.email,
         dateOfBirth: new Date(req.body.dateOfBirth),
@@ -93,7 +99,7 @@ export class DoctorRequestController {
     const search = req.query.search as string | undefined;
     const page = Number(req.query.page) || 1;
     const limit = Number(req.query.limit) || 10;
-    const result = await this.getAllDoctorRequestUseCase.execute({
+    const result = await this._getAllDoctorRequestUseCase.execute({
       page,
       limit,
       status,
@@ -105,7 +111,7 @@ export class DoctorRequestController {
   });
   getDoctorReq = asyncHandler(async (req: Request, res: Response) => {
     const id = req.params.id as string;
-    const result = await this.getDoctorRequestUseCase.execute(id);
+    const result = await this._getDoctorRequestUseCase.execute(id);
     res.status(HTTP_STATUS.OK).json({
       success: true,
       message: "DoctorRequest fetched succesfully",

@@ -1,21 +1,27 @@
-import type { DoctorRequestStatus } from "../../../entites/doctor/doctorRequestList.types";
+import type {
+  DoctorRequestStatus,
+} from "../types/doctorRequestList.types";
 
 interface StatusBadgeProps {
   status: DoctorRequestStatus;
 }
 
-const StatusBadge = ({ status }: StatusBadgeProps) => {
-  const styles = {
-    pending: "bg-yellow-100 text-yellow-700 border border-yellow-200",
-    approved: "bg-green-100 text-green-700 border border-green-200",
-    rejected: "bg-red-100 text-red-700 border border-red-200",
-  };
+const StatusBadge = ({
+  status,
+}: StatusBadgeProps) => {
+
+  const normalizedStatus =
+    status.toLowerCase();
 
   return (
     <span
-      className={`inline-flex rounded-full px-3 py-1 text-xs font-semibold capitalize ${styles[status]}`}
+      className={`status-badge status-${normalizedStatus}`}
     >
-      {status}
+      <span className="status-badge-dot" />
+
+      <span>
+        {normalizedStatus}
+      </span>
     </span>
   );
 };

@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import type { DoctorRequestDetails } from "../../../entites/doctor/doctorRequestDetials.types";
+import type { DoctorRequestDetails } from "../types/doctorRequestDetials.types";
 import { getDoctorRequestDetailsThunk } from "./doctorRequestDetailsPage.thunk";
 
 interface DoctorRequestDetailsState {

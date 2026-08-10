@@ -1,7 +1,7 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import type { AxiosError } from "axios";
-import type { ApiResponse } from "@/entites/api";
-import { retryDoctorRequest } from "../services/retrySubmit";
+import type { ApiResponse } from "@/types/api";
+import { retryDoctorRequest } from "../api/retrySubmit";
 
 export const retryDoctorRequestThunk = createAsyncThunk(
   "doctor/retryDoctorRequest",

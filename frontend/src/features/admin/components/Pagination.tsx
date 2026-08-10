@@ -1,4 +1,9 @@
-import { getPaginationRange } from "@/shared/utils/pagination";
+import {
+  ChevronLeft,
+  ChevronRight,
+} from "lucide-react";
+
+import { getPaginationRange } from "@/utils/pagination";
 
 interface PaginationProps {
   currentPage: number;
@@ -13,57 +18,83 @@ const Pagination = ({
   siblingCount = 1,
   onPageChange,
 }: PaginationProps) => {
-  if (totalPages <= 1) return null;
+
+  if (totalPages <= 1) {
+    return null;
+  }
 
   const pages = getPaginationRange(
     currentPage,
     totalPages,
-    siblingCount
+    siblingCount,
   );
 
   return (
-    <div className="mt-6 flex items-center justify-center gap-2">
+    <div className="doctor-pagination">
+
       <button
         type="button"
-        onClick={() => onPageChange(currentPage - 1)}
+        onClick={() =>
+          onPageChange(currentPage - 1)
+        }
         disabled={currentPage === 1}
-        className="rounded-lg border border-slate-300 px-4 py-2 text-sm font-medium transition hover:bg-slate-100 disabled:cursor-not-allowed disabled:opacity-50"
+        className="pagination-arrow"
+        aria-label="Previous page"
       >
-        Previous
+        <ChevronLeft size={16} />
       </button>
 
-      {pages.map((item, index) =>
-        item === "..." ? (
-          <span
-            key={`ellipsis-${index}`}
-            className="px-2 text-slate-500"
-          >
-            ...
-          </span>
-        ) : (
-          <button
-            key={item}
-            type="button"
-            onClick={() => onPageChange(item)}
-            className={`rounded-lg px-4 py-2 text-sm font-medium transition ${
-              currentPage === item
-                ? "bg-blue-600 text-white"
-                : "border border-slate-300 hover:bg-slate-100"
-            }`}
-          >
-            {item}
-          </button>
-        )
-      )}
+
+      <div className="pagination-pages">
+
+        {pages.map((item, index) =>
+
+          item === "..." ? (
+
+            <span
+              key={`ellipsis-${index}`}
+              className="pagination-ellipsis"
+            >
+              •••
+            </span>
+
+          ) : (
+
+            <button
+              key={item}
+              type="button"
+              onClick={() =>
+                onPageChange(item)
+              }
+              className={
+                currentPage === item
+                  ? "pagination-page pagination-page-active"
+                  : "pagination-page"
+              }
+            >
+              {item}
+            </button>
+
+          ),
+        )}
+
+      </div>
+
 
       <button
         type="button"
-        onClick={() => onPageChange(currentPage + 1)}
-        disabled={currentPage === totalPages}
-        className="rounded-lg border border-slate-300 px-4 py-2 text-sm font-medium transition hover:bg-slate-100 disabled:cursor-not-allowed disabled:opacity-50"
+        onClick={() =>
+          onPageChange(currentPage + 1)
+        }
+        disabled={
+          currentPage === totalPages
+        }
+        className="pagination-arrow"
+        aria-label="Next page"
       >
-        Next
+        <ChevronRight size={16} />
       </button>
+
     </div>
   );
 };

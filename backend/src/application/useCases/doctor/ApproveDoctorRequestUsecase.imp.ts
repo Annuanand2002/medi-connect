@@ -8,28 +8,32 @@ import { ApproveDoctorRewuestDTO } from "../../DTO/doctorRequet/approveDoctorReq
 import { IApproveDoctorRequestUsecase } from "../../repository/doctor/IApproveDoctorRequestUsecase";
 import IDoctorVerificationTokenRepo from "../../../domain/repositories/doctor/IDoctorVerificationTokenRepo";
 import IEmailService from "../../services/IEmailService";
+import { injectable, inject } from "inversify";
+import { TYPES } from "../../../di/types/types";
+import { ICounterRepo } from "../../../domain/repositories/common/ICounter";
+import { generateCode } from "../../../shared/utils/GenerateCode";
 
+@injectable()
 export class ApproveDoctorRequestUsecase implements IApproveDoctorRequestUsecase {
   constructor(
-    private doctorReqRepo: IDoctorRequest,
-    private departmentRepo: IDepartmentRepo,
-    private doctorRepo: IDoctorRepo,
-    private verificationTokenRepo: IDoctorVerificationTokenRepo,
-    private emailService: IEmailService,
+    @inject(TYPES.DoctorRequestRepository)
+    private _doctorReqRepo: IDoctorRequest,
+    @inject(TYPES.DepartmentRepo)
+    private _departmentRepo: IDepartmentRepo,
+    @inject(TYPES.DoctorRepo)
+    private _doctorRepo: IDoctorRepo,
+    @inject(TYPES.DoctorVerificationTokenRepository)
+    private _verificationTokenRepo: IDoctorVerificationTokenRepo,
+    @inject(TYPES.EmailService)
+    private _emailService: IEmailService,
+    @inject(TYPES.CounterRepo)
+    private _counterRepo : ICounterRepo
   ) {}
-  private async generateDoctorCode(): Promise<string> {
-    const lastDoctor = await this.doctorRepo.findLastdoctor();
-
-    if (!lastDoctor?.doctorCode) {
-      return "DOC001";
-    }
-
-    const lastNumber = parseInt(lastDoctor.doctorCode.replace("DOC", ""), 10);
-
-    return `DOC${String(lastNumber + 1).padStart(3, "0")}`;
-  }
+  
   async execeute(request: ApproveDoctorRewuestDTO): Promise<void> {
-    const requests = await this.doctorReqRepo.findById(request.doctorRequestId);
+    const requests = await this._doctorReqRepo.findById(
+      request.doctorRequestId,
+    );
     if (!requests) {
       throw new AppError("Doctor request not found", HTTP_STATUS.NOT_FOUND);
     }
@@ -39,16 +43,19 @@ export class ApproveDoctorRequestUsecase implements IApproveDoctorRequestUsecase
         HTTP_STATUS.CONFLICT,
       );
     }
-    const department = await this.departmentRepo.findById(request.departmentId);
+    const department = await this._departmentRepo.findById(
+      request.departmentId,
+    );
     if (!department || !department.isActive) {
       throw new AppError("department not found", HTTP_STATUS.NOT_FOUND);
     }
-    const existingDoctor = await this.doctorRepo.findByEmail(requests.email);
+    const existingDoctor = await this._doctorRepo.findByEmail(requests.email);
     if (existingDoctor) {
       throw new AppError("doctor already exits", HTTP_STATUS.CONFLICT);
     }
-    const doctorCode = await this.generateDoctorCode();
-    const doctor = await this.doctorRepo.create({
+    const sequence = await this._counterRepo.getNextSequence("doctor")
+    const doctorCode = await generateCode(sequence,"DOC")
+    const doctor = await this._doctorRepo.create({
       doctorCode,
       fullName: requests.fullName,
       email: requests.email,
@@ -60,18 +67,18 @@ export class ApproveDoctorRequestUsecase implements IApproveDoctorRequestUsecase
       status: "PENDING_SETUP",
     });
     const verificationToken = randomUUID();
-    await this.verificationTokenRepo.deleteByDoctorId(doctor.id!);
-    await this.verificationTokenRepo.create({
+    await this._verificationTokenRepo.deleteByDoctorId(doctor.id!);
+    await this._verificationTokenRepo.create({
       doctorId: doctor.id!,
       token: verificationToken,
       expiresAt: new Date(Date.now() + 24 * 60 * 60 * 1000),
     });
-    await this.emailService.sendDoctorSetupEmail({
+    await this._emailService.sendDoctorSetupEmail({
       name: doctor.fullName,
       email: doctor.email,
       token: verificationToken,
     });
-    await this.doctorReqRepo.update(request.doctorRequestId, {
+    await this._doctorReqRepo.update(request.doctorRequestId, {
       status: "APPROVED",
     });
   }

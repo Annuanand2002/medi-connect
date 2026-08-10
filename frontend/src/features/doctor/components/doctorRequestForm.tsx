@@ -1,10 +1,10 @@
 import { useForm } from "react-hook-form";
-import type { DoctorRequestFormData } from "../../../entites/doctor/doctorRequest.type";
+import type { DoctorRequestFormData } from "../types/doctorRequest.type";
 import { zodResolver } from "@hookform/resolvers/zod";
-import Input from "@/shared/components/Input";
-import FileUpload from "@/shared/components/fileUpload";
-import Button from "@/shared/components/button";
-import { doctorRequestSchema } from "../schema/doctorRequestSchema";
+import Input from "@/components/Input";
+import FileUpload from "@/components/fileUpload";
+import Button from "@/components/button";
+import { doctorRequestSchema } from "../validation/doctorRequestSchema";
 import { useEffect } from "react";
 
 type InitialDoctorValues = Pick<

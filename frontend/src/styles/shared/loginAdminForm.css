@@ -1,0 +1,652 @@
+/* =========================================================
+   MEDICONNECT
+   SHARED FORM COMPONENTS
+   Input + PasswordInput + Button
+   ========================================================= */
+
+
+/* =========================================================
+   INPUT GROUP
+   ========================================================= */
+
+.input-group {
+  width: 100%;
+}
+
+
+/* =========================================================
+   INPUT LABEL
+   ========================================================= */
+
+.input-label {
+  display: block;
+
+  margin-bottom: 9px;
+
+  color: #363b49;
+
+  font-size: 13px;
+
+  font-weight: 650;
+
+  line-height: 1.4;
+
+  letter-spacing: 0.01em;
+}
+
+
+/* =========================================================
+   INPUT WRAPPER
+   ========================================================= */
+
+.input-wrapper {
+  position: relative;
+
+  display: flex;
+
+  align-items: center;
+
+  width: 100%;
+  height: 58px;
+
+  box-sizing: border-box;
+
+  border: 1px solid #e2e5ec;
+
+  border-radius: 13px;
+
+  background: #ffffff;
+
+  transition:
+    border-color 180ms ease,
+    box-shadow 180ms ease,
+    background 180ms ease,
+    transform 180ms ease;
+}
+
+
+/* =========================================================
+   INPUT HOVER
+   ========================================================= */
+
+.input-wrapper:hover {
+  border-color: #cfd3df;
+}
+
+
+/* =========================================================
+   INPUT FOCUS
+   ========================================================= */
+
+.input-wrapper:focus-within {
+  border-color: #5d55b7;
+
+  background: #ffffff;
+
+  box-shadow:
+    0 0 0 4px rgba(93, 85, 183, 0.08),
+    0 7px 20px rgba(93, 85, 183, 0.05);
+}
+
+
+/* =========================================================
+   LEFT ICON
+   ========================================================= */
+
+.input-left-icon {
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  flex-shrink: 0;
+
+  width: 20px;
+  height: 20px;
+
+  margin-left: 17px;
+
+  color: #9ba1af;
+
+  transition:
+    color 180ms ease;
+}
+
+
+/* Icon when input focused */
+
+.input-wrapper:focus-within .input-left-icon {
+  color: #5d55b7;
+}
+
+
+/* =========================================================
+   INPUT
+   ========================================================= */
+
+.custom-input {
+  min-width: 0;
+
+  width: 100%;
+
+  height: 100%;
+
+  padding:
+    0 15px;
+
+  box-sizing: border-box;
+
+  border: 0;
+
+  outline: none;
+
+  background: transparent;
+
+  color: #171b28;
+
+  font-family:
+    Inter,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    sans-serif;
+
+  font-size: 14px;
+
+  line-height: 1;
+}
+
+
+/* Placeholder */
+
+.custom-input::placeholder {
+  color: #aeb3bf;
+
+  opacity: 1;
+}
+
+
+/* Disabled */
+
+.custom-input:disabled {
+  cursor: not-allowed;
+
+  opacity: 0.6;
+}
+
+
+/* =========================================================
+   RIGHT ICON
+   ========================================================= */
+
+.input-right-icon {
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  flex-shrink: 0;
+
+  width: 20px;
+  height: 20px;
+
+  margin-right: 16px;
+
+  color: #9ba1af;
+}
+
+
+/* =========================================================
+   PASSWORD TOGGLE
+   ========================================================= */
+
+.password-toggle {
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  flex-shrink: 0;
+
+  width: 36px;
+  height: 36px;
+
+  margin-right: 10px;
+
+  padding: 0;
+
+  box-sizing: border-box;
+
+  border: 0;
+
+  border-radius: 9px;
+
+  outline: none;
+
+  background: transparent;
+
+  color: #9ba1af;
+
+  cursor: pointer;
+
+  transition:
+    background 180ms ease,
+    color 180ms ease,
+    transform 180ms ease;
+}
+
+
+/* Password hover */
+
+.password-toggle:hover {
+  background: #f3f4f8;
+
+  color: #5d55b7;
+}
+
+
+/* Password active */
+
+.password-toggle:active {
+  transform: scale(0.94);
+}
+
+
+/* Password focus */
+
+.password-toggle:focus-visible {
+  outline: 2px solid rgba(93, 85, 183, 0.3);
+
+  outline-offset: 2px;
+}
+
+
+/* =========================================================
+   ERROR STATE
+   ========================================================= */
+
+.input-wrapper.input-error {
+  border-color: #ef9b9b;
+
+  background: #fffafa;
+}
+
+
+/* Error focus */
+
+.input-wrapper.input-error:focus-within {
+  border-color: #dc5f5f;
+
+  box-shadow:
+    0 0 0 4px rgba(220, 95, 95, 0.08);
+}
+
+
+/* Error icon */
+
+.input-wrapper.input-error .input-left-icon {
+  color: #d96a6a;
+}
+
+
+/* =========================================================
+   ERROR MESSAGE
+   ========================================================= */
+
+.input-error-message {
+  margin: 7px 2px 0;
+
+  color: #d94d4d;
+
+  font-size: 12px;
+
+  font-weight: 500;
+
+  line-height: 1.4;
+}
+
+
+/* =========================================================
+   BUTTON
+   ========================================================= */
+
+.custom-button {
+  position: relative;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  width: 100%;
+  height: 58px;
+
+  margin-top: 3px;
+
+  padding: 0 55px 0 20px;
+
+  overflow: hidden;
+
+  box-sizing: border-box;
+
+  border: 0;
+
+  border-radius: 13px;
+
+  background:
+    linear-gradient(
+      135deg,
+      #5d55b7 0%,
+      #4d459f 100%
+    );
+
+  color: #ffffff;
+
+  font-family:
+    Inter,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    sans-serif;
+
+  font-size: 12px;
+
+  font-weight: 750;
+
+  line-height: 1;
+
+  letter-spacing: 0.13em;
+
+  cursor: pointer;
+
+  box-shadow:
+    0 10px 25px
+    rgba(93, 85, 183, 0.20);
+
+  transition:
+    transform 180ms ease,
+    box-shadow 180ms ease,
+    background 180ms ease;
+}
+
+
+/* =========================================================
+   BUTTON HOVER
+   ========================================================= */
+
+.custom-button:hover:not(:disabled) {
+  transform: translateY(-2px);
+
+  background:
+    linear-gradient(
+      135deg,
+      #665dc5 0%,
+      #564dae 100%
+    );
+
+  box-shadow:
+    0 15px 30px
+    rgba(93, 85, 183, 0.26);
+}
+
+
+/* =========================================================
+   BUTTON ACTIVE
+   ========================================================= */
+
+.custom-button:active:not(:disabled) {
+  transform: translateY(0);
+
+  box-shadow:
+    0 7px 15px
+    rgba(93, 85, 183, 0.20);
+}
+
+
+/* =========================================================
+   BUTTON FOCUS
+   ========================================================= */
+
+.custom-button:focus-visible {
+  outline: none;
+
+  box-shadow:
+    0 0 0 4px
+      rgba(93, 85, 183, 0.13),
+    0 10px 25px
+      rgba(93, 85, 183, 0.20);
+}
+
+
+/* =========================================================
+   BUTTON DISABLED
+   ========================================================= */
+
+.custom-button:disabled {
+  cursor: not-allowed;
+
+  opacity: 0.68;
+
+  transform: none;
+}
+
+
+/* =========================================================
+   BUTTON TEXT
+   ========================================================= */
+
+.button-text {
+  position: relative;
+
+  z-index: 2;
+
+  display: inline-flex;
+
+  align-items: center;
+  justify-content: center;
+}
+
+
+/* =========================================================
+   BUTTON ARROW
+   ========================================================= */
+
+.button-arrow {
+  position: absolute;
+
+  right: 19px;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  width: 27px;
+  height: 27px;
+
+  border: 1px solid
+    rgba(255, 255, 255, 0.15);
+
+  border-radius: 7px;
+
+  background:
+    rgba(255, 255, 255, 0.08);
+
+  color: #ffffff;
+
+  font-size: 16px;
+
+  line-height: 1;
+
+  transition:
+    transform 180ms ease,
+    background 180ms ease;
+}
+
+
+/* Arrow hover */
+
+.custom-button:hover:not(:disabled)
+.button-arrow {
+  transform: translateX(3px);
+
+  background:
+    rgba(255, 255, 255, 0.14);
+}
+
+
+/* =========================================================
+   BUTTON SHINE
+   ========================================================= */
+
+.button-shine {
+  position: absolute;
+
+  top: 0;
+  bottom: 0;
+  left: -100%;
+
+  width: 55%;
+
+  transform: skewX(-20deg);
+
+  background:
+    linear-gradient(
+      90deg,
+      transparent,
+      rgba(255, 255, 255, 0.10),
+      transparent
+    );
+
+  pointer-events: none;
+
+  transition:
+    left 650ms ease;
+}
+
+
+/* Shine animation */
+
+.custom-button:hover:not(:disabled)
+.button-shine {
+  left: 140%;
+}
+
+
+/* =========================================================
+   BUTTON SPINNER
+   ========================================================= */
+
+.button-spinner {
+  position: relative;
+
+  z-index: 3;
+
+  width: 19px;
+  height: 19px;
+
+  margin-right: 9px;
+
+  flex-shrink: 0;
+
+  animation:
+    form-button-spin 800ms linear infinite;
+}
+
+
+/* =========================================================
+   INPUT / BUTTON ACCESSIBILITY
+   ========================================================= */
+
+.input-wrapper:has(input:focus-visible) {
+  outline: none;
+}
+
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+
+@media (max-width: 600px) {
+
+  .input-wrapper {
+    height: 56px;
+
+    border-radius: 12px;
+  }
+
+  .custom-input {
+    padding-left: 13px;
+    padding-right: 13px;
+
+    font-size: 13px;
+  }
+
+  .input-label {
+    margin-bottom: 8px;
+
+    font-size: 12px;
+  }
+
+  .custom-button {
+    height: 56px;
+
+    border-radius: 12px;
+  }
+
+}
+
+
+@media (max-width: 380px) {
+
+  .input-wrapper {
+    height: 54px;
+  }
+
+  .custom-input {
+    font-size: 13px;
+  }
+
+  .input-label {
+    font-size: 11px;
+  }
+
+  .custom-button {
+    height: 54px;
+
+    font-size: 11px;
+  }
+
+}
+
+
+/* =========================================================
+   REDUCED MOTION
+   ========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+  .input-wrapper,
+  .password-toggle,
+  .custom-button,
+  .button-arrow,
+  .button-shine {
+    transition: none;
+  }
+
+  .button-spinner {
+    animation: none;
+  }
+
+}
+
+
+/* =========================================================
+   ANIMATION
+   ========================================================= */
+
+@keyframes form-button-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}

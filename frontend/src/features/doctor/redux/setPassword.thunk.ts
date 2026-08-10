@@ -1,8 +1,8 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { AxiosError } from "axios";
-import { setPassword } from "../services/auth.service";
-import type { ApiResponse } from "@/entites/api";
-import type { SetPasswordPayload } from "../../../entites/doctor/auth.type";
+import { setPassword } from "../api/auth.service";
+import type { ApiResponse } from "@/types/api";
+import type { SetPasswordPayload } from "../types/auth.type";
 
 export const setPasswordThunk = createAsyncThunk<
   void,

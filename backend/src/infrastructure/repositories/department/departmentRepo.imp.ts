@@ -2,7 +2,9 @@ import { Department } from "../../../domain/entities/department/department.entit
 import { IDepartmentRepo } from "../../../domain/repositories/department/IDepeartmentRepo";
 import { DepartmentMapper } from "../../database/mappers/DepartmentMapper";
 import DepartmentModel from "../../database/models/department.model";
+import { injectable } from "inversify";
 
+@injectable()
 export class DepartmentRepo implements IDepartmentRepo {
   async create(data: Partial<Department>): Promise<Department> {
     const document = await DepartmentModel.create(data);

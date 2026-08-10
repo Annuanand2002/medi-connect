@@ -4,7 +4,7 @@ import { getDoctorRequestListThunk } from "./doctorRequestList.thunk";
 import type {
   DoctorRequest,
   DoctorRequestStatus,
-} from "../../../entites/doctor/doctorRequestList.types";
+} from "../types/doctorRequestList.types";
 
 interface DoctorRequestListState {
   loading: boolean;

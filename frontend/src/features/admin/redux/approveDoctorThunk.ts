@@ -1,8 +1,8 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import type { ApproveDoctorPayload } from "../../../entites/doctor/approveDoctor.types";
-import type { ApiResponse } from "@/entites/api";
+import type { ApproveDoctorPayload } from "../types/approveDoctor.types";
+import type { ApiResponse } from "@/types/api";
 import type { AxiosError } from "axios";
-import { approveDoctorRequest } from "../services/approveDoctor.services";
+import { approveDoctorRequest } from "../api/approveDoctor.services";
 
 export const approveDoctorThunk = createAsyncThunk<
   void,

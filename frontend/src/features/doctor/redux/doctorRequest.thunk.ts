@@ -1,7 +1,7 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { applyDoctorRequest } from "../services/doctorRequest.service";
+import { applyDoctorRequest } from "../api/doctorRequest.service";
 import type { AxiosError } from "axios";
-import type { ApiResponse } from "@/entites/api";
+import type { ApiResponse } from "@/types/api";
 
 export const applyDoctorRequestThunk = createAsyncThunk(
   "doctor/applyDoctorRequest",

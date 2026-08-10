@@ -13,7 +13,7 @@ export class DoctorRequestMapper {
       profileImg: document.profileImg
         ? {
             url: document.profileImg.url,
-            publicId: document.profileImg.publicId,
+            key: document.profileImg.key,
           }
         : undefined,
 
@@ -23,17 +23,17 @@ export class DoctorRequestMapper {
 
       governmentId: {
         url: document.governmentId.url,
-        publicId: document.governmentId.publicId,
+        key: document.governmentId.key,
       },
 
       medicalLicense: {
         url: document.medicalLicense.url,
-        publicId: document.medicalLicense.publicId,
+        key: document.medicalLicense.key,
       },
 
       degreeCertificates: document.degreeCertificates.map((certificate) => ({
         url: certificate.url,
-        publicId: certificate.publicId,
+        key: certificate.key,
       })),
 
       status: document.status,

@@ -1,6 +1,6 @@
 export interface UploadFile {
     url : string;
-    publicId : string
+    key : string
 }
 
 interface DoctorRequest{

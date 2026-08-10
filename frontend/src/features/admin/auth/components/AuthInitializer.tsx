@@ -1,6 +1,5 @@
 import { useEffect } from "react";
-import { useAppDispatch, useAppSelector } from "@/app/hooks/hooks";
-
+import { useAppDispatch, useAppSelector } from "@/hooks/hooks";
 import { refreshToken } from "../api/refreshTokenApi";
 import { finishLoading, loginSuccess, logout } from "../redux/authSlice";
 

@@ -1,9 +1,10 @@
+import { injectable } from "inversify";
 import { DoctorRetryToken } from "../../../domain/entities/doctor/doctorRetryToken";
 import { IDoctorRetryTokenRepo } from "../../../domain/repositories/doctor/IDoctorRetry.repo";
 import { DoctorRetryTokenMapper } from "../../database/mappers/DoctorRetryTokenMapper";
 import { DoctorRetryTokenModel } from "../../database/models/doctorRetryTokenModel";
 
-
+@injectable()
 export class DoctorRetryTokenRepository implements IDoctorRetryTokenRepo{
     async create(data: DoctorRetryToken): Promise<void> {
         const token = await DoctorRetryTokenMapper.toPersistence(data);

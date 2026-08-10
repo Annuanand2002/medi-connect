@@ -1,13 +1,19 @@
+import { inject, injectable } from "inversify";
 import { IDepartmentRepo } from "../../../domain/repositories/department/IDepeartmentRepo";
 import HTTP_STATUS from "../../../shared/constants/httpStatusCode";
 import AppError from "../../../shared/errors/appErrors";
 import { DeleteDepartmentDTO } from "../../DTO/department/deleteDepartmentDTO";
 import { IDeleteDepartmentUseCase } from "../../repository/department/IDeleteDepartmentUseCase";
+import { TYPES } from "../../../di/types/types";
 
+@injectable()
 export class DeleteDepartmentUseCase implements IDeleteDepartmentUseCase {
-  constructor(private departmentRepo: IDepartmentRepo) {}
+  constructor(
+    @inject(TYPES.DepartmentRepo)
+    private _departmentRepo: IDepartmentRepo,
+  ) {}
   async execute(request: DeleteDepartmentDTO): Promise<void> {
-    const deaprtment = await this.departmentRepo.findById(request.id);
+    const deaprtment = await this._departmentRepo.findById(request.id);
     if (!deaprtment) {
       throw new AppError("Department not found", HTTP_STATUS.NOT_FOUND);
     }
@@ -17,7 +23,7 @@ export class DeleteDepartmentUseCase implements IDeleteDepartmentUseCase {
         HTTP_STATUS.BAD_REQUEST,
       );
     }
-    const updatedDepartment = await this.departmentRepo.update(request.id, {
+    const updatedDepartment = await this._departmentRepo.update(request.id, {
       isActive: false,
     });
     if (!updatedDepartment) {

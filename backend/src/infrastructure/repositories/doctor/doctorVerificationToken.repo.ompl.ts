@@ -1,8 +1,10 @@
+import { injectable } from "inversify";
 import DoctorVerificationToken from "../../../domain/entities/doctor/doctorVerificationToken.entity";
 import IDoctorVerificationTokenRepo from "../../../domain/repositories/doctor/IDoctorVerificationTokenRepo";
 import DoctorVerificationTokenMapper from "../../database/mappers/doctorVerificationToken.mapper";
 import DoctorVerificationTokenModel from "../../database/models/doctorVerificationToken.model";
 
+@injectable()
 export default class DoctorVerificationTokenRepository implements IDoctorVerificationTokenRepo {
   async create(
     data: Partial<DoctorVerificationToken>,

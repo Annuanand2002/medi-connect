@@ -1,4 +1,4 @@
-import type { DoctorRequestFormData } from "../../../entites/doctor/doctorRequest.type";
+import type { DoctorRequestFormData } from "../types/doctorRequest.type";
 
 export const buildDoctorRequestFormData = (
   data: DoctorRequestFormData,

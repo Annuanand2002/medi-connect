@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import type { Department } from "../../../entites/doctor/department.types";
+import type { Department } from "../types/department.types";
 import { getDepartmentsThunk, createDepartmentThunk } from "./department.thunk";
 
 interface DepartmentState {

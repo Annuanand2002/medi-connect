@@ -1,26 +1,30 @@
-import Button from "@/shared/components/button";
-import Input from "@/shared/components/Input";
-import PasswordInput from "@/shared/components/passwordInpur";
-import { Mail } from "lucide-react";
+import Button from "@/components/button";
+import Input from "@/components/Input";
+import PasswordInput from "@/components/passwordInpur";
+import {  Mail } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { loginAdmin } from "../api/loginApi";
-
-import { loginSchema, type LoginFormData } from "../schemas/loginSchema";
+import {
+  loginSchema,
+  type LoginFormData,
+} from "../schemas/loginSchema";
 import { useState } from "react";
 import axios from "axios";
-import { useAppDispatch } from "@/app/hooks/hooks";
+import { useAppDispatch } from "@/hooks/hooks";
 import { loginSuccess } from "../redux/authSlice";
-import { useNavigate } from "react-router-dom";
+import {  useNavigate } from "react-router-dom";
 
 const LoginForm = () => {
   const [loginError, setLoginError] = useState("");
+
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
+
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isSubmitting },
   } = useForm<LoginFormData>({
     resolver: zodResolver(loginSchema),
     mode: "all",
@@ -29,63 +33,157 @@ const LoginForm = () => {
   const onSubmit = async (data: LoginFormData) => {
     try {
       setLoginError("");
+
       const response = await loginAdmin(data);
+
       dispatch(
         loginSuccess({
           admin: response.result.admin,
           accessToken: response.result.accessToken,
         }),
       );
-      navigate("/admin/dashboard", { replace: true });
+
+      navigate("/admin/dashboard", {
+        replace: true,
+      });
     } catch (error) {
       console.log(error);
+
       if (axios.isAxiosError(error)) {
-        setLoginError(error.response?.data?.message || "Something went wrong.");
+        setLoginError(
+          error.response?.data?.message ||
+            "Something went wrong.",
+        );
       } else {
-        setLoginError("Soemthing went wrong");
+        setLoginError("Something went wrong.");
       }
     }
   };
 
   return (
-    <div className="flex w-full items-center justify-center bg-white lg:w-1/2">
-      <div className="w-full max-w-md px-8">
-        <h1 className="text-4xl font-bold text-gray-900">SIGN IN</h1>
+    <section className="login-form-section">
+      <div className="login-form-container">
 
-        <p className="mt-3 text-gray-500">
-          Welcome back! Please enter your details.
-        </p>
+        {/* Mobile Brand */}
+        <div className="mobile-brand">
+          <div className="mobile-brand-mark">
+            MC
+          </div>
 
-        <form onSubmit={handleSubmit(onSubmit)} className="mt-10 space-y-6">
+          <div>
+            <strong>MediConnect</strong>
+            <span>Admin Portal</span>
+          </div>
+        </div>
+
+        {/* Header */}
+        <header className="login-header">
+
+          <div className="login-label">
+            <span />
+            ADMIN SIGN IN
+          </div>
+
+          <h1>
+            Welcome back<span>,</span>
+          </h1>
+
+          <p>
+            Sign in to continue to your MediConnect
+            admin dashboard.
+          </p>
+
+        </header>
+
+        {/* Login Form */}
+        <form
+          onSubmit={handleSubmit(onSubmit)}
+          className="login-form"
+        >
+
+          {/* Email */}
           <Input
+            id="admin-email"
             label="Email Address"
             type="email"
             placeholder="Enter your email"
-            leftIcon={<Mail size={20} />}
+            autoComplete="email"
+            leftIcon={<Mail size={19} />}
             error={errors.email?.message}
             {...register("email")}
           />
 
+          {/* Password */}
           <PasswordInput
+            id="admin-password"
             label="Password"
             placeholder="Enter your password"
+            autoComplete="current-password"
             error={errors.password?.message}
             {...register("password")}
           />
+
+
+          {/* Login Error */}
           {loginError && (
-            <p
-              className="rounded-md
-            bg-red-100 px-4 py-2 text-sm
-            text-red-600
-            "
+            <div
+              className="login-error"
+              role="alert"
             >
-              {loginError}
-            </p>
+              <div className="error-icon">
+                !
+              </div>
+
+              <p>{loginError}</p>
+            </div>
           )}
-          <Button type="submit">SIGN IN</Button>
+
+          {/* Submit */}
+          <Button
+            type="submit"
+            loading={isSubmitting}
+          >
+            {isSubmitting
+              ? "Signing In..."
+              : "SIGN IN"}
+          </Button>
         </form>
+
+        {/* Security */}
+        <div className="security-note">
+          <span className="security-icon">
+            <svg
+              width="14"
+              height="14"
+              viewBox="0 0 24 24"
+              fill="none"
+              aria-hidden="true"
+            >
+              <path
+                d="M12 3L20 6V11C20 16.1 16.6 20.5 12 22C7.4 20.5 4 16.1 4 11V6L12 3Z"
+                stroke="currentColor"
+                strokeWidth="1.8"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+
+              <path
+                d="M9 12L11 14L15 10"
+                stroke="currentColor"
+                strokeWidth="1.8"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+            </svg>
+          </span>
+
+          <span>
+            Secure admin access
+          </span>
+        </div>
+
       </div>
-    </div>
+    </section>
   );
 };
 

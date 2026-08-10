@@ -1,0 +1,1591 @@
+/* =========================================================
+   MEDICONNECT
+   DOCTOR REQUEST DETAILS
+   ========================================================= */
+
+
+/* =========================================================
+   PAGE
+   ========================================================= */
+
+.doctor-details-page {
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 20px;
+
+  width: 100%;
+
+  padding: 28px 30px 40px;
+
+  background: #f6f7fa;
+}
+
+
+/* =========================================================
+   BACK LINK
+   ========================================================= */
+
+.doctor-details-back {
+  display: inline-flex;
+
+  align-items: center;
+
+  gap: 7px;
+
+  width: fit-content;
+
+  color: #777e8b;
+
+  font-size: 10px;
+
+  font-weight: 600;
+
+  text-decoration: none;
+
+  transition:
+    color 160ms ease,
+    transform 160ms ease;
+}
+
+.doctor-details-back:hover {
+  color: #5148a8;
+
+  transform: translateX(-2px);
+}
+
+
+/* =========================================================
+   PROFILE HEADER
+   ========================================================= */
+
+.doctor-profile-card {
+  display: flex;
+
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 30px;
+
+  padding: 24px 26px;
+
+  border: 1px solid #e7e9ef;
+
+  border-radius: 17px;
+
+  background:
+    radial-gradient(
+      circle at 95% 10%,
+      rgba(94, 82, 215, 0.09),
+      transparent 28%
+    ),
+    #ffffff;
+
+  box-shadow:
+    0 7px 25px
+    rgba(30, 37, 58, 0.04);
+}
+
+.doctor-profile-main {
+  display: flex;
+
+  align-items: center;
+
+  gap: 16px;
+
+  min-width: 0;
+}
+
+.doctor-profile-avatar {
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  width: 68px;
+  height: 68px;
+
+  flex-shrink: 0;
+
+  overflow: hidden;
+
+  border: 4px solid #f1f0ff;
+
+  border-radius: 18px;
+
+  background:
+    linear-gradient(
+      135deg,
+      #eeecff,
+      #e4e1ff
+    );
+
+  color: #6258bd;
+
+  cursor: pointer;
+
+  box-shadow:
+    0 7px 18px
+    rgba(73, 62, 171, 0.08);
+}
+
+.doctor-profile-avatar img {
+  width: 100%;
+  height: 100%;
+
+  object-fit: cover;
+}
+
+.doctor-profile-info {
+  min-width: 0;
+}
+
+.doctor-profile-eyebrow {
+  color: #8179b9;
+
+  font-size: 8px;
+
+  font-weight: 800;
+
+  letter-spacing: 0.18em;
+}
+
+.doctor-profile-info h2 {
+  margin: 5px 0 7px;
+
+  overflow: hidden;
+
+  color: #222632;
+
+  font-size: 23px;
+
+  font-weight: 700;
+
+  letter-spacing: -0.5px;
+
+  white-space: nowrap;
+
+  text-overflow: ellipsis;
+}
+
+.doctor-profile-meta {
+  display: flex;
+
+  align-items: center;
+
+  flex-wrap: wrap;
+
+  gap: 12px;
+}
+
+.doctor-profile-meta span {
+  display: flex;
+
+  align-items: center;
+
+  gap: 5px;
+
+  color: #969ba7;
+
+  font-size: 9px;
+}
+
+.doctor-profile-status {
+  display: flex;
+
+  flex-direction: column;
+
+  align-items: flex-end;
+
+  gap: 7px;
+
+  flex-shrink: 0;
+}
+
+.status-caption {
+  color: #aaadb5;
+
+  font-size: 7px;
+
+  font-weight: 800;
+
+  letter-spacing: 0.14em;
+}
+
+
+/* =========================================================
+   SECTION
+   ========================================================= */
+
+.doctor-details-section {
+  padding: 23px 25px;
+
+  border: 1px solid #e8eaf0;
+
+  border-radius: 16px;
+
+  background: #ffffff;
+
+  box-shadow:
+    0 6px 21px
+    rgba(30, 37, 58, 0.035);
+}
+
+.doctor-section-heading {
+  display: flex;
+
+  align-items: center;
+
+  gap: 11px;
+
+  padding-bottom: 17px;
+
+  border-bottom: 1px solid #f0f1f4;
+}
+
+.doctor-section-icon {
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  width: 37px;
+  height: 37px;
+
+  flex-shrink: 0;
+
+  border-radius: 10px;
+
+  background: #f0efff;
+
+  color: #6258be;
+}
+
+.doctor-section-heading span {
+  display: block;
+
+  color: #827ab8;
+
+  font-size: 7px;
+
+  font-weight: 800;
+
+  letter-spacing: 0.16em;
+}
+
+.doctor-section-heading h3 {
+  margin: 4px 0 0;
+
+  color: #303541;
+
+  font-size: 14px;
+
+  font-weight: 680;
+}
+
+.doctor-section-description {
+  margin: 15px 0 0;
+
+  color: #999eaa;
+
+  font-size: 10px;
+
+  line-height: 1.6;
+}
+
+
+/* =========================================================
+   INFORMATION GRID
+   ========================================================= */
+
+.doctor-info-grid {
+  display: grid;
+
+  grid-template-columns:
+    repeat(3, minmax(0, 1fr));
+
+  gap: 1px;
+
+  margin-top: 20px;
+
+  overflow: hidden;
+
+  border: 1px solid #edf0f3;
+
+  border-radius: 12px;
+
+  background: #edf0f3;
+}
+
+.doctor-info-item {
+  display: flex;
+
+  flex-direction: column;
+
+  min-height: 82px;
+
+  gap: 8px;
+
+  padding: 16px;
+
+  background: #ffffff;
+}
+
+.doctor-info-item span {
+  color: #a0a5af;
+
+  font-size: 9px;
+}
+
+.doctor-info-item strong {
+  display: flex;
+
+  align-items: center;
+
+  gap: 6px;
+
+  overflow: hidden;
+
+  color: #424754;
+
+  font-size: 11px;
+
+  font-weight: 650;
+
+  white-space: nowrap;
+
+  text-overflow: ellipsis;
+}
+
+.doctor-info-item strong svg {
+  flex-shrink: 0;
+
+  color: #7269c7;
+}
+
+.doctor-info-item small {
+  margin-left: 2px;
+
+  color: #a2a6af;
+
+  font-size: 9px;
+
+  font-weight: 450;
+}
+
+
+/* =========================================================
+   DOCUMENT GRID
+   ========================================================= */
+
+.doctor-documents-grid {
+  display: grid;
+
+  grid-template-columns:
+    repeat(3, minmax(0, 1fr));
+
+  gap: 14px;
+
+  margin-top: 20px;
+}
+
+
+/* =========================================================
+   DOCUMENT CARD
+   ========================================================= */
+
+.document-card {
+  overflow: hidden;
+
+  border: 1px solid #e8eaf0;
+
+  border-radius: 13px;
+
+  background: #ffffff;
+
+  box-shadow:
+    0 4px 15px
+    rgba(30, 37, 58, 0.025);
+
+  transition:
+    transform 180ms ease,
+    box-shadow 180ms ease,
+    border-color 180ms ease;
+}
+
+.document-card:hover {
+  transform: translateY(-2px);
+
+  border-color: #dedcf1;
+
+  box-shadow:
+    0 9px 24px
+    rgba(30, 37, 58, 0.065);
+}
+
+.document-preview {
+  height: 175px;
+
+  overflow: hidden;
+
+  background: #f5f6f8;
+}
+
+.document-image-button {
+  position: relative;
+
+  display: block;
+
+  width: 100%;
+  height: 100%;
+
+  padding: 0;
+
+  border: 0;
+
+  background: transparent;
+
+  cursor: pointer;
+
+  overflow: hidden;
+}
+
+.document-image {
+  width: 100%;
+  height: 100%;
+
+  object-fit: cover;
+
+  transition:
+    transform 300ms ease;
+}
+
+.document-image-button:hover .document-image {
+  transform: scale(1.04);
+}
+
+.document-image-overlay {
+  position: absolute;
+
+  inset: auto 10px 10px;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  gap: 6px;
+
+  min-height: 31px;
+
+  border-radius: 8px;
+
+  background: rgba(25, 27, 43, 0.78);
+
+  color: #ffffff;
+
+  font-size: 9px;
+
+  font-weight: 600;
+
+  opacity: 0;
+
+  transform: translateY(5px);
+
+  transition:
+    opacity 180ms ease,
+    transform 180ms ease;
+
+  backdrop-filter: blur(7px);
+}
+
+.document-image-button:hover .document-image-overlay {
+  opacity: 1;
+
+  transform: translateY(0);
+}
+
+.document-pdf-preview {
+  display: flex;
+
+  flex-direction: column;
+
+  align-items: center;
+  justify-content: center;
+
+  gap: 10px;
+
+  width: 100%;
+  height: 100%;
+
+  background:
+    radial-gradient(
+      circle at center,
+      #fff3f3,
+      #f7f8fa 68%
+    );
+
+  color: #a7abb4;
+}
+
+.document-pdf-icon {
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  width: 56px;
+  height: 56px;
+
+  border-radius: 15px;
+
+  background: #fff0f0;
+
+  color: #d45f5f;
+
+  box-shadow:
+    0 7px 18px
+    rgba(204, 82, 82, 0.08);
+}
+
+.document-pdf-preview span {
+  font-size: 8px;
+
+  font-weight: 800;
+
+  letter-spacing: 0.13em;
+}
+
+.document-content {
+  padding: 13px 14px;
+}
+
+.document-title-row {
+  display: flex;
+
+  align-items: flex-start;
+  justify-content: space-between;
+
+  gap: 10px;
+}
+
+.document-type {
+  color: #9c9fa8;
+
+  font-size: 7px;
+
+  font-weight: 800;
+
+  letter-spacing: 0.12em;
+}
+
+.document-title-row h3 {
+  margin: 4px 0 0;
+
+  overflow: hidden;
+
+  color: #3b404c;
+
+  font-size: 10px;
+
+  font-weight: 650;
+
+  white-space: nowrap;
+
+  text-overflow: ellipsis;
+}
+
+.document-check {
+  flex-shrink: 0;
+
+  color: #62aa82;
+}
+
+.document-action {
+  display: inline-flex;
+
+  align-items: center;
+
+  gap: 5px;
+
+  margin-top: 11px;
+
+  padding: 0;
+
+  border: 0;
+
+  background: transparent;
+
+  color: #6259b8;
+
+  font-family: inherit;
+
+  font-size: 9px;
+
+  font-weight: 650;
+
+  text-decoration: none;
+
+  cursor: pointer;
+
+  transition:
+    color 150ms ease,
+    gap 150ms ease;
+}
+
+.document-action:hover {
+  gap: 7px;
+
+  color: #42399c;
+}
+
+
+/* =========================================================
+   DECISION CARD
+   ========================================================= */
+
+.doctor-decision-card {
+  display: flex;
+
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 25px;
+
+  padding: 22px 25px;
+
+  border: 1px solid #e5e6ed;
+
+  border-radius: 16px;
+
+  background:
+    linear-gradient(
+      135deg,
+      #ffffff 0%,
+      #f9f8ff 100%
+    );
+
+  box-shadow:
+    0 7px 23px
+    rgba(30, 37, 58, 0.04);
+}
+
+.doctor-decision-content {
+  min-width: 0;
+}
+
+.doctor-decision-content > span {
+  color: #8279b9;
+
+  font-size: 7px;
+
+  font-weight: 800;
+
+  letter-spacing: 0.16em;
+}
+
+.doctor-decision-content h3 {
+  margin: 5px 0 0;
+
+  color: #343945;
+
+  font-size: 14px;
+
+  font-weight: 680;
+}
+
+.doctor-decision-content p {
+  max-width: 570px;
+
+  margin: 5px 0 0;
+
+  color: #999ea9;
+
+  font-size: 9px;
+
+  line-height: 1.6;
+}
+
+.doctor-decision-actions {
+  display: flex;
+
+  align-items: center;
+
+  gap: 8px;
+
+  flex-shrink: 0;
+}
+
+.doctor-reject-button,
+.doctor-approve-button {
+  display: inline-flex;
+
+  align-items: center;
+  justify-content: center;
+
+  min-height: 39px;
+
+  padding: 0 15px;
+
+  border-radius: 9px;
+
+  font-family: inherit;
+
+  font-size: 9px;
+
+  font-weight: 650;
+
+  cursor: pointer;
+
+  transition:
+    transform 160ms ease,
+    box-shadow 160ms ease,
+    background 160ms ease;
+}
+
+.doctor-reject-button {
+  border: 1px solid #efcece;
+
+  background: #fff6f6;
+
+  color: #c45c5c;
+}
+
+.doctor-reject-button:hover {
+  transform: translateY(-1px);
+
+  background: #fff0f0;
+
+  box-shadow:
+    0 5px 13px
+    rgba(190, 75, 75, 0.08);
+}
+
+.doctor-approve-button {
+  border: 1px solid #4e9e70;
+
+  background: #4e9e70;
+
+  color: #ffffff;
+
+  box-shadow:
+    0 5px 14px
+    rgba(65, 145, 99, 0.18);
+}
+
+.doctor-approve-button:hover {
+  transform: translateY(-1px);
+
+  background: #438d63;
+
+  box-shadow:
+    0 8px 18px
+    rgba(65, 145, 99, 0.22);
+}
+
+
+/* =========================================================
+   STATE
+   ========================================================= */
+
+.doctor-details-state {
+  display: flex;
+
+  flex-direction: column;
+
+  align-items: center;
+  justify-content: center;
+
+  min-height: 340px;
+
+  padding: 30px;
+
+  border: 1px solid #e8eaf0;
+
+  border-radius: 16px;
+
+  background: #ffffff;
+
+  text-align: center;
+
+  box-shadow:
+    0 6px 21px
+    rgba(30, 37, 58, 0.035);
+}
+
+.doctor-details-state h3 {
+  margin: 14px 0 0;
+
+  color: #363b47;
+
+  font-size: 15px;
+
+  font-weight: 650;
+}
+
+.doctor-details-state p {
+  max-width: 360px;
+
+  margin: 6px 0 0;
+
+  color: #9ca1ab;
+
+  font-size: 10px;
+
+  line-height: 1.6;
+}
+
+.doctor-details-state-icon {
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  width: 48px;
+  height: 48px;
+
+  border-radius: 14px;
+
+  background: #f0efff;
+
+  color: #645bc0;
+}
+
+.doctor-details-error .doctor-details-state-icon {
+  background: #fff0f0;
+
+  color: #d25e5e;
+}
+
+.doctor-details-state-link {
+  display: inline-flex;
+
+  align-items: center;
+
+  gap: 6px;
+
+  margin-top: 17px;
+
+  color: #5f56b4;
+
+  font-size: 10px;
+
+  font-weight: 650;
+
+  text-decoration: none;
+}
+
+
+/* =========================================================
+   LOADER
+   ========================================================= */
+
+.doctor-details-loader {
+  display: flex;
+
+  align-items: center;
+
+  gap: 5px;
+}
+
+.doctor-details-loader span {
+  width: 7px;
+  height: 7px;
+
+  border-radius: 50%;
+
+  background: #7167ca;
+
+  animation:
+    detailsLoader 1.2s
+    ease-in-out
+    infinite;
+}
+
+.doctor-details-loader span:nth-child(2) {
+  animation-delay: 0.15s;
+}
+
+.doctor-details-loader span:nth-child(3) {
+  animation-delay: 0.3s;
+}
+
+
+/* =========================================================
+   MODAL
+   ========================================================= */
+
+.doctor-modal-backdrop {
+  position: fixed;
+
+  inset: 0;
+
+  z-index: 1000;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  padding: 20px;
+
+  background:
+    rgba(15, 18, 31, 0.52);
+
+  backdrop-filter: blur(5px);
+}
+
+.doctor-modal {
+  width: 100%;
+  max-width: 500px;
+
+  overflow: hidden;
+
+  border: 1px solid rgba(255, 255, 255, 0.7);
+
+  border-radius: 17px;
+
+  background: #ffffff;
+
+  box-shadow:
+    0 25px 70px
+    rgba(17, 20, 38, 0.22);
+
+  animation:
+    modalEnter 180ms
+    ease-out;
+}
+
+
+/* =========================================================
+   MODAL HEADER
+   ========================================================= */
+
+.doctor-modal-header {
+  display: flex;
+
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 15px;
+
+  padding: 19px 21px;
+
+  border-bottom: 1px solid #edf0f3;
+}
+
+.doctor-modal-heading {
+  display: flex;
+
+  align-items: center;
+
+  gap: 11px;
+}
+
+.doctor-modal-heading > div:last-child {
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 3px;
+}
+
+.doctor-modal-heading span {
+  color: #999da7;
+
+  font-size: 7px;
+
+  font-weight: 800;
+
+  letter-spacing: 0.14em;
+}
+
+.doctor-modal-heading h2 {
+  margin: 0;
+
+  color: #303541;
+
+  font-size: 16px;
+
+  font-weight: 680;
+}
+
+.doctor-modal-icon {
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  width: 38px;
+  height: 38px;
+
+  border-radius: 11px;
+}
+
+.doctor-modal-icon-success {
+  background: #edf9f2;
+
+  color: #4d9b72;
+}
+
+.doctor-modal-icon-danger {
+  background: #fff0f0;
+
+  color: #ce6262;
+}
+
+.doctor-modal-close {
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  width: 32px;
+  height: 32px;
+
+  padding: 0;
+
+  border: 0;
+
+  border-radius: 8px;
+
+  background: transparent;
+
+  color: #9a9faa;
+
+  cursor: pointer;
+
+  transition:
+    background 150ms ease,
+    color 150ms ease;
+}
+
+.doctor-modal-close:hover {
+  background: #f4f5f7;
+
+  color: #4c515d;
+}
+
+
+/* =========================================================
+   MODAL BODY
+   ========================================================= */
+
+.doctor-modal-body {
+  padding: 20px 21px;
+}
+
+.doctor-modal-description {
+  margin: 0 0 18px;
+
+  color: #9297a2;
+
+  font-size: 10px;
+
+  line-height: 1.6;
+}
+
+.doctor-modal-field {
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 7px;
+}
+
+.doctor-modal-field label {
+  color: #555a66;
+
+  font-size: 10px;
+
+  font-weight: 650;
+}
+
+.doctor-select-wrapper {
+  position: relative;
+}
+
+.doctor-select-wrapper select,
+.doctor-create-department input,
+.doctor-modal-field textarea {
+  width: 100%;
+
+  border: 1px solid #e2e5ea;
+
+  border-radius: 9px;
+
+  outline: none;
+
+  background: #fafbfc;
+
+  color: #3d424f;
+
+  font-family: inherit;
+
+  font-size: 10px;
+
+  transition:
+    border-color 160ms ease,
+    background 160ms ease,
+    box-shadow 160ms ease;
+}
+
+.doctor-select-wrapper select {
+  height: 43px;
+
+  padding: 0 35px 0 12px;
+
+  appearance: none;
+
+  cursor: pointer;
+}
+
+.doctor-select-wrapper > svg {
+  position: absolute;
+
+  top: 50%;
+  right: 12px;
+
+  transform: translateY(-50%);
+
+  color: #9ca1ac;
+
+  pointer-events: none;
+}
+
+.doctor-select-wrapper select:focus,
+.doctor-create-department input:focus,
+.doctor-modal-field textarea:focus {
+  border-color: #aaa5db;
+
+  background: #ffffff;
+
+  box-shadow:
+    0 0 0 3px
+    rgba(91, 80, 188, 0.07);
+}
+
+.doctor-modal-divider {
+  display: flex;
+
+  align-items: center;
+
+  gap: 10px;
+
+  margin: 19px 0;
+
+  color: #adb1ba;
+
+  font-size: 8px;
+
+  font-weight: 700;
+}
+
+.doctor-modal-divider span {
+  flex: 1;
+
+  height: 1px;
+
+  background: #eceef2;
+}
+
+.doctor-create-department {
+  display: flex;
+
+  gap: 7px;
+}
+
+.doctor-create-department input {
+  height: 43px;
+
+  padding: 0 12px;
+}
+
+.doctor-create-department button {
+  display: inline-flex;
+
+  align-items: center;
+  justify-content: center;
+
+  gap: 5px;
+
+  height: 43px;
+
+  flex-shrink: 0;
+
+  padding: 0 13px;
+
+  border: 1px solid #e0def1;
+
+  border-radius: 9px;
+
+  background: #f3f2ff;
+
+  color: #5c53b0;
+
+  font-family: inherit;
+
+  font-size: 9px;
+
+  font-weight: 650;
+
+  cursor: pointer;
+
+  transition:
+    background 150ms ease,
+    opacity 150ms ease;
+}
+
+.doctor-create-department button:hover:not(:disabled) {
+  background: #ebe9ff;
+}
+
+.doctor-create-department button:disabled {
+  opacity: 0.45;
+
+  cursor: not-allowed;
+}
+
+.doctor-modal-field textarea {
+  resize: vertical;
+
+  min-height: 120px;
+
+  padding: 12px;
+}
+
+.doctor-field-hint {
+  color: #a5a9b2;
+
+  font-size: 8px;
+}
+
+
+/* =========================================================
+   REJECTION NOTICE
+   ========================================================= */
+
+.doctor-rejection-notice {
+  display: flex;
+
+  align-items: flex-start;
+
+  gap: 9px;
+
+  margin-bottom: 18px;
+
+  padding: 11px 12px;
+
+  border: 1px solid #f1dcdc;
+
+  border-radius: 9px;
+
+  background: #fff7f7;
+
+  color: #c26464;
+}
+
+.doctor-rejection-notice svg {
+  flex-shrink: 0;
+
+  margin-top: 1px;
+}
+
+.doctor-rejection-notice p {
+  margin: 0;
+
+  color: #a76a6a;
+
+  font-size: 9px;
+
+  line-height: 1.55;
+}
+
+
+/* =========================================================
+   MODAL FOOTER
+   ========================================================= */
+
+.doctor-modal-footer {
+  display: flex;
+
+  align-items: center;
+  justify-content: flex-end;
+
+  gap: 8px;
+
+  padding: 15px 21px;
+
+  border-top: 1px solid #edf0f3;
+
+  background: #fcfcfd;
+}
+
+.doctor-modal-cancel,
+.doctor-modal-confirm {
+  display: inline-flex;
+
+  align-items: center;
+  justify-content: center;
+
+  gap: 6px;
+
+  min-height: 38px;
+
+  padding: 0 14px;
+
+  border-radius: 9px;
+
+  font-family: inherit;
+
+  font-size: 9px;
+
+  font-weight: 650;
+
+  cursor: pointer;
+
+  transition:
+    transform 150ms ease,
+    background 150ms ease,
+    box-shadow 150ms ease,
+    opacity 150ms ease;
+}
+
+.doctor-modal-cancel {
+  border: 1px solid #e1e3e8;
+
+  background: #ffffff;
+
+  color: #737984;
+}
+
+.doctor-modal-cancel:hover {
+  background: #f6f7f8;
+}
+
+.doctor-modal-confirm {
+  color: #ffffff;
+
+  border: 0;
+}
+
+.doctor-modal-confirm-success {
+  background: #4f9d71;
+
+  box-shadow:
+    0 5px 13px
+    rgba(72, 151, 103, 0.16);
+}
+
+.doctor-modal-confirm-success:hover:not(:disabled) {
+  transform: translateY(-1px);
+
+  background: #438d63;
+}
+
+.doctor-modal-confirm-danger {
+  background: #c95d5d;
+
+  box-shadow:
+    0 5px 13px
+    rgba(194, 82, 82, 0.14);
+}
+
+.doctor-modal-confirm-danger:hover:not(:disabled) {
+  transform: translateY(-1px);
+
+  background: #b95050;
+}
+
+.doctor-modal-confirm:disabled {
+  opacity: 0.45;
+
+  cursor: not-allowed;
+}
+
+
+/* =========================================================
+   ANIMATIONS
+   ========================================================= */
+
+@keyframes detailsLoader {
+  0%,
+  80%,
+  100% {
+    transform: scale(0.7);
+
+    opacity: 0.45;
+  }
+
+  40% {
+    transform: scale(1);
+
+    opacity: 1;
+  }
+}
+
+@keyframes modalEnter {
+  from {
+    opacity: 0;
+
+    transform: translateY(8px) scale(0.98);
+  }
+
+  to {
+    opacity: 1;
+
+    transform: translateY(0) scale(1);
+  }
+}
+
+
+/* =========================================================
+   TABLET
+   ========================================================= */
+
+@media (max-width: 1100px) {
+  .doctor-documents-grid {
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr));
+  }
+
+  .doctor-info-grid {
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr));
+  }
+}
+
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 700px) {
+  .doctor-details-page {
+    gap: 15px;
+
+    padding: 18px 16px 28px;
+  }
+
+  .doctor-profile-card {
+    align-items: flex-start;
+
+    flex-direction: column;
+
+    padding: 20px;
+  }
+
+  .doctor-profile-status {
+    align-items: flex-start;
+  }
+
+  .doctor-profile-info h2 {
+    max-width: 230px;
+
+    font-size: 20px;
+  }
+
+  .doctor-profile-meta {
+    flex-direction: column;
+
+    align-items: flex-start;
+
+    gap: 5px;
+  }
+
+  .doctor-details-section {
+    padding: 18px;
+  }
+
+  .doctor-info-grid {
+    grid-template-columns: 1fr;
+
+    margin-top: 15px;
+  }
+
+  .doctor-documents-grid {
+    grid-template-columns: 1fr;
+
+    margin-top: 15px;
+  }
+
+  .doctor-decision-card {
+    align-items: stretch;
+
+    flex-direction: column;
+
+    padding: 19px;
+  }
+
+  .doctor-decision-actions {
+    width: 100%;
+  }
+
+  .doctor-reject-button,
+  .doctor-approve-button {
+    flex: 1;
+  }
+
+  .doctor-modal-backdrop {
+    align-items: flex-end;
+
+    padding: 10px;
+  }
+
+  .doctor-modal {
+    max-height: 92vh;
+
+    overflow-y: auto;
+
+    border-radius: 17px;
+  }
+}
+
+
+/* =========================================================
+   SMALL MOBILE
+   ========================================================= */
+
+@media (max-width: 430px) {
+  .doctor-profile-main {
+    align-items: flex-start;
+  }
+
+  .doctor-profile-avatar {
+    width: 58px;
+    height: 58px;
+  }
+
+  .doctor-profile-info h2 {
+    font-size: 18px;
+  }
+
+  .doctor-decision-actions {
+    flex-direction: column;
+  }
+
+  .doctor-reject-button,
+  .doctor-approve-button {
+    width: 100%;
+  }
+
+  .doctor-modal-footer {
+    flex-direction: column-reverse;
+
+    align-items: stretch;
+  }
+
+  .doctor-modal-cancel,
+  .doctor-modal-confirm {
+    width: 100%;
+  }
+
+  .doctor-create-department {
+    flex-direction: column;
+  }
+
+  .doctor-create-department button {
+    width: 100%;
+  }
+}

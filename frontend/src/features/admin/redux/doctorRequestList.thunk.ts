@@ -1,8 +1,8 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { AxiosError } from "axios";
-import { getDoctorRequests } from "../services/doctorRequest.service";
-import type { ApiResponse } from "@/entites/api";
-import type { DoctorRequestListResponse } from "../../../entites/doctor/doctorRequestList.types";
+import { getDoctorRequests } from "../api/doctorRequest.service";
+import type { ApiResponse } from "@/types/api";
+import type { DoctorRequestListResponse } from "../types/doctorRequestList.types";
 
 interface GetDoctorRequestParams {
   page: number;

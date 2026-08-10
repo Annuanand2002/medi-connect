@@ -1,48 +1,85 @@
-import type { DoctorRequestStatus } from "../../../entites/doctor/doctorRequestList.types";
+import { Search, SlidersHorizontal } from "lucide-react";
+
+import type {
+  DoctorRequestStatus,
+} from "../types/doctorRequestList.types";
 
 interface DoctorRequestFiltersProps {
   search: string;
   status?: DoctorRequestStatus;
-
   onSearchChange: (value: string) => void;
   onStatusChange: (value?: DoctorRequestStatus) => void;
 }
 
 const DoctorRequestFilters = ({
-  //search,
+  search,
   status,
-  //onSearchChange,
+  onSearchChange,
   onStatusChange,
 }: DoctorRequestFiltersProps) => {
   return (
-    <div className="mb-6 flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+    <section className="doctor-request-filters">
       {/* Search */}
-      {/* <input
-        type="text"
-        placeholder="Search by name or email..."
-        value={search}
-        onChange={(e) => onSearchChange(e.target.value)}
-        className="w-full rounded-xl border border-slate-300 px-4 py-2 outline-none focus:border-blue-500 md:max-w-sm"
-      /> */}
+      <div className="doctor-search">
+        <Search
+          size={18}
+          strokeWidth={1.8}
+        />
 
-      {/* Status Filter */}
-      <select
-        value={status ?? ""}
-        onChange={(e) =>
-          onStatusChange(
-            e.target.value === ""
-              ? undefined
-              : (e.target.value as DoctorRequestStatus),
-          )
-        }
-        className="rounded-xl border border-slate-300 px-4 py-2 outline-none focus:border-blue-500"
-      >
-        <option value="">All Status</option>
-        <option value="PENDING">PENDING</option>
-        <option value="APPROVED">APPROVED</option>
-        <option value="REJECTED">REJECTED</option>
-      </select>
-    </div>
+        <input
+          type="text"
+          value={search}
+          onChange={(event) => onSearchChange(event.target.value)}
+          placeholder="Search by name or email..."
+          aria-label="Search doctor requests"
+        />
+
+        {search && (
+          <button
+            type="button"
+            className="doctor-search-clear"
+            onClick={() => onSearchChange("")}
+            aria-label="Clear search"
+          >
+            ×
+          </button>
+        )}
+      </div>
+
+      {/* Status */}
+      <div className="doctor-status-filter">
+        <SlidersHorizontal
+          size={16}
+          strokeWidth={1.8}
+        />
+
+        <select
+          value={status ?? ""}
+          onChange={(event) =>
+            onStatusChange(
+              event.target.value === ""
+                ? undefined
+                : (event.target.value as DoctorRequestStatus),
+            )
+          }
+          aria-label="Filter by status"
+        >
+          <option value="">All Status</option>
+
+          <option value="PENDING">
+            Pending
+          </option>
+
+          <option value="APPROVED">
+            Approved
+          </option>
+
+          <option value="REJECTED">
+            Rejected
+          </option>
+        </select>
+      </div>
+    </section>
   );
 };
 

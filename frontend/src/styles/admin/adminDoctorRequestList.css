@@ -1,0 +1,1168 @@
+/* =========================================================
+   MEDICONNECT
+   DOCTOR REQUEST MANAGEMENT
+   ========================================================= */
+
+
+/* =========================================================
+   PAGE
+   ========================================================= */
+
+.doctor-request-page {
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 20px;
+
+  width: 100%;
+
+  padding: 28px 30px 35px;
+
+  background: #f6f7fa;
+}
+
+
+/* =========================================================
+   INTRO
+   ========================================================= */
+
+.doctor-request-intro {
+  display: flex;
+
+  align-items: center;
+
+  gap: 15px;
+
+  padding: 5px 2px;
+}
+
+.doctor-request-intro-icon {
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  width: 46px;
+  height: 46px;
+
+  flex-shrink: 0;
+
+  border-radius: 13px;
+
+  background:
+    linear-gradient(
+      135deg,
+      #efedff,
+      #e8e5ff
+    );
+
+  color: #6258bf;
+
+  box-shadow:
+    0 7px 18px
+    rgba(72, 61, 170, 0.08);
+}
+
+.doctor-request-intro span {
+  display: block;
+
+  color: #827bb8;
+
+  font-size: 8px;
+
+  font-weight: 800;
+
+  letter-spacing: 0.18em;
+}
+
+.doctor-request-intro h2 {
+  margin: 4px 0 0;
+
+  color: #222632;
+
+  font-size: 19px;
+
+  font-weight: 680;
+
+  letter-spacing: -0.35px;
+}
+
+.doctor-request-intro p {
+  margin: 3px 0 0;
+
+  color: #979ca8;
+
+  font-size: 10px;
+}
+
+
+/* =========================================================
+   FILTER TOOLBAR
+   ========================================================= */
+
+.doctor-request-filters {
+  display: flex;
+
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 14px;
+
+  width: 100%;
+
+  padding: 15px;
+
+  border: 1px solid #e9ebf0;
+
+  border-radius: 14px;
+
+  background: #ffffff;
+
+  box-shadow:
+    0 5px 18px
+    rgba(30, 37, 58, 0.035);
+}
+
+
+/* =========================================================
+   SEARCH
+   ========================================================= */
+
+.doctor-search {
+  display: flex;
+
+  align-items: center;
+
+  width: 100%;
+  max-width: 410px;
+  height: 43px;
+
+  padding: 0 12px;
+
+  border: 1px solid #e5e7ec;
+
+  border-radius: 10px;
+
+  background: #fafbfc;
+
+  color: #a2a7b2;
+
+  transition:
+    border-color 180ms ease,
+    background 180ms ease,
+    box-shadow 180ms ease;
+}
+
+.doctor-search:focus-within {
+  border-color: #aaa5dc;
+
+  background: #ffffff;
+
+  box-shadow:
+    0 0 0 3px
+    rgba(91, 80, 188, 0.07);
+}
+
+.doctor-search input {
+  width: 100%;
+
+  height: 100%;
+
+  padding: 0 10px;
+
+  border: 0;
+  outline: 0;
+
+  background: transparent;
+
+  color: #333846;
+
+  font-family: inherit;
+
+  font-size: 11px;
+}
+
+.doctor-search input::placeholder {
+  color: #afb3bc;
+}
+
+.doctor-search-clear {
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  width: 23px;
+  height: 23px;
+
+  flex-shrink: 0;
+
+  padding: 0;
+
+  border: 0;
+
+  border-radius: 6px;
+
+  background: transparent;
+
+  color: #9da2ad;
+
+  font-size: 18px;
+
+  line-height: 1;
+
+  cursor: pointer;
+
+  transition:
+    background 150ms ease,
+    color 150ms ease;
+}
+
+.doctor-search-clear:hover {
+  background: #f0f1f5;
+
+  color: #555b68;
+}
+
+
+/* =========================================================
+   STATUS FILTER
+   ========================================================= */
+
+.doctor-status-filter {
+  display: flex;
+
+  align-items: center;
+
+  gap: 8px;
+
+  min-width: 155px;
+  height: 43px;
+
+  padding: 0 11px;
+
+  border: 1px solid #e5e7ec;
+
+  border-radius: 10px;
+
+  background: #fafbfc;
+
+  color: #8f95a1;
+}
+
+.doctor-status-filter select {
+  width: 100%;
+
+  height: 100%;
+
+  padding: 0;
+
+  border: 0;
+  outline: 0;
+
+  appearance: none;
+
+  background: transparent;
+
+  color: #454a57;
+
+  font-family: inherit;
+
+  font-size: 11px;
+
+  cursor: pointer;
+}
+
+
+/* =========================================================
+   TABLE WRAPPER
+   ========================================================= */
+
+.doctor-request-table-wrapper {
+  width: 100%;
+
+  overflow: hidden;
+
+  border: 1px solid #e9ebf0;
+
+  border-radius: 15px;
+
+  background: #ffffff;
+
+  box-shadow:
+    0 6px 22px
+    rgba(30, 37, 58, 0.035);
+}
+
+
+/* =========================================================
+   TABLE
+   ========================================================= */
+
+.doctor-request-table {
+  width: 100%;
+
+  border-collapse: collapse;
+
+  table-layout: fixed;
+}
+
+.doctor-request-table thead {
+  background:
+    linear-gradient(
+      180deg,
+      #fafbfc,
+      #f7f8fa
+    );
+}
+
+.doctor-request-table th {
+  height: 49px;
+
+  padding: 0 18px;
+
+  border-bottom: 1px solid #ebedf1;
+
+  color: #8b909b;
+
+  font-size: 9px;
+
+  font-weight: 750;
+
+  letter-spacing: 0.06em;
+
+  text-align: left;
+
+  text-transform: uppercase;
+}
+
+.doctor-request-table th:nth-child(1) {
+  width: 27%;
+}
+
+.doctor-request-table th:nth-child(2) {
+  width: 18%;
+}
+
+.doctor-request-table th:nth-child(3) {
+  width: 13%;
+}
+
+.doctor-request-table th:nth-child(4) {
+  width: 14%;
+}
+
+.doctor-request-table th:nth-child(5) {
+  width: 12%;
+}
+
+.doctor-request-table th:nth-child(6) {
+  width: 16%;
+}
+
+.doctor-request-table tbody tr {
+  border-bottom: 1px solid #f0f1f4;
+
+  transition:
+    background 160ms ease;
+}
+
+.doctor-request-table tbody tr:last-child {
+  border-bottom: 0;
+}
+
+.doctor-request-table tbody tr:hover {
+  background: #fafaff;
+}
+
+.doctor-request-table td {
+  height: 74px;
+
+  padding: 10px 18px;
+
+  color: #5d6370;
+
+  font-size: 10px;
+
+  vertical-align: middle;
+}
+
+
+/* =========================================================
+   DOCTOR CELL
+   ========================================================= */
+
+.doctor-cell {
+  display: flex;
+
+  align-items: center;
+
+  gap: 10px;
+
+  min-width: 0;
+}
+
+.doctor-avatar {
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  width: 36px;
+  height: 36px;
+
+  flex-shrink: 0;
+
+  border-radius: 10px;
+
+  background:
+    linear-gradient(
+      135deg,
+      #efedff,
+      #e4e1ff
+    );
+
+  color: #5d53b8;
+
+  font-size: 12px;
+
+  font-weight: 700;
+}
+
+.doctor-info {
+  display: flex;
+
+  flex-direction: column;
+
+  min-width: 0;
+
+  gap: 4px;
+}
+
+.doctor-info strong {
+  overflow: hidden;
+
+  color: #343946;
+
+  font-size: 14px;
+
+  font-weight: 650;
+
+  white-space: nowrap;
+
+  text-overflow: ellipsis;
+}
+
+.doctor-info span {
+  display: flex;
+
+  align-items: center;
+
+  gap: 4px;
+
+  overflow: hidden;
+
+  color: #a0a5af;
+
+  font-size: 12px;
+
+  white-space: nowrap;
+
+  text-overflow: ellipsis;
+}
+
+
+/* =========================================================
+   OTHER CELLS
+   ========================================================= */
+
+.doctor-specialization {
+  display: inline-block;
+
+  max-width: 100%;
+
+  overflow: hidden;
+
+  color: #59606d;
+
+  font-size: 12px;
+
+  white-space: nowrap;
+
+  text-overflow: ellipsis;
+}
+
+.doctor-experience {
+  color: #454b58;
+
+  font-size: 12px;
+
+  font-weight: 600;
+}
+
+.doctor-experience small {
+  margin-left: 3px;
+
+  color: #a3a7b0;
+
+  font-size: 12px;
+
+  font-weight: 450;
+}
+
+.doctor-date {
+  color: #8c929d;
+
+  font-size: 12px;
+}
+
+
+/* =========================================================
+   STATUS
+   ========================================================= */
+
+.status-badge {
+  display: inline-flex;
+
+  align-items: center;
+
+  gap: 6px;
+
+  padding: 6px 9px;
+
+  border: 1px solid transparent;
+
+  border-radius: 7px;
+
+  font-size: 12px;
+
+  font-weight: 650;
+
+  text-transform: capitalize;
+}
+
+.status-badge-dot {
+  width: 5px;
+  height: 5px;
+
+  flex-shrink: 0;
+
+  border-radius: 50%;
+
+  background: currentColor;
+}
+
+.status-pending {
+  border-color: #f4dfb0;
+
+  background: #fff9eb;
+
+  color: #bb8a2b;
+}
+
+.status-approved {
+  border-color: #bee7d0;
+
+  background: #effbf4;
+
+  color: #429667;
+}
+
+.status-rejected {
+  border-color: #f0c7c7;
+
+  background: #fff2f2;
+
+  color: #c65b5b;
+}
+
+
+/* =========================================================
+   ACTION
+   ========================================================= */
+
+.doctor-action-heading {
+  text-align: right !important;
+}
+
+.doctor-action-cell {
+  text-align: right;
+}
+
+.doctor-view-button {
+  display: inline-flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  gap: 5px;
+
+  min-height: 31px;
+
+  padding: 0 9px;
+
+  border: 1px solid #e5e4f3;
+
+  border-radius: 8px;
+
+  background: #fafaff;
+
+  color: #5d54b4;
+
+  font-size: 12px;
+
+  font-weight: 650;
+
+  text-decoration: none;
+
+  transition:
+    background 160ms ease,
+    border-color 160ms ease,
+    transform 160ms ease;
+}
+
+.doctor-view-button:hover {
+  transform: translateY(-1px);
+
+  border-color: #d8d5ef;
+
+  background: #f2f0ff;
+}
+
+
+/* =========================================================
+   EMPTY STATE
+   ========================================================= */
+
+.doctor-request-empty {
+  display: flex;
+
+  flex-direction: column;
+
+  align-items: center;
+  justify-content: center;
+
+  min-height: 300px;
+
+  padding: 30px;
+
+  border: 1px solid #e9ebf0;
+
+  border-radius: 15px;
+
+  background: #ffffff;
+
+  text-align: center;
+
+  box-shadow:
+    0 6px 22px
+    rgba(30, 37, 58, 0.035);
+}
+
+.doctor-request-empty-icon {
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  width: 52px;
+  height: 52px;
+
+  margin-bottom: 13px;
+
+  border-radius: 15px;
+
+  background:
+    linear-gradient(
+      135deg,
+      #efedff,
+      #e9e7ff
+    );
+
+  color: #675dc2;
+}
+
+.doctor-request-empty > span {
+  color: #8c84be;
+
+  font-size: 12px;
+
+  font-weight: 800;
+
+  letter-spacing: 0.16em;
+}
+
+.doctor-request-empty h3 {
+  margin: 7px 0 0;
+
+  color: #363b48;
+
+  font-size: 15px;
+
+  font-weight: 650;
+}
+
+.doctor-request-empty p {
+  max-width: 330px;
+
+  margin: 6px 0 0;
+
+  color: #a0a5af;
+
+  font-size: 10px;
+
+  line-height: 1.6;
+}
+
+
+/* =========================================================
+   LOADING
+   ========================================================= */
+
+.doctor-request-state {
+  display: flex;
+
+  flex-direction: column;
+
+  align-items: center;
+  justify-content: center;
+
+  min-height: 300px;
+
+  padding: 30px;
+
+  border: 1px solid #e9ebf0;
+
+  border-radius: 15px;
+
+  background: #ffffff;
+
+  text-align: center;
+
+  box-shadow:
+    0 6px 22px
+    rgba(30, 37, 58, 0.035);
+}
+
+.doctor-request-state h3 {
+  margin: 15px 0 0;
+
+  color: #3a3f4b;
+
+  font-size: 14px;
+
+  font-weight: 650;
+}
+
+.doctor-request-state p {
+  margin: 6px 0 0;
+
+  color: #a0a5af;
+
+  font-size: 10px;
+}
+
+.doctor-request-loader {
+  display: flex;
+
+  align-items: center;
+
+  gap: 5px;
+}
+
+.doctor-request-loader span {
+  width: 7px;
+  height: 7px;
+
+  border-radius: 50%;
+
+  background: #7066c9;
+
+  animation:
+    doctorLoader 1.2s
+    ease-in-out
+    infinite;
+}
+
+.doctor-request-loader span:nth-child(2) {
+  animation-delay: 0.15s;
+}
+
+.doctor-request-loader span:nth-child(3) {
+  animation-delay: 0.3s;
+}
+
+
+/* =========================================================
+   ERROR
+   ========================================================= */
+
+.doctor-request-error {
+  background:
+    linear-gradient(
+      145deg,
+      #ffffff,
+      #fffafa
+    );
+}
+
+.doctor-request-state-icon {
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  width: 44px;
+  height: 44px;
+
+  border-radius: 13px;
+
+  background: #fff0f0;
+
+  color: #d45e5e;
+
+  font-size: 18px;
+
+  font-weight: 700;
+}
+
+
+/* =========================================================
+   PAGINATION
+   ========================================================= */
+
+.doctor-pagination {
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  gap: 8px;
+
+  padding-top: 3px;
+}
+
+.pagination-pages {
+  display: flex;
+
+  align-items: center;
+
+  gap: 5px;
+}
+
+.pagination-page,
+.pagination-arrow {
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  width: 34px;
+  height: 34px;
+
+  padding: 0;
+
+  border: 1px solid #e4e6eb;
+
+  border-radius: 9px;
+
+  background: #ffffff;
+
+  color: #737985;
+
+  font-family: inherit;
+
+  font-size: 10px;
+
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition:
+    background 160ms ease,
+    border-color 160ms ease,
+    color 160ms ease,
+    transform 160ms ease;
+}
+
+.pagination-page:hover,
+.pagination-arrow:hover:not(:disabled) {
+  transform: translateY(-1px);
+
+  border-color: #d7d4ed;
+
+  background: #f6f5ff;
+
+  color: #5e55b5;
+}
+
+.pagination-page-active {
+  border-color: #5d53b5;
+
+  background: #5d53b5;
+
+  color: #ffffff;
+
+  box-shadow:
+    0 5px 12px
+    rgba(93, 83, 181, 0.2);
+}
+
+.pagination-arrow:disabled {
+  opacity: 0.4;
+
+  cursor: not-allowed;
+}
+
+.pagination-ellipsis {
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  width: 24px;
+
+  color: #a4a8b1;
+
+  font-size: 8px;
+
+  letter-spacing: 1px;
+}
+
+
+/* =========================================================
+   ANIMATIONS
+   ========================================================= */
+
+@keyframes doctorLoader {
+  0%,
+  80%,
+  100% {
+    transform: scale(0.7);
+
+    opacity: 0.45;
+  }
+
+  40% {
+    transform: scale(1);
+
+    opacity: 1;
+  }
+}
+
+
+/* =========================================================
+   TABLET
+   ========================================================= */
+
+@media (max-width: 1000px) {
+  .doctor-request-page {
+    padding: 22px;
+  }
+
+  .doctor-request-table {
+    min-width: 850px;
+  }
+
+  .doctor-request-table-wrapper {
+    overflow-x: auto;
+  }
+
+  .doctor-request-table-wrapper::-webkit-scrollbar {
+    height: 5px;
+  }
+
+  .doctor-request-table-wrapper::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+
+    background: #d7d9df;
+  }
+}
+
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 700px) {
+  .doctor-request-page {
+    gap: 15px;
+
+    padding: 18px 16px 25px;
+  }
+
+  .doctor-request-intro {
+    align-items: flex-start;
+  }
+
+  .doctor-request-intro-icon {
+    width: 40px;
+    height: 40px;
+  }
+
+  .doctor-request-intro h2 {
+    font-size: 17px;
+  }
+
+  .doctor-request-filters {
+    flex-direction: column;
+
+    align-items: stretch;
+
+    padding: 12px;
+  }
+
+  .doctor-search {
+    max-width: none;
+  }
+
+  .doctor-status-filter {
+    width: 100%;
+  }
+
+  .doctor-request-table-wrapper {
+    overflow: visible;
+
+    border: 0;
+
+    background: transparent;
+
+    box-shadow: none;
+  }
+
+  .doctor-request-table {
+    display: block;
+
+    min-width: 0;
+  }
+
+  .doctor-request-table thead {
+    display: none;
+  }
+
+  .doctor-request-table tbody {
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 10px;
+  }
+
+  .doctor-request-table tbody tr {
+    display: grid;
+
+    grid-template-columns:
+      1fr auto;
+
+    gap: 10px;
+
+    padding: 15px;
+
+    border: 1px solid #e9ebf0;
+
+    border-radius: 14px;
+
+    background: #ffffff;
+
+    box-shadow:
+      0 5px 18px
+      rgba(30, 37, 58, 0.035);
+  }
+
+  .doctor-request-table tbody tr:hover {
+    background: #ffffff;
+  }
+
+  .doctor-request-table td {
+    display: block;
+
+    width: auto;
+    height: auto;
+
+    padding: 0;
+
+    border: 0;
+  }
+
+  .doctor-request-table td:nth-child(1) {
+    grid-column: 1 / -1;
+  }
+
+  .doctor-request-table td:nth-child(2) {
+    grid-column: 1;
+  }
+
+  .doctor-request-table td:nth-child(3) {
+    grid-column: 2;
+
+    text-align: right;
+  }
+
+  .doctor-request-table td:nth-child(4) {
+    grid-column: 1;
+
+    padding-top: 3px;
+  }
+
+  .doctor-request-table td:nth-child(5) {
+    grid-column: 2;
+
+    grid-row: 3;
+
+    text-align: right;
+  }
+
+  .doctor-request-table td:nth-child(6) {
+    grid-column: 1 / -1;
+
+    padding-top: 7px;
+
+    border-top: 1px solid #f0f1f4;
+
+    text-align: left;
+  }
+
+  .doctor-action-heading {
+    text-align: left !important;
+  }
+
+  .doctor-view-button {
+    width: 100%;
+
+    min-height: 36px;
+  }
+
+  .doctor-request-empty,
+  .doctor-request-state {
+    min-height: 260px;
+  }
+}
+
+
+/* =========================================================
+   SMALL MOBILE
+   ========================================================= */
+
+@media (max-width: 420px) {
+  .doctor-request-intro p {
+    max-width: 240px;
+
+    line-height: 1.5;
+  }
+
+  .doctor-info strong {
+    max-width: 180px;
+  }
+
+  .doctor-pagination {
+    gap: 4px;
+  }
+
+  .pagination-page,
+  .pagination-arrow {
+    width: 32px;
+    height: 32px;
+  }
+}
