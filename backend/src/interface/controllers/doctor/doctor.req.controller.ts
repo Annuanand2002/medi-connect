@@ -105,6 +105,7 @@ export class DoctorRequestController {
       status,
       search,
     });
+        console.log("check",result)
     res
       .status(HTTP_STATUS.OK)
       .json({ success: true, messgae: "All requests fetched", result });
@@ -112,6 +113,7 @@ export class DoctorRequestController {
   getDoctorReq = asyncHandler(async (req: Request, res: Response) => {
     const id = req.params.id as string;
     const result = await this._getDoctorRequestUseCase.execute(id);
+
     res.status(HTTP_STATUS.OK).json({
       success: true,
       message: "DoctorRequest fetched succesfully",

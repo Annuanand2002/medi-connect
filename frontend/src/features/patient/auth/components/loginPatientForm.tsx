@@ -117,6 +117,16 @@ const LoginPatientForm = () => {
           <Button type="submit" loading={isSubmitting}>
             {isSubmitting ? "Signing In..." : "Sign In"}
           </Button>
+                    <div className="doctor-form-options">
+
+            <Link
+              to="/patient/create-patient"
+              className="doctor-forgot-password"
+            >
+              New here?
+            </Link>
+
+          </div>
         </form>
 
         <div className="patient-login-security-note">

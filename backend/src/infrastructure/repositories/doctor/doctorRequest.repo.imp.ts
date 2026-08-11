@@ -49,7 +49,8 @@ export class DoctorRequestRepository extends BaseRepository<DoctorRequestSchmea,
                 fullName : {
                     $regex : search,
                     $options : "i"
-                },
+                }
+              },{
                 email : {
                     $regex : search,
                     $options : "i"

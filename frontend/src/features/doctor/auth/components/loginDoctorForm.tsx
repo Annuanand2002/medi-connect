@@ -182,7 +182,16 @@ const LoginDoctorForm = () => {
               ? "Signing In..."
               : "SIGN IN"}
           </Button>
+                    <div className="doctor-form-options">
 
+            <Link
+              to="/doctor/apply"
+              className="doctor-forgot-password"
+            >
+              New here?
+            </Link>
+
+          </div>
         </form>
 
 

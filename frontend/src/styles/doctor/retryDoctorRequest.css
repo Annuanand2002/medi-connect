@@ -1,0 +1,558 @@
+.retry-doctor-page {
+  min-height: 100vh;
+  padding: 20px;
+  box-sizing: border-box;
+  background:
+    radial-gradient(circle at 12% 15%, rgba(93, 85, 183, 0.1), transparent 28%),
+    #eef2f8;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.retry-doctor-shell {
+  width: 100%;
+  max-width: 1500px;
+  min-height: calc(100vh - 40px);
+  overflow: hidden;
+  border-radius: 24px;
+  background: #ffffff;
+  box-shadow: 0 25px 70px rgba(35, 28, 106, 0.13);
+  display: grid;
+  grid-template-columns: minmax(380px, 44%) 1fr;
+}
+
+/* Left panel */
+
+.retry-doctor-banner {
+  position: relative;
+  overflow: hidden;
+  padding: 42px;
+  box-sizing: border-box;
+  color: #ffffff;
+  background:
+    radial-gradient(circle at 52% 48%, rgba(114, 99, 220, 0.32), transparent 32%),
+    linear-gradient(145deg, #211878 0%, #30258f 58%, #463aa6 100%);
+  display: grid;
+  grid-template-rows: auto auto minmax(270px, 1fr) auto;
+}
+
+.retry-doctor-banner-grid {
+  position: absolute;
+  inset: 0;
+  opacity: 0.07;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.5) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.5) 1px, transparent 1px);
+  background-size: 42px 42px;
+  mask-image: linear-gradient(to bottom, #000, transparent 88%);
+}
+
+.retry-doctor-banner-orb {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.retry-doctor-banner-orb-one {
+  top: -145px;
+  left: -145px;
+  width: 330px;
+  height: 330px;
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.retry-doctor-banner-orb-two {
+  right: -100px;
+  bottom: -100px;
+  width: 310px;
+  height: 310px;
+  background: rgba(135, 121, 239, 0.28);
+  filter: blur(38px);
+}
+
+.retry-doctor-brand,
+.retry-doctor-banner-copy,
+.retry-doctor-robot-wrap,
+.retry-doctor-banner-card {
+  position: relative;
+  z-index: 1;
+}
+
+.retry-doctor-brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.retry-doctor-brand img {
+  width: 42px;
+  height: 42px;
+  object-fit: cover;
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  border-radius: 12px;
+}
+
+.retry-doctor-brand strong,
+.retry-doctor-brand span {
+  display: block;
+}
+
+.retry-doctor-brand strong {
+  font-size: 18px;
+  letter-spacing: -0.02em;
+}
+
+.retry-doctor-brand span {
+  margin-top: 2px;
+  color: rgba(255, 255, 255, 0.62);
+  font-size: 11px;
+}
+
+.retry-doctor-banner-copy {
+  max-width: 360px;
+  margin-top: 55px;
+}
+
+.retry-doctor-banner-copy > span {
+  color: #cbc6ff;
+  font-size: 10px;
+  font-weight: 750;
+  letter-spacing: 0.14em;
+}
+
+.retry-doctor-banner-copy h1 {
+  margin: 15px 0;
+  color: #ffffff;
+  font-size: clamp(35px, 3.3vw, 50px);
+  font-weight: 720;
+  line-height: 1.07;
+  letter-spacing: -0.05em;
+}
+
+.retry-doctor-banner-copy h1 em {
+  color: #b8b0ff;
+  font-style: normal;
+}
+
+.retry-doctor-banner-copy p {
+  max-width: 345px;
+  margin: 0;
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 14px;
+  line-height: 1.7;
+}
+
+.retry-doctor-robot-wrap {
+  position: relative;
+  min-height: 285px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.retry-doctor-robot-halo {
+  position: absolute;
+  width: min(315px, 80%);
+  aspect-ratio: 1;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(151, 138, 255, 0.18), transparent 67%);
+  box-shadow: 0 0 85px rgba(132, 117, 247, 0.32);
+}
+
+.retry-doctor-orbit {
+  position: absolute;
+  border: 1px solid rgba(255, 255, 255, 0.11);
+  border-radius: 50%;
+}
+
+.retry-doctor-orbit-one {
+  width: min(365px, 93%);
+  aspect-ratio: 1;
+}
+
+.retry-doctor-orbit-two {
+  width: min(250px, 65%);
+  aspect-ratio: 1;
+  border-style: dashed;
+  transform: rotate(-25deg);
+}
+
+.retry-doctor-robot {
+  position: relative;
+  z-index: 1;
+  width: min(290px, 75%);
+  max-height: 310px;
+  object-fit: contain;
+  filter: drop-shadow(0 25px 20px rgba(13, 8, 65, 0.36));
+  transform: translateY(8px);
+}
+
+.retry-doctor-banner-card {
+  padding: 14px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(12px);
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.retry-doctor-banner-card > span {
+  width: 21px;
+  height: 21px;
+  flex: 0 0 21px;
+  border-radius: 50%;
+  color: #2b247d;
+  background: #a9f0cf;
+  font-size: 12px;
+  font-weight: 800;
+  line-height: 21px;
+  text-align: center;
+}
+
+.retry-doctor-banner-card strong {
+  display: block;
+  margin-bottom: 3px;
+  color: #ffffff;
+  font-size: 11px;
+}
+
+.retry-doctor-banner-card p {
+  margin: 0;
+  color: rgba(255, 255, 255, 0.64);
+  font-size: 10px;
+  line-height: 1.45;
+}
+
+/* Right panel */
+
+.retry-doctor-form-panel {
+  min-width: 0;
+  background: #ffffff;
+}
+
+.retry-doctor-form-container {
+  width: 100%;
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 58px 56px 42px;
+  box-sizing: border-box;
+}
+
+.retry-doctor-header {
+  margin-bottom: 31px;
+}
+
+.retry-doctor-header > span {
+  color: #7567db;
+  font-size: 10px;
+  font-weight: 750;
+  letter-spacing: 0.14em;
+}
+
+.retry-doctor-header h1 {
+  margin: 12px 0 10px;
+  color: #201d4d;
+  font-size: clamp(28px, 2.5vw, 36px);
+  font-weight: 720;
+  line-height: 1.15;
+  letter-spacing: -0.04em;
+}
+
+.retry-doctor-header p {
+  margin: 0;
+  color: #77758b;
+  font-size: 13px;
+  line-height: 1.65;
+}
+
+.retry-doctor-alert {
+  margin-bottom: 25px;
+  padding: 13px 15px;
+  border: 1px solid #bce8d2;
+  border-radius: 12px;
+  color: #23734d;
+  background: #effbf4;
+  font-size: 13px;
+  line-height: 1.45;
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.retry-doctor-alert > span {
+  width: 19px;
+  height: 19px;
+  flex: 0 0 19px;
+  border-radius: 50%;
+  color: #ffffff;
+  background: #35a66f;
+  font-size: 12px;
+  font-weight: 800;
+  line-height: 19px;
+  text-align: center;
+}
+
+.retry-doctor-alert p {
+  margin: 0;
+}
+
+/* DoctorRequestForm styling, scoped to this page */
+
+.retry-doctor-form-panel .doctor-request-form {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+.retry-doctor-form-panel .doctor-request-form-section {
+  padding-top: 28px;
+  border-top: 1px solid #ececf4;
+}
+
+.retry-doctor-form-panel .doctor-request-form-section:first-child {
+  padding-top: 0;
+  border-top: 0;
+}
+
+.retry-doctor-form-panel .doctor-request-section-heading {
+  margin-bottom: 19px;
+  display: flex;
+  align-items: flex-start;
+  gap: 11px;
+}
+
+.retry-doctor-form-panel .doctor-request-section-heading > span {
+  width: 24px;
+  height: 24px;
+  flex: 0 0 24px;
+  border-radius: 7px;
+  color: #6657d2;
+  background: #f0efff;
+  font-size: 10px;
+  font-weight: 750;
+  line-height: 24px;
+  text-align: center;
+}
+
+.retry-doctor-form-panel .doctor-request-section-heading h3 {
+  margin: 1px 0 4px;
+  color: #2a274e;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.retry-doctor-form-panel .doctor-request-section-heading p {
+  margin: 0;
+  color: #878599;
+  font-size: 11px;
+  line-height: 1.45;
+}
+
+.retry-doctor-form-panel .doctor-request-fields,
+.retry-doctor-form-panel .doctor-request-upload-grid {
+  display: grid;
+  gap: 17px;
+}
+
+.retry-doctor-form-panel .doctor-request-fields-two-column,
+.retry-doctor-form-panel .doctor-request-upload-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.retry-doctor-form-panel
+  .doctor-request-fields-two-column
+  > :last-child:nth-child(odd) {
+  grid-column: span 2;
+}
+
+.retry-doctor-form-panel .doctor-request-submit {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.retry-doctor-form-panel .doctor-request-submit > button {
+  width: 100%;
+}
+
+.retry-doctor-form-panel .doctor-request-submit p {
+  margin: 0;
+  color: #9795a8;
+  font-size: 10px;
+  text-align: center;
+}
+
+.retry-doctor-security-note {
+  margin-top: 28px;
+  padding-top: 20px;
+  border-top: 1px solid #eeedf4;
+  color: #9895a7;
+  font-size: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+
+.retry-doctor-security-note svg {
+  color: #6b5ecd;
+}
+
+/* Loading, error, and missing-application states */
+
+.retry-doctor-status {
+  min-height: 360px;
+  padding: 40px 20px;
+  color: #858298;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.retry-doctor-status h2 {
+  margin: 18px 0 8px;
+  color: #2b2850;
+  font-size: 21px;
+  letter-spacing: -0.03em;
+}
+
+.retry-doctor-status p {
+  max-width: 330px;
+  margin: 0;
+  font-size: 13px;
+  line-height: 1.65;
+}
+
+.retry-doctor-status-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 15px;
+  color: #6657d2;
+  background: #f1f0ff;
+  font-size: 22px;
+  font-weight: 750;
+  line-height: 48px;
+}
+
+.retry-doctor-status-error .retry-doctor-status-icon {
+  color: #ffffff;
+  background: #dc5d6b;
+}
+
+.retry-doctor-spinner {
+  color: #6657d2;
+  animation: retry-doctor-spin 1s linear infinite;
+}
+
+@keyframes retry-doctor-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (max-width: 900px) {
+  .retry-doctor-page {
+    padding: 14px;
+  }
+
+  .retry-doctor-shell {
+    grid-template-columns: 1fr;
+  }
+
+  .retry-doctor-banner {
+    min-height: 390px;
+    padding: 30px;
+  }
+
+  .retry-doctor-banner-copy {
+    margin-top: 38px;
+  }
+
+  .retry-doctor-robot-wrap {
+    position: absolute;
+    right: 18px;
+    bottom: 10px;
+    width: 240px;
+    min-height: 0;
+  }
+
+  .retry-doctor-robot {
+    width: 185px;
+  }
+
+  .retry-doctor-robot-halo {
+    width: 190px;
+  }
+
+  .retry-doctor-form-container {
+    max-width: 760px;
+    padding: 42px 36px;
+  }
+}
+
+@media (max-width: 580px) {
+  .retry-doctor-page {
+    padding: 0;
+    background: #ffffff;
+  }
+
+  .retry-doctor-shell {
+    min-height: 100vh;
+    border-radius: 0;
+    box-shadow: none;
+  }
+
+  .retry-doctor-banner {
+    min-height: 315px;
+    padding: 24px;
+  }
+
+  .retry-doctor-banner-copy h1 {
+    max-width: 260px;
+    font-size: 32px;
+  }
+
+  .retry-doctor-banner-copy p {
+    max-width: 250px;
+    font-size: 12px;
+  }
+
+  .retry-doctor-robot-wrap {
+    right: -6px;
+    bottom: 2px;
+    width: 160px;
+  }
+
+  .retry-doctor-robot {
+    width: 130px;
+  }
+
+  .retry-doctor-robot-halo {
+    width: 130px;
+  }
+
+  .retry-doctor-banner-card {
+    display: none;
+  }
+
+  .retry-doctor-form-container {
+    padding: 34px 20px 30px;
+  }
+
+  .retry-doctor-form-panel .doctor-request-fields-two-column,
+  .retry-doctor-form-panel .doctor-request-upload-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .retry-doctor-form-panel
+    .doctor-request-fields-two-column
+    > :last-child:nth-child(odd) {
+    grid-column: auto;
+  }
+}
