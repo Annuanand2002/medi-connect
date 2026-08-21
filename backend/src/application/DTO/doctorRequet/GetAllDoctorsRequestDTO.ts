@@ -1,8 +1,8 @@
-import { DoctorRequestStatus } from "../../../shared/constants/doctorRequestStatus";
+import { DoctorRequestStatus } from "../../../shared/constants/role.status";
 
-export interface GetDoctorRequestDTO{
-    page : number;
-    limit : number;
-    status?: DoctorRequestStatus;
-    search ?: string
+export interface GetDoctorRequestDTO {
+  page: number;
+  limit: number;
+  status?: DoctorRequestStatus;
+  search?: string;
 }

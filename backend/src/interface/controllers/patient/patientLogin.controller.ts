@@ -1,10 +1,10 @@
 import { inject, injectable } from "inversify";
 import { TYPES } from "../../../di/types/types";
-import { IPatientLoginUseCase } from "../../../application/repository/patient/IPatientLogin";
 import asyncHandler from "../../../shared/utils/asyncHandler";
 import { Request, Response } from "express";
 import { setRefershCookie } from "../../../shared/utils/cookies";
 import HTTP_STATUS from "../../../shared/constants/httpStatusCode";
+import { IPatientLoginUseCase } from "../../../domain/repositories/patient/repo.usecase/IPatientLogin";
 
 @injectable()
 export class LoginPatientController {

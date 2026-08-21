@@ -5,14 +5,14 @@ interface ApiResponse<T> {
 }
 
 const sendResponse = <T>(
-  success: boolean,
   message: string,
   data?: T,
 ): ApiResponse<T> => {
   return {
-    success,
+    success: true,
     message,
     data,
   };
 };
+
 export default sendResponse;

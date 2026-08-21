@@ -1,7 +1,7 @@
 import { injectable } from "inversify";
 import { IPatientResetTokenRepo } from "../../../domain/repositories/patient/IResetToken.repo";
 import { PatientResetToken } from "../../../domain/entities/patient/patientResetToken.entity";
-import { PatientResetTokenMapper } from "../../database/mappers/patientResetMapper";
+import { PatientResetTokenMapper } from "../../mappers/patientResetMapper";
 import { PatientResetTokenModel } from "../../database/models/patinetResetModel";
 
 @injectable()

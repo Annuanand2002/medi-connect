@@ -5,7 +5,11 @@ import { BaseRepository } from "../Base/base.repo.impl";
 import PatientModel, {
   PatientSchema,
 } from "../../database/models/patient.model";
-import { PatientMapper } from "../../database/mappers/Patient.Mapper";
+import { PatientMapper } from "../../mappers/Patient.Mapper";
+import {
+  GetPatientReqDTO,
+  PaginationPatientResDTO,
+} from "../../../application/DTO/patient/getPatient";
 
 @injectable()
 export class PatientRepo
@@ -13,13 +17,13 @@ export class PatientRepo
   implements IPatientRepo
 {
   constructor() {
-    super(PatientModel, PatientMapper.toDomain);
+    super(PatientModel, PatientMapper.toDomain, PatientMapper.toPersistence);
   }
   async create(data: Patient): Promise<Patient> {
     const document = await PatientModel.create(
       PatientMapper.toPersistence(data),
     );
-   return PatientMapper.toDomain(document);
+    return PatientMapper.toDomain(document);
   }
   async findByEmail(email: string): Promise<Patient | null> {
     const document = await PatientModel.findOne({ email });
@@ -28,19 +32,43 @@ export class PatientRepo
     }
     return PatientMapper.toDomain(document);
   }
-  async update(id: string, data: Partial<Patient>): Promise<Patient | null> {
-    const document = await PatientModel.findByIdAndUpdate(
-      id,
-      PatientMapper.toPersistence(data),
-      { new: true },
-    );
-    if (!document) return null;
-    return PatientMapper.toDomain(document);
-  }
   async updateRefreshToken(
     id: string,
     refreshToken: string | null,
   ): Promise<void> {
     await PatientModel.findByIdAndUpdate(id, { refreshToken });
+  }
+  async findPatient(dto: GetPatientReqDTO): Promise<PaginationPatientResDTO> {
+    const { page, limit, search, isBlocked } = dto;
+    const query: Record<string, unknown> = {};
+    if (isBlocked) {
+      query.isBlocked = isBlocked;
+    }
+    if (search) {
+      query.$or = [
+        {
+          fullName: {
+            $regex: search,
+            $options: "i",
+          }
+        },
+        {
+          email: {
+            $regex: search,
+            $options: "i",
+          }
+        },
+      ];
+    }
+    console.log("query",query)
+    const result = await super.findAll(page, limit, query);
+    console.log("result",result)
+    return {
+      requests: result.data,
+      page: result.page,
+      limit: result.limit,
+      total: result.total,
+      totalPages: result.totalPages,
+    };
   }
 }

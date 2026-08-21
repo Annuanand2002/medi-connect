@@ -1,9 +1,11 @@
+import { GetPatientReqDTO, PaginationPatientResDTO } from "../../../application/DTO/patient/getPatient";
 import { Patient } from "../../entities/patient/patient.entity";
 import { IBaseRepository } from "../base/IBaseRepository";
 
-export interface IPatientRepo extends IBaseRepository<Patient|null> {
+export interface IPatientRepo extends IBaseRepository<Patient> {
   create(data : Patient):Promise<Patient>;
   findByEmail(email:string):Promise<Patient|null>
   update(id:string,data:Partial<Patient>):Promise<Patient|null>;
   updateRefreshToken(id:string,refreshToken:string|null):Promise<void>
+  findPatient(dto:GetPatientReqDTO):Promise<PaginationPatientResDTO>
 }

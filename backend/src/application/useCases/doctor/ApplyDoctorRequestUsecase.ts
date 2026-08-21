@@ -5,9 +5,9 @@ import HTTP_STATUS from "../../../shared/constants/httpStatusCode";
 import AppError from "../../../shared/errors/appErrors";
 import { ApplyDoctorRequestDTO } from "../../DTO/doctorRequet/applyDoctorRequestDTO";
 import { IDoctorRequestFileService } from "../../services/IDoctorRequestFileService";
-import { IDcotorRequestUseCase } from "../../repository/doctor/IApplyDoctorRequestUsecase";
 import { inject, injectable } from "inversify";
 import { TYPES } from "../../../di/types/types";
+import { IDcotorRequestUseCase } from "../../../domain/repositories/doctor/repo.usecase/IApplyDoctorRequestUsecase";
 
 @injectable()
 export class DoctorRequestUsecase implements IDcotorRequestUseCase {
@@ -48,7 +48,7 @@ export class DoctorRequestUsecase implements IDcotorRequestUseCase {
         email: request.email,
         dateOfBirth: request.dateOfBirth,
         qualification: request.qualification,
-        specialization: request.specialization,
+        department: request.department,
         experience: request.experience,
         profileImg,
         governmentId,
@@ -70,7 +70,7 @@ export class DoctorRequestUsecase implements IDcotorRequestUseCase {
       email: request.email,
       dateOfBirth: request.dateOfBirth,
       qualification: request.qualification,
-      specialization: request.specialization,
+      department: request.department,
       experience: request.experience,
       profileImg,
       governmentId,

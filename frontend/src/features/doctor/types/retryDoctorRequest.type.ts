@@ -4,7 +4,7 @@ export interface RetryDoctorRequest {
   email: string;
   dateOfBirth: string;
   qualification: string;
-  specialization: string;
+  department: string;
   experience: number;
   profileImg: string;
   governmentId: string;

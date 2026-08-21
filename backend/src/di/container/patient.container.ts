@@ -19,6 +19,9 @@ import { RequestPatientForgetPasswordUseCase } from "../../application/useCases/
 import { ResetPatientPassowrd } from "../../application/useCases/patient/resetpassword.usecase";
 import { RequestPatientResetPasswordController } from "../../interface/controllers/patient/requestForgetPassword";
 import { ResetPatientPasswordController } from "../../interface/controllers/patient/resetPassword";
+import { GetAllPatientUseCase } from "../../application/useCases/patient/getAllPatient";
+import { PatientController } from "../../interface/controllers/patient/patient.controller";
+import { TogglePatientUsecase } from "../../application/useCases/patient/toggle.usecase";
 
 export function patientBinding(container: Container) {
   container.bind(TYPES.PatientRepo).to(PatientRepo);
@@ -40,4 +43,7 @@ export function patientBinding(container: Container) {
   container.bind(TYPES.ResetPatientPassowrd).to(ResetPatientPassowrd);
   container.bind(TYPES.RequestPatientResetPasswordController).to(RequestPatientResetPasswordController)
   container.bind(TYPES.ResetPatientPasswordController).to(ResetPatientPasswordController)
+  container.bind(TYPES.GetAllPatientUseCase).to(GetAllPatientUseCase)
+  container.bind(TYPES.PatientController).to(PatientController)
+  container.bind(TYPES.TogglePatientUsecase).to(TogglePatientUsecase)
 }

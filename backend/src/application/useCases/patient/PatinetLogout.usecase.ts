@@ -1,11 +1,11 @@
 import { inject, injectable } from "inversify";
-import { ILogoutUseCase } from "../../repository/common/ILogoutUseCase";
 import { IPatientRepo } from "../../../domain/repositories/patient/IPatient.repo";
 import { TYPES } from "../../../di/types/types";
 import { LogoutReqDTO } from "../../DTO/logoutReq";
 import { ITokenService } from "../../../domain/services/ITokenService";
 import AppError from "../../../shared/errors/appErrors";
 import HTTP_STATUS from "../../../shared/constants/httpStatusCode";
+import { ILogoutUseCase } from "../../../domain/repositories/common/ILogoutUseCase";
 
 @injectable()
 export class LogoutPatientUseCase implements ILogoutUseCase {

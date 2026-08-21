@@ -4,8 +4,8 @@ import { IDepartmentRepo } from "../../../domain/repositories/department/IDepear
 import HTTP_STATUS from "../../../shared/constants/httpStatusCode";
 import AppError from "../../../shared/errors/appErrors";
 import { CreateDepatmentDTO } from "../../DTO/department/createDepaertmentDTO";
-import { ICreateDepartmentUsecase } from "../../repository/department/ICreateDepartmentUsecase";
 import { TYPES } from "../../../di/types/types";
+import { ICreateDepartmentUsecase } from "../../../domain/repositories/department/ICreateDepartmentUsecase";
 
 @injectable()
 export class CreateDepeartmentUseCase implements ICreateDepartmentUsecase {

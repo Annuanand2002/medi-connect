@@ -38,8 +38,8 @@ const LoginForm = () => {
 
       dispatch(
         loginSuccess({
-          admin: response.result.admin,
-          accessToken: response.result.accessToken,
+          admin: response.data.admin,
+          accessToken: response.data.accessToken,
         }),
       );
 

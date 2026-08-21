@@ -1,6 +1,6 @@
 import { Department } from "../../../domain/entities/department/department.entities";
 import { IDepartmentRepo } from "../../../domain/repositories/department/IDepeartmentRepo";
-import { DepartmentMapper } from "../../database/mappers/DepartmentMapper";
+import { DepartmentMapper } from "../../mappers/DepartmentMapper";
 import DepartmentModel from "../../database/models/department.model";
 import { injectable } from "inversify";
 

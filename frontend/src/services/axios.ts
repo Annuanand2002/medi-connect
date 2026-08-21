@@ -1,14 +1,18 @@
 import { store } from "@/store/store";
 import axios, { type InternalAxiosRequestConfig } from "axios";
+
 import { logout, loginSuccess } from "@/features/admin/auth/redux/authSlice";
+
 import {
   loginDoctorSuccess,
   logoutDoctor,
 } from "@/features/doctor/auth/redux/authDoctor.slice";
+
 import {
   loginPatientSuccess,
   logoutPatient,
 } from "@/features/patient/auth/redux/patient.auth.slice";
+
 import { refreshToken } from "@/features/admin/auth/api/refreshTokenApi";
 import { refreshPatientToken } from "@/features/patient/auth/api/refreshPatientToken";
 import { refreshDoctorToken } from "@/features/doctor/auth/api/refreshDoctorToken";
@@ -16,6 +20,7 @@ import { refreshDoctorToken } from "@/features/doctor/auth/api/refreshDoctorToke
 interface RetryRequestConfig extends InternalAxiosRequestConfig {
   _retry?: boolean;
 }
+
 const axiosInstance = axios.create({
   baseURL: import.meta.env.VITE_API_URL,
   withCredentials: true,
@@ -24,7 +29,6 @@ const axiosInstance = axios.create({
   },
 });
 
-// Request interceptor
 const getAccessToken = (url?: string) => {
   if (url?.startsWith("/admin")) {
     return store.getState().auth.accessToken;
@@ -40,6 +44,7 @@ const getAccessToken = (url?: string) => {
 
   return null;
 };
+
 axiosInstance.interceptors.request.use((config) => {
   const token = getAccessToken(config.url);
 
@@ -49,6 +54,7 @@ axiosInstance.interceptors.request.use((config) => {
 
   return config;
 });
+
 const getRoleFromUrl = (
   url?: string,
 ): "admin" | "doctor" | "patient" | null => {
@@ -66,6 +72,7 @@ const getRoleFromUrl = (
 
   return null;
 };
+
 const authRoutes = [
   "/admin/login",
   "/admin/refresh-token",
@@ -85,21 +92,55 @@ const authRoutes = [
   "/patient/forgot-password",
   "/patient/reset-password",
 ];
+
+const DOCTOR_BLOCKED_MESSAGE =
+  "Your account has been blocked. Please contact customer care.";
+
+const PATIENT_BLOCKED_MESSAGE =
+  "Your account has been blocked. Please contact customer care.";
+
 axiosInstance.interceptors.response.use(
   (response) => response,
 
   async (error) => {
     const originalRequest = error.config as RetryRequestConfig;
 
+    const status = error.response?.status;
+
+    const role = getRoleFromUrl(originalRequest?.url);
+    //doctorblocked
+    if (
+      status === 403 &&
+      role === "doctor" &&
+      error.response?.data?.message === DOCTOR_BLOCKED_MESSAGE
+    ) {
+      store.dispatch(logoutDoctor());
+
+      window.location.href = `/doctor/login?error=${encodeURIComponent(
+        "Your account has been blocked. Please contact customer care.",
+      )}`;
+
+      return Promise.reject(error);
+    }
+    if (
+      status === 403 &&
+      error.response?.data?.message === PATIENT_BLOCKED_MESSAGE &&
+      role === "patient"
+    ) {
+      store.dispatch(logoutPatient());
+
+      window.location.replace(
+        `/patient/login?error=${encodeURIComponent(PATIENT_BLOCKED_MESSAGE)}`,
+      );
+
+      return Promise.reject(error);
+    }
+
     const isAuthRoute = authRoutes.some((route) =>
       originalRequest.url?.includes(route),
     );
 
-    if (
-      error.response?.status === 401 &&
-      !originalRequest._retry &&
-      !isAuthRoute
-    ) {
+    if (status === 401 && !originalRequest._retry && !isAuthRoute) {
       originalRequest._retry = true;
 
       try {
@@ -146,12 +187,16 @@ axiosInstance.interceptors.response.use(
           );
         }
 
+        // Put new token into original request
         originalRequest.headers.Authorization = `Bearer ${accessToken}`;
 
-        // Retry the original request
-
+        // Retry original request
         return axiosInstance(originalRequest);
       } catch (err) {
+        // =========================
+        // REFRESH TOKEN FAILED
+        // =========================
+
         const role = getRoleFromUrl(originalRequest.url);
 
         if (role === "admin") {

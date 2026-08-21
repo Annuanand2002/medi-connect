@@ -1,5 +1,6 @@
-import bannerImage from "@/assets/images/robot.png";
-import logo from "@/assets/logo/mediconnect-logo.jpeg";
+import logo from '@/assets/logo/mediconnect-logo.jpeg';
+import bannerImage from '@/assets/images/robot.png';
+
 
 const LoginBanner = () => {
   return (

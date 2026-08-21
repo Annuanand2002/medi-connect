@@ -1,9 +1,9 @@
 import { inject, injectable } from "inversify";
-import { IVerifyPatientOTPUsecase } from "../../../application/repository/patient/IVerifyOTP.usecase";
 import { TYPES } from "../../../di/types/types";
 import asyncHandler from "../../../shared/utils/asyncHandler";
 import { Request, Response } from "express";
 import HTTP_STATUS from "../../../shared/constants/httpStatusCode";
+import { IVerifyPatientOTPUsecase } from "../../../domain/repositories/patient/repo.usecase/IVerifyOTP.usecase";
 
 @injectable()
 export class VerifyPatientOTP {

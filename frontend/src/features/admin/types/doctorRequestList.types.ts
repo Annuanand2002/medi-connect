@@ -7,7 +7,7 @@ export interface DoctorRequest {
   id: string;
   fullName: string;
   email: string;
-  specialization: string;
+  department: string;
   experience: number;
   createdAt: string;
   status: DoctorRequestStatus;
@@ -23,7 +23,7 @@ export interface DoctorRequestPagination {
 export interface DoctorRequestListResponse {
   success: boolean;
   message: string;
-  result: {
+  data: {
     requests: DoctorRequest[];
     page: number;
     limit: number;

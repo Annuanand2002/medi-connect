@@ -1,11 +1,11 @@
 import { inject, injectable } from "inversify";
-import { IVerifyPatientOTPUsecase } from "../../repository/patient/IVerifyOTP.usecase";
 import { IPatientOtpRepo } from "../../../domain/repositories/patient/IPatientOtp.repo";
 import { VerifyPatientOtpDTO } from "../../DTO/patient/verifyOTP.dto";
 import HTTP_STATUS from "../../../shared/constants/httpStatusCode";
 import AppError from "../../../shared/errors/appErrors";
 import { TYPES } from "../../../di/types/types";
 import { IPatientRepo } from "../../../domain/repositories/patient/IPatient.repo";
+import { IVerifyPatientOTPUsecase } from "../../../domain/repositories/patient/repo.usecase/IVerifyOTP.usecase";
 
 @injectable()
 export class VerifyPatientOTPUsecase implements IVerifyPatientOTPUsecase {

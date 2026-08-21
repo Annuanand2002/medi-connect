@@ -1,9 +1,9 @@
 import { injectable, inject } from "inversify";
-import { IGetDoctorRetryRequest } from "../../../application/repository/doctor/IGetDoctorRetryReq.usecase";
 import HTTP_STATUS from "../../../shared/constants/httpStatusCode";
 import asyncHandler from "../../../shared/utils/asyncHandler";
 import { Request, Response } from "express";
 import { TYPES } from "../../../di/types/types";
+import { IGetDoctorRetryRequest } from "../../../domain/repositories/doctor/repo.usecase/IGetDoctorRetryReq.usecase";
 
 @injectable()
 export class GetRetryDoctorRequestController {

@@ -1,4 +1,5 @@
 import FileEntity from "../../../domain/entities/common/file.entity";
+import { Department } from "../../../shared/constants/department";
 
 
 
@@ -8,7 +9,7 @@ export interface ApplyDoctorRequestDTO{
     dateOfBirth : Date;
     qualification : string;
     experience : number;
-    specialization : string;
+    department : Department;
     profileImg ?: FileEntity;
     governmentId : FileEntity;
     medicalLicense : FileEntity;

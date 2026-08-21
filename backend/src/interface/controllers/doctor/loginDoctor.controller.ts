@@ -1,10 +1,11 @@
-import { IDoctorLoginUseCase } from "../../../application/repository/doctor/IDoctorLogin.usecase";
+
 import asyncHandler from "../../../shared/utils/asyncHandler";
 import { Request, Response } from "express";
 import { setRefershCookie } from "../../../shared/utils/cookies";
 import HTTP_STATUS from "../../../shared/constants/httpStatusCode";
 import { inject, injectable } from "inversify";
 import { TYPES } from "../../../di/types/types";
+import { IDoctorLoginUseCase } from "../../../domain/repositories/doctor/repo.usecase/IDoctorLogin.usecase";
 
 @injectable()
 export class LoginDoctorController {

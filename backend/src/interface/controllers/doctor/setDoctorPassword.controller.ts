@@ -1,9 +1,9 @@
 import { inject, injectable } from "inversify";
-import { ISetPasswordUsecase } from "../../../application/repository/doctor/ISetPasswordUsecase";
 import HTTP_STATUS from "../../../shared/constants/httpStatusCode";
 import asyncHandler from "../../../shared/utils/asyncHandler";
 import { Request, Response } from "express";
 import { TYPES } from "../../../di/types/types";
+import { ISetPasswordUsecase } from "../../../domain/repositories/doctor/repo.usecase/ISetPasswordUsecase";
 
 @injectable()
 export class SetDoctorPasswordController {

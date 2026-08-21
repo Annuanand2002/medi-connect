@@ -1,3 +1,5 @@
+import { Department } from "../../../shared/constants/department";
+
 export interface UploadFile {
     url : string;
     key : string
@@ -8,7 +10,7 @@ interface DoctorRequest{
    fullName : string;
    email : string;
    dateOfBirth : Date;
-   specialization : string;
+   department : Department;
    profileImg ?: UploadFile;
    qualification : string;
    experience : number;

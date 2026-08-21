@@ -1,5 +1,4 @@
 import { inject, injectable } from "inversify";
-import { ICreatePatientUseCase } from "../../repository/patient/ICreatePatient.usecase";
 import { IPatientRepo } from "../../../domain/repositories/patient/IPatient.repo";
 import { TYPES } from "../../../di/types/types";
 import AppError from "../../../shared/errors/appErrors";
@@ -13,6 +12,7 @@ import { generateCode } from "../../../shared/utils/GenerateCode";
 import { IPatientOtpRepo } from "../../../domain/repositories/patient/IPatientOtp.repo";
 import IEmailService from "../../services/IEmailService";
 import { generateOtp } from "../../../shared/utils/generateOTP";
+import { ICreatePatientUseCase } from "../../../domain/repositories/patient/repo.usecase/ICreatePatient.usecase";
 
 @injectable()
 export class CreatePatientUSeCase implements ICreatePatientUseCase {
@@ -37,6 +37,7 @@ export class CreatePatientUSeCase implements ICreatePatientUseCase {
       ...dto,
       patientCode,
       isVerified: false,
+      isBlocked : "ACTIVE"
     });
     const otp = generateOtp()
     await this._otpService.create({

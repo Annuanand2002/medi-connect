@@ -3,8 +3,8 @@ import { IDepartmentRepo } from "../../../domain/repositories/department/IDepear
 import HTTP_STATUS from "../../../shared/constants/httpStatusCode";
 import AppError from "../../../shared/errors/appErrors";
 import { DeleteDepartmentDTO } from "../../DTO/department/deleteDepartmentDTO";
-import { IDeleteDepartmentUseCase } from "../../repository/department/IDeleteDepartmentUseCase";
 import { TYPES } from "../../../di/types/types";
+import { IDeleteDepartmentUseCase } from "../../../domain/repositories/department/IDeleteDepartmentUseCase";
 
 @injectable()
 export class DeleteDepartmentUseCase implements IDeleteDepartmentUseCase {

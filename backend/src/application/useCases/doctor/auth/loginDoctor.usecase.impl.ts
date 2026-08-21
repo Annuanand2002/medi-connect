@@ -6,8 +6,8 @@ import HTTP_STATUS from "../../../../shared/constants/httpStatusCode";
 import AppError from "../../../../shared/errors/appErrors";
 import { DoctorLoginResDTO } from "../../../DTO/doctor/loginDoctor.DTO";
 import { LoginRequestDTO } from "../../../DTO/loginReq";
-import { IDoctorLoginUseCase } from "../../../repository/doctor/IDoctorLogin.usecase";
 import { TYPES } from "../../../../di/types/types";
+import { IDoctorLoginUseCase } from "../../../../domain/repositories/doctor/repo.usecase/IDoctorLogin.usecase";
 
 
 @injectable()

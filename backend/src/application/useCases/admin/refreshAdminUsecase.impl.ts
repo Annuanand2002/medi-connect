@@ -6,8 +6,8 @@ import HTTP_STATUS from "../../../shared/constants/httpStatusCode";
 import AppError from "../../../shared/errors/appErrors";
 import { RefreshTokenReqDTO } from "../../DTO/refreshTokenReqDTo";
 import { RefreshTokenResultDTO } from "../../DTO/refreshTokenResultDTO";
-import { IRefreshAdminUseCase } from "../../repository/admin/IRefreshAdminUseCase";
 import { TYPES } from "../../../di/types/types";
+import { IRefreshAdminUseCase } from "../../../domain/repositories/admin/IRefreshAdminUseCase";
 
 @injectable()
 export class RefreshAdminUseCase implements IRefreshAdminUseCase {

@@ -1,6 +1,6 @@
 import { inject, injectable } from "inversify";
 import { TYPES } from "../../../di/types/types";
-import { IPatientRefreshUseCase } from "../../../application/repository/patient/IPatientRefreshToken";
+import { IPatientRefreshUseCase } from "../../../domain/repositories/patient/repo.usecase/IPatientRefreshToken";
 import asyncHandler from "../../../shared/utils/asyncHandler";
 import { Request, Response } from "express";
 import AppError from "../../../shared/errors/appErrors";

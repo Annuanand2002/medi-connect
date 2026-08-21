@@ -1,13 +1,15 @@
-import { IDcotorRequestUseCase } from "../../../application/repository/doctor/IApplyDoctorRequestUsecase";
 import { Request, Response } from "express";
 import asyncHandler from "../../../shared/utils/asyncHandler";
 import HTTP_STATUS from "../../../shared/constants/httpStatusCode";
 import AppError from "../../../shared/errors/appErrors";
-import { IGetAllDoctorRequedstUseCase } from "../../../application/repository/doctor/IGetAllDoctorRequets";
-import { DoctorRequestStatus } from "../../../shared/constants/doctorRequestStatus";
-import { IGetDoctorRequestUseCase } from "../../../application/repository/doctor/IGetDoctorRequest.usecase";
+import { DoctorRequestStatus } from "../../../shared/constants/role.status";
 import { inject, injectable } from "inversify";
 import { TYPES } from "../../../di/types/types";
+import { IDcotorRequestUseCase } from "../../../domain/repositories/doctor/repo.usecase/IApplyDoctorRequestUsecase";
+import { IGetAllDoctorRequedstUseCase } from "../../../domain/repositories/doctor/repo.usecase/IGetAllDoctorRequets";
+import { IGetDoctorRequestUseCase } from "../../../domain/repositories/doctor/repo.usecase/IGetDoctorRequest.usecase";
+import sendResponse from "../../../shared/utils/apiResponse";
+import { RESPONSE_MESSAGES } from "../../../shared/constants/message";
 
 type DoctorRequestFiles = {
   profileImg?: {
@@ -50,13 +52,12 @@ export class DoctorRequestController {
       }
       const files = req.files as unknown as DoctorRequestFiles;
 
-      const result = await this._applyDoctorRequestUseCase.execute({
+      await this._applyDoctorRequestUseCase.execute({
         fullName: req.body.fullName,
         email: req.body.email,
         dateOfBirth: new Date(req.body.dateOfBirth),
-
         qualification: req.body.qualification,
-        specialization: req.body.specialization,
+        department: req.body.department,
         experience: Number(req.body.experience),
 
         profileImg: files.profileImg?.[0]
@@ -86,12 +87,13 @@ export class DoctorRequestController {
         })),
       });
 
-      res.status(HTTP_STATUS.CREATED).json({
-        success: true,
-        message:
-          "Application submitted successfully.Your application will be reviewed within 2-3 business days.After verification a mail will be send to your email.",
-        result,
-      });
+      res
+        .status(HTTP_STATUS.CREATED)
+        .json(
+          sendResponse(
+            "your application submitted succesfylly.It will be reviwed within 2-3 bussiness days and connect with you through your email.",
+          ),
+        );
     },
   );
   getAllDoctorRequest = asyncHandler(async (req: Request, res: Response) => {
@@ -105,19 +107,15 @@ export class DoctorRequestController {
       status,
       search,
     });
-        console.log("check",result)
     res
       .status(HTTP_STATUS.OK)
-      .json({ success: true, messgae: "All requests fetched", result });
+      .json(sendResponse(RESPONSE_MESSAGES.FETCH, result));
   });
   getDoctorReq = asyncHandler(async (req: Request, res: Response) => {
     const id = req.params.id as string;
     const result = await this._getDoctorRequestUseCase.execute(id);
-
-    res.status(HTTP_STATUS.OK).json({
-      success: true,
-      message: "DoctorRequest fetched succesfully",
-      result,
-    });
+    res
+      .status(HTTP_STATUS.OK)
+      .json(sendResponse(RESPONSE_MESSAGES.FETCH, result));
   });
 }

@@ -1,11 +1,11 @@
 import { inject, injectable } from "inversify";
-import { IRefreshDoctorUseCase } from "../../../application/repository/doctor/IDoctorRefresh.usecase";
 import { TYPES } from "../../../di/types/types";
 import asyncHandler from "../../../shared/utils/asyncHandler";
 import { Request, Response } from "express";
 import AppError from "../../../shared/errors/appErrors";
 import HTTP_STATUS from "../../../shared/constants/httpStatusCode";
 import { setRefershCookie } from "../../../shared/utils/cookies";
+import { IRefreshDoctorUseCase } from "../../../domain/repositories/doctor/repo.usecase/IDoctorRefresh.usecase";
 
 @injectable()
 export class DoctorRefreshTokenController {

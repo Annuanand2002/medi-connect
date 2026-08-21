@@ -1,8 +1,7 @@
 import { PatientOtp } from "../../entities/patient/patientOtp.entity";
+import { IBaseRepository } from "../base/IBaseRepository";
 
-export interface IPatientOtpRepo {
-  create(data: PatientOtp): Promise<PatientOtp>;
+export interface IPatientOtpRepo extends IBaseRepository<PatientOtp> {
   findByPatientId(patientId: string): Promise<PatientOtp | null>;
   deleteByPatientId(patientId: string): Promise<void>;
-  update(patientId: string, data: Partial<PatientOtp>): Promise<PatientOtp | null>;
 }

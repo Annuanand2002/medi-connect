@@ -62,10 +62,10 @@ export const doctorRequestSchema = z.object({
     .trim()
     .min(2, "Qualification is required."),
 
-  specialization: z
+  department: z
     .string()
     .trim()
-    .min(2, "Specialization is required."),
+    .min(2, "Please select a department."),
 
 experience: z
   .number({

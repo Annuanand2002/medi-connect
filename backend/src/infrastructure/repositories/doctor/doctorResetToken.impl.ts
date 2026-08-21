@@ -1,15 +1,22 @@
 import { injectable } from "inversify";
 import { DoctorResetToken } from "../../../domain/entities/doctor/doctorResetToken.entity";
 import { IDoctorResetTokenRepo } from "../../../domain/repositories/doctor/IDoctorResetToken.repo";
-import { DoctorResetTokenMapper } from "../../database/mappers/DoctorResetToken.mapper";
-import { DoctorResetTokenModel } from "../../database/models/doctorResetToken.model";
+import { DoctorResetTokenModel, DoctorResetTokenSchema } from "../../database/models/doctorResetToken.model";
+import { DoctorResetTokenMapper } from "../../mappers/DoctorResetToken.mapper";
+import { BaseRepository } from "../Base/base.repo.impl";
+
 
 @injectable()
-export class DoctorResetTokenRepo implements IDoctorResetTokenRepo {
-  async create(data: DoctorResetToken): Promise<void> {
-    const result = DoctorResetTokenMapper.toPersistence(data);
-    await DoctorResetTokenModel.create(result);
-  }
+export class DoctorResetTokenRepo extends BaseRepository<DoctorResetTokenSchema,DoctorResetToken> implements IDoctorResetTokenRepo {
+   constructor(){
+    super(
+      DoctorResetTokenModel,
+      DoctorResetTokenMapper.toDomain,
+      DoctorResetTokenMapper.toPersistence
+
+    )
+   }
+
   async findByDoctorId(doctorId: string): Promise<DoctorResetToken | null> {
     const result = await DoctorResetTokenModel.findById(doctorId);
     if (!result) return null;

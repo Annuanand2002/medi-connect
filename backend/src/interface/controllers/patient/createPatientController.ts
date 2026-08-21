@@ -3,7 +3,7 @@ import asyncHandler from "../../../shared/utils/asyncHandler";
 import { Request,Response } from "express";
 import { TYPES } from "../../../di/types/types";
 import HTTP_STATUS from "../../../shared/constants/httpStatusCode";
-import { ICreatePatientUseCase } from "../../../application/repository/patient/ICreatePatient.usecase";
+import { ICreatePatientUseCase } from "../../../domain/repositories/patient/repo.usecase/ICreatePatient.usecase";
 
 @injectable()
 export class CreatePatientController{

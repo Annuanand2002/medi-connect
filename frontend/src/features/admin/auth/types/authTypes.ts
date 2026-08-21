@@ -6,7 +6,7 @@ export interface Admin {
  export interface LoginResponse {
     success : boolean;
     message : string;
-    result : {
+    data : {
         accessToken : string;
         refreshToken : string;
         admin : Admin

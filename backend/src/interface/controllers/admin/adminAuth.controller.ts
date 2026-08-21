@@ -1,4 +1,3 @@
-import { ILoginAdminUseCase } from "../../../application/repository/admin/ILoginAdminUsecase";
 import asyncHandler from "../../../shared/utils/asyncHandler";
 import { Request, Response } from "express";
 import {
@@ -7,10 +6,13 @@ import {
 } from "../../../shared/utils/cookies";
 import HTTP_STATUS from "../../../shared/constants/httpStatusCode";
 import AppError from "../../../shared/errors/appErrors";
-import { IRefreshAdminUseCase } from "../../../application/repository/admin/IRefreshAdminUseCase";
-import { ILogoutUseCase } from "../../../application/repository/common/ILogoutUseCase";
 import { inject, injectable } from "inversify";
 import { TYPES } from "../../../di/types/types";
+import { ILoginAdminUseCase } from "../../../domain/repositories/admin/ILoginAdminUsecase";
+import { IRefreshAdminUseCase } from "../../../domain/repositories/admin/IRefreshAdminUseCase";
+import { ILogoutUseCase } from "../../../domain/repositories/common/ILogoutUseCase";
+import sendResponse from "../../../shared/utils/apiResponse";
+import { RESPONSE_MESSAGES } from "../../../shared/constants/message";
 
 @injectable()
 export class AdminController {
@@ -26,9 +28,10 @@ export class AdminController {
   login = asyncHandler(async (req: Request, res: Response) => {
     const result = await this._adminLoginUseCase.execute(req.body);
     setRefershCookie(res, result.refreshToken);
+    sendResponse(`${RESPONSE_MESSAGES.LOGIN_SUCCESS}`, result);
     res
       .status(HTTP_STATUS.OK)
-      .json({ success: true, message: "Login succesfull", result });
+      .json(sendResponse(RESPONSE_MESSAGES.LOGIN_SUCCESS, result));
   });
   //refreshtoken
   refreshToken = asyncHandler(async (req: Request, res: Response) => {
@@ -57,6 +60,6 @@ export class AdminController {
     clearRefershTokenCookie(res);
     res
       .status(HTTP_STATUS.OK)
-      .json({ success: true, message: "Logout succesfully" });
+      .json(sendResponse(RESPONSE_MESSAGES.LOGIN_SUCCESS));
   });
 }

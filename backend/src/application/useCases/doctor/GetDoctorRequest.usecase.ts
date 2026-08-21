@@ -1,8 +1,8 @@
 import { inject, injectable } from "inversify";
 import DoctorRequest from "../../../domain/entities/doctor/doctorRequestEntity";
 import { IDoctorRequest } from "../../../domain/repositories/doctor/IDoctorRequest";
-import { IGetDoctorRequestUseCase } from "../../repository/doctor/IGetDoctorRequest.usecase";
 import { TYPES } from "../../../di/types/types";
+import { IGetDoctorRequestUseCase } from "../../../domain/repositories/doctor/repo.usecase/IGetDoctorRequest.usecase";
 
 @injectable()
 export class GetDoctorRequestUseCase implements IGetDoctorRequestUseCase {

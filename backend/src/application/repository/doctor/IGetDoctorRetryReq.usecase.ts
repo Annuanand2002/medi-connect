@@ -1,5 +1,0 @@
-import DoctorRequest from "../../../domain/entities/doctor/doctorRequestEntity";
-
-export interface IGetDoctorRetryRequest{
-    execute(token:string):Promise<DoctorRequest>
-}

@@ -1,5 +1,4 @@
 import { inject, injectable } from "inversify";
-import { IPatientLoginUseCase } from "../../repository/patient/IPatientLogin";
 import { TYPES } from "../../../di/types/types";
 import { IPatientRepo } from "../../../domain/repositories/patient/IPatient.repo";
 import {
@@ -10,6 +9,7 @@ import AppError from "../../../shared/errors/appErrors";
 import HTTP_STATUS from "../../../shared/constants/httpStatusCode";
 import { IHashService } from "../../../domain/services/IHashService";
 import { ITokenService } from "../../../domain/services/ITokenService";
+import { IPatientLoginUseCase } from "../../../domain/repositories/patient/repo.usecase/IPatientLogin";
 
 @injectable()
 export class LoginPatientUseCase implements IPatientLoginUseCase {

@@ -1,9 +1,9 @@
 import { inject, injectable } from "inversify";
 import { TYPES } from "../../../di/types/types";
-import { IResetPasswordUsecase } from "../../../application/repository/common/IResetPassword.usecase";
 import asyncHandler from "../../../shared/utils/asyncHandler";
 import { Request,Response } from "express";
 import HTTP_STATUS from "../../../shared/constants/httpStatusCode";
+import { IResetPasswordUsecase } from "../../../domain/repositories/common/IResetPassword.usecase";
 
 @injectable()
 export class ResetPatientPasswordController {

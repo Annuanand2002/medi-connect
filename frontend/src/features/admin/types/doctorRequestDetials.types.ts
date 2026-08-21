@@ -9,7 +9,7 @@ export interface DoctorRequestDetails {
   email: string;
   dateOfBirth: string;
   qualification: string;
-  specialization: string;
+  department: string;
   experience: number;
   profileImg: UploadFile;
   governmentId: UploadFile;
@@ -22,5 +22,5 @@ export interface DoctorRequestDetails {
 export interface DoctorRequestDetailsResponse {
   success: boolean;
   message: string;
-  result: DoctorRequestDetails;
+  data: DoctorRequestDetails;
 }

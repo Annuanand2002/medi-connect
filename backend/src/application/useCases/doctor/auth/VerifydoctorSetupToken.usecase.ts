@@ -4,8 +4,8 @@ import IDoctorVerificationTokenRepo from "../../../../domain/repositories/doctor
 import HTTP_STATUS from "../../../../shared/constants/httpStatusCode";
 import AppError from "../../../../shared/errors/appErrors";
 import { VerifyDoctorSetupTokenDTO, VerifyDoctorSetupTokenResponseDTO } from "../../../DTO/doctor/verifyDoctorSetupTokenF.DTO";
-import { IVerifyDoctorSetupTokenUseCase } from "../../../repository/doctor/IVerifyDoctorSetupTokenUseCase";
 import { TYPES } from "../../../../di/types/types";
+import { IVerifyDoctorSetupTokenUseCase } from "../../../../domain/repositories/doctor/repo.usecase/IVerifyDoctorSetupTokenUseCase";
 
 @injectable()
 export class VerifyDoctorSetupTokenUseCase implements IVerifyDoctorSetupTokenUseCase{

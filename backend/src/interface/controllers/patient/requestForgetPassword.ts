@@ -1,6 +1,6 @@
 import { inject, injectable } from "inversify";
 import { TYPES } from "../../../di/types/types";
-import { IRequestForgetPassword } from "../../../application/repository/common/IRequestForgetPassword.usecase";
+import { IRequestForgetPassword } from "../../../domain/repositories/common/IRequestForgetPassword.usecase";
 import asyncHandler from "../../../shared/utils/asyncHandler";
 import { Request, Response } from "express";
 import HTTP_STATUS from "../../../shared/constants/httpStatusCode";

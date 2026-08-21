@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate,useSearchParams } from "react-router-dom";
 import axios from "axios";
 import { Mail } from "lucide-react";
 
@@ -19,6 +19,11 @@ import { loginPatient } from "../api/login.patient";
 
 const LoginPatientForm = () => {
   const [loginError, setLoginError] = useState("");
+  const [searchParams] = useSearchParams();
+
+const blockedError = searchParams.get("error");
+
+const displayedError = blockedError || loginError;
 
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
@@ -107,10 +112,10 @@ const LoginPatientForm = () => {
             <Link to="/patient/request-reset">Forgot password?</Link>
           </div>
 
-          {loginError && (
+          {displayedError && (
             <div className="patient-login-error" role="alert">
               <span>!</span>
-              <p>{loginError}</p>
+              <p>{displayedError}</p>
             </div>
           )}
 

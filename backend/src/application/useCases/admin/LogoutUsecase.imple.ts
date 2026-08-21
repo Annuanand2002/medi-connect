@@ -4,8 +4,8 @@ import { JWTService } from "../../../infrastructure/services/ITokenService.impl"
 import HTTP_STATUS from "../../../shared/constants/httpStatusCode";
 import AppError from "../../../shared/errors/appErrors";
 import { LogoutReqDTO } from "../../DTO/logoutReq";
-import { ILogoutUseCase } from "../../repository/common/ILogoutUseCase";
 import { TYPES } from "../../../di/types/types";
+import { ILogoutUseCase } from "../../../domain/repositories/common/ILogoutUseCase";
 
 @injectable()
 export class LogoutUseCase implements ILogoutUseCase {

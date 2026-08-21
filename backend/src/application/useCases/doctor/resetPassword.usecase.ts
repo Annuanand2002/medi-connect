@@ -1,12 +1,12 @@
 import { inject, injectable } from "inversify";
 import { SetDoctorPasswordDTO } from "../../DTO/doctor/setPasswordDTO";
-import { IResetPasswordUsecase } from "../../repository/common/IResetPassword.usecase";
 import { IDoctorResetTokenRepo } from "../../../domain/repositories/doctor/IDoctorResetToken.repo";
 import AppError from "../../../shared/errors/appErrors";
 import HTTP_STATUS from "../../../shared/constants/httpStatusCode";
 import { TYPES } from "../../../di/types/types";
 import { IDoctorRepo } from "../../../domain/repositories/doctor/IDoctor";
 import { IHashService } from "../../../domain/services/IHashService";
+import { IResetPasswordUsecase } from "../../../domain/repositories/common/IResetPassword.usecase";
 
 @injectable()
 export class ResetDoctorPassowrd implements IResetPasswordUsecase {

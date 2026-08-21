@@ -3,7 +3,7 @@ import { IDepartmentRepo } from "../../../domain/repositories/department/IDepear
 import HTTP_STATUS from "../../../shared/constants/httpStatusCode";
 import AppError from "../../../shared/errors/appErrors";
 import { DeleteDepartmentDTO } from "../../DTO/department/deleteDepartmentDTO";
-import { IRestoreDepartmentUseCase } from "../../repository/department/IRestoreDepartment";
+import { IRestoreDepartmentUseCase } from "../../../domain/repositories/department/IRestoreDepartment";
 import { TYPES } from "../../../di/types/types";
 
 @injectable()

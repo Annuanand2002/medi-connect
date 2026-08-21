@@ -166,7 +166,7 @@ const DoctorRequestDetailsPage = () => {
 
                 <span>
                   <Stethoscope size={13} />
-                  {request.specialization}
+                  {request.department}
                 </span>
               </div>
             </div>
@@ -224,9 +224,9 @@ const DoctorRequestDetailsPage = () => {
             </div>
 
             <div className="doctor-info-item">
-              <span>Specialization</span>
+              <span>Department</span>
 
-              <strong>{request.specialization}</strong>
+              <strong>{request.department}</strong>
             </div>
 
             <div className="doctor-info-item">
@@ -339,6 +339,7 @@ const DoctorRequestDetailsPage = () => {
         <ApproveDoctorModal
           open={showApproveModal}
           doctorRequestId={request.id}
+          department={request.department}
           onClose={() => setShowApproveModal(false)}
           onSuccess={() => {
             dispatch(getDoctorRequestDetailsThunk(request.id));

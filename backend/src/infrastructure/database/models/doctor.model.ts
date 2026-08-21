@@ -1,4 +1,5 @@
 import { HydratedDocument, InferSchemaType, Schema, model } from "mongoose";
+import { Department } from "../../../shared/constants/department";
 
 const uploadFileSchema = new Schema({
   url: {
@@ -47,22 +48,16 @@ const doctorSchema = new Schema(
       trim: true,
     },
 
-    specialization: {
+    department: {
       type: String,
+      enum : Object.values(Department),
       required: true,
-      trim: true,
     },
 
     experience: {
       type: Number,
       required: true,
       min: 0,
-    },
-
-    departmentId: {
-      type: Schema.Types.ObjectId,
-      ref: "Department",
-      required: true,
     },
 
     refreshToken: {
@@ -72,8 +67,8 @@ const doctorSchema = new Schema(
 
     status: {
       type: String,
-      enum: ["PENDING_SETUP", "ACTIVE", "BLOCKED"],
-      default: "PENDING_SETUP",
+      enum: [ "ACTIVE", "BLOCKED"],
+      default: "ACTIVE",
     },
   },
   {

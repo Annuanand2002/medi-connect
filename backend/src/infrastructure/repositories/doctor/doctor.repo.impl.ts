@@ -1,37 +1,77 @@
 import Doctor from "../../../domain/entities/doctor/doctor.entity";
 import { IDoctorRepo } from "../../../domain/repositories/doctor/IDoctor";
-import DoctorMapper from "../../database/mappers/DoctorMapper";
 import DoctorModel, { DoctorSchema } from "../../database/models/doctor.model";
 import { injectable } from "inversify";
 import { BaseRepository } from "../Base/base.repo.impl";
-
+import DoctorMapper from "../../mappers/DoctorMapper";
+import {
+  GetDoctorReqDTO,
+  PaginationDoctorResDTO,
+} from "../../../application/DTO/doctor/getDoctorDTO";
 
 @injectable()
-export class DoctorRepo extends BaseRepository<DoctorSchema,Doctor> implements IDoctorRepo{
-    constructor(){
-        super(DoctorModel,DoctorMapper.toDomain)
+export class DoctorRepo
+  extends BaseRepository<DoctorSchema, Doctor>
+  implements IDoctorRepo
+{
+  constructor() {
+    super(DoctorModel, DoctorMapper.toDomain, DoctorMapper.toPersistence);
+  }
+  async findByEmail(email: string): Promise<Doctor | null> {
+    const doctor = await DoctorModel.findOne({ email: email.toLowerCase() });
+    return doctor ? DoctorMapper.toDomain(doctor) : null;
+  }
+  async updateRefreshToken(
+    id: string,
+    refreshToken: string | null,
+  ): Promise<void> {
+    await DoctorModel.findByIdAndUpdate(id, { refreshToken });
+  }
+  async countByDepartment(departmentId: string): Promise<number> {
+    return await DoctorModel.countDocuments({
+      departmentId,
+      status: { $ne: "BLOCKED" },
+    });
+  }
+  async findLastdoctor(): Promise<Doctor | null> {
+    const doctor = await DoctorModel.findOne().sort({ createAt: -1 });
+    return doctor ? DoctorMapper.toDomain(doctor) : null;
+  }
+  async findDoctors(dto: GetDoctorReqDTO): Promise<PaginationDoctorResDTO> {
+    const { page, limit, status, search } = dto;
+    const query: Record<string, unknown> = {};
+    if(status){
+      query.status = status;
     }
-    async create(data: Partial<Doctor>): Promise<Doctor> {
-        const doctor = await DoctorModel.create(data);
-        return DoctorMapper.toDomain(doctor)
+    if (search) {
+      query.$or = [
+        {
+          fullName: {
+            $regex: search,
+            $options: "i",
+          },
+        },
+        {
+          email: {
+            $regex: search,
+            $options: "i",
+          },
+        },
+        {
+          department: {
+            $regex: search,
+            $options: "i",
+          },
+        },
+      ];
     }
-    async findByEmail(email: string): Promise<Doctor | null> {
-        const doctor = await DoctorModel.findOne({email:email.toLowerCase()})
-        return doctor?DoctorMapper.toDomain(doctor):null;
-    }
-    async update(id: string, data: Partial<Doctor>): Promise<Doctor | null> {
-        const document = await DoctorModel.findByIdAndUpdate(id,data,{new:true})
-        if(!document)return null;
-        return DoctorMapper.toDomain(document)
-    }
-    async updateRefreshToken(id: string, refreshToken: string | null): Promise<void> {
-        await DoctorModel.findByIdAndUpdate(id,{refreshToken})
-    }
-    async countByDepartment(departmentId: string): Promise<number> {
-        return await DoctorModel.countDocuments({departmentId,status:{$ne:"BLOCKED"}})
-    }
-    async findLastdoctor(): Promise<Doctor | null> {
-        const doctor = await DoctorModel.findOne().sort({createAt:-1})
-        return doctor?DoctorMapper.toDomain(doctor):null;
-    }
+    const result = await super.findAll(page, limit, query);
+    return {
+      requests: result.data,
+      page: result.page,
+      limit: result.limit,
+      total: result.total,
+      totalPages: result.totalPages,
+    };
+  }
 }

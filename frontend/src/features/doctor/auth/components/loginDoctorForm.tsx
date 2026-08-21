@@ -1,7 +1,7 @@
 import { useAppDispatch } from "@/hooks/hooks";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate,useSearchParams } from "react-router-dom";
 
 import {
   loginDoctorSchema,
@@ -25,6 +25,9 @@ const LoginDoctorForm = () => {
 
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams()
+  const blockedError = searchParams.get("error");
+  const displayedError = blockedError || loginError;
 
   const {
     register,
@@ -157,7 +160,7 @@ const LoginDoctorForm = () => {
 
 
           {/* Login Error */}
-          {loginError && (
+          {displayedError && (
             <div
               className="doctor-login-error"
               role="alert"
@@ -167,7 +170,7 @@ const LoginDoctorForm = () => {
               </div>
 
               <p>
-                {loginError}
+                {displayedError}
               </p>
             </div>
           )}

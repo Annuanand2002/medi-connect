@@ -6,8 +6,8 @@ import HTTP_STATUS from "../../../shared/constants/httpStatusCode";
 import AppError from "../../../shared/errors/appErrors";
 import { LoginRequestDTO } from "../../DTO/loginReq";
 import { LoginResposneDTO } from "../../DTO/loginRes";
-import { ILoginAdminUseCase } from "../../repository/admin/ILoginAdminUsecase";
 import { TYPES } from "../../../di/types/types";
+import { ILoginAdminUseCase } from "../../../domain/repositories/admin/ILoginAdminUsecase";
 
 @injectable()
 export class AdminUseCase implements ILoginAdminUseCase {

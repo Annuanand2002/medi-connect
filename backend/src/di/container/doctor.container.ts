@@ -32,6 +32,27 @@ import { DoctorResetTokenRepo } from "../../infrastructure/repositories/doctor/d
 import { RequestResetPasswordController } from "../../interface/controllers/doctor/requestResetPassword.controller";
 import { ResetDoctorPassowrd } from "../../application/useCases/doctor/resetPassword.usecase";
 import { ResetDoctorPasswordController } from "../../interface/controllers/doctor/resetPassword.controller";
+import { GetAllDoctorsUSeCase } from "../../application/useCases/doctor/GetAllDoctors.usecase";
+import { DoctorController } from "../../interface/controllers/doctor/doctors.controller";
+import { ToggelDoctorStatus } from "../../application/useCases/doctor/ToogleDoctorStatus.usecase";
+import { DoctorAvailabilityRepo } from "../../infrastructure/repositories/doctor/doctorAvailability.repo";
+import { CreateDoctorAvailUseCase } from "../../application/useCases/doctor/createDoctorAvailbility.usecase";
+import { DoctorAvailController } from "../../interface/controllers/doctor/doctorAvailability.controller";
+import { UpdateDoctorAvailabilityUseCase } from "../../application/useCases/doctor/updateDoctorAvailability.usecase";
+import { DeleteDoctorAvailUsecase } from "../../application/useCases/doctor/DeleteDoctorAvail.usecase";
+import { GetDoctorAvailUsecase } from "../../application/useCases/doctor/GetDoctorAvailability.usecase";
+import { DoctorLeaveRepo } from "../../infrastructure/repositories/doctor/doctorLeave.repo";
+import { CreateDoctorLeave } from "../../application/useCases/doctor/CreateDoctorLeave.usecase";
+import { UpdateDoctorLeave } from "../../application/useCases/doctor/updateDoctorLeave.usecase";
+import { DeleteDoctorLeaveusecase } from "../../application/useCases/doctor/deleteDoctorLeave.usecase";
+import { GetAllDoctorLeaveUsecase } from "../../application/useCases/doctor/GetAllDoctorLeave.usecase";
+import { DoctorLeaveController } from "../../interface/controllers/doctor/doctorLeave.controller";
+import { DoctorBlockRepo } from "../../infrastructure/repositories/doctor/doctorBlock.repo";
+import { CreateDoctorBlockUseCase } from "../../application/useCases/doctor/CreateDoctorBlock";
+import { UpdateDoctorBlockUsecase } from "../../application/useCases/doctor/UpdateDoctorBlock.usecase";
+import { DeleteDoctorBlockUsecase } from "../../application/useCases/doctor/DeleteDoctorBlock.usecase";
+import { GetDoctorBlockUsecase } from "../../application/useCases/doctor/GetDoctorBlock.usecase";
+import { DoctorBlockController } from "../../interface/controllers/doctor/doctorBlock.controller";
 
 export function doctorBinding(container: Container) {
   container.bind(TYPES.DoctorRepo).to(DoctorRepo);
@@ -79,37 +100,46 @@ export function doctorBinding(container: Container) {
   container
     .bind(TYPES.SetDoctorPasswordController)
     .to(SetDoctorPasswordController);
-    container
-    .bind(TYPES.DoctorLoginUseCase)
-    .to(DoctorLoginUseCase)
-    container
-    .bind(TYPES.LoginDoctorController)
-    .to(LoginDoctorController)
-    container
-    .bind(TYPES.RefreshDoctorUseCase)
-    .to(RefreshDoctorUseCase)
-    container
+  container.bind(TYPES.DoctorLoginUseCase).to(DoctorLoginUseCase);
+  container.bind(TYPES.LoginDoctorController).to(LoginDoctorController);
+  container.bind(TYPES.RefreshDoctorUseCase).to(RefreshDoctorUseCase);
+  container
     .bind(TYPES.DoctorRefreshTokenController)
-    .to(DoctorRefreshTokenController)
-    container
-    .bind(TYPES.LogoutDoctorUseCase)
-    .to(LogoutDoctorUseCase)
-    container
-    .bind(TYPES.DoctorLogoutController)
-    .to(DoctorLogoutController)
-    container
+    .to(DoctorRefreshTokenController);
+  container.bind(TYPES.LogoutDoctorUseCase).to(LogoutDoctorUseCase);
+  container.bind(TYPES.DoctorLogoutController).to(DoctorLogoutController);
+  container
     .bind(TYPES.RequestDoctorForgetPasswordUseCase)
-    .to(RequestDoctorForgetPasswordUseCase)
-    container
-    .bind(TYPES.DoctorResetTokenRepo)
-    .to(DoctorResetTokenRepo)
-    container
+    .to(RequestDoctorForgetPasswordUseCase);
+  container.bind(TYPES.DoctorResetTokenRepo).to(DoctorResetTokenRepo);
+  container
     .bind(TYPES.RequestResetPasswordController)
-    .to(RequestResetPasswordController)
-    container
-    .bind(TYPES.ResetDoctorPassowrd)
-    .to(ResetDoctorPassowrd)
-    container
+    .to(RequestResetPasswordController);
+  container.bind(TYPES.ResetDoctorPassowrd).to(ResetDoctorPassowrd);
+  container
     .bind(TYPES.ResetDoctorPasswordController)
-    .to(ResetDoctorPasswordController)
+    .to(ResetDoctorPasswordController);
+  container.bind(TYPES.GetAllDoctorsUSeCase).to(GetAllDoctorsUSeCase);
+  container.bind(TYPES.DoctorController).to(DoctorController);
+  container.bind(TYPES.ToggelDoctorStatus).to(ToggelDoctorStatus);
+  container.bind(TYPES.DoctorAvailabilityRepo).to(DoctorAvailabilityRepo);
+  container.bind(TYPES.CreateDoctorAvailUseCase).to(CreateDoctorAvailUseCase);
+  container.bind(TYPES.DoctorAvailController).to(DoctorAvailController);
+  container
+    .bind(TYPES.UpdateDoctorAvailabilityUseCase)
+    .to(UpdateDoctorAvailabilityUseCase);
+  container.bind(TYPES.DeleteDoctorAvailUsecase).to(DeleteDoctorAvailUsecase);
+  container.bind(TYPES.GetDoctorAvailUsecase).to(GetDoctorAvailUsecase);
+  container.bind(TYPES.DoctorLeaveRepo).to(DoctorLeaveRepo);
+  container.bind(TYPES.CreateDoctorLeave).to(CreateDoctorLeave);
+  container.bind(TYPES.UpdateDoctorLeave).to(UpdateDoctorLeave);
+  container.bind(TYPES.DeleteDoctorLeaveusecase).to(DeleteDoctorLeaveusecase);
+  container.bind(TYPES.GetAllDoctorLeaveUsecase).to(GetAllDoctorLeaveUsecase);
+  container.bind(TYPES.DoctorLeaveController).to(DoctorLeaveController);
+  container.bind(TYPES.DoctorBlockRepo).to(DoctorBlockRepo);
+  container.bind(TYPES.CreateDoctorBlockUseCase).to(CreateDoctorBlockUseCase);
+  container.bind(TYPES.UpdateDoctorBlockUsecase).to(UpdateDoctorBlockUsecase);
+  container.bind(TYPES.DeleteDoctorBlockUsecase).to(DeleteDoctorBlockUsecase);
+  container.bind(TYPES.GetDoctorBlockUsecase).to(GetDoctorBlockUsecase);
+  container.bind(TYPES.DoctorBlockController).to(DoctorBlockController)
 }

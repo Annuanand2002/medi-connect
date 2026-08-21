@@ -5,10 +5,11 @@ import {
   Settings,
   Stethoscope,
   IndianRupee,
+  PersonStanding
 } from "lucide-react";
 
 import logo from "@/assets/logo/mediconnect-logo.jpeg";
-import SidebarItem from "./SidebarItem";
+import SidebarItem from "../../../components/SidebarItem";
 import { useAppDispatch } from "@/hooks/hooks";
 import { useNavigate } from "react-router-dom";
 import { logoutAdminThunk } from "../auth/redux/logout.thunk";
@@ -72,13 +73,17 @@ const AdminSidebar = () => {
           to="/admin/doctor-request"
           icon={ClipboardList}
           label="Doctor Requests"
-          badge={8}
         />
 
         <SidebarItem
           to="/admin/doctors"
           icon={Stethoscope}
           label="Doctors"
+        />
+        <SidebarItem
+          to="/admin/patient"
+          icon={PersonStanding}
+          label="Patients"
         />
 
         <SidebarItem

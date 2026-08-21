@@ -8,13 +8,9 @@ import patientRouter from "./interface/routers/patient/pateint.router";
 
 const app = express();
 
-const allowedOrigins = [
-  "http://localhost:5173",
-  "https://75b0f7h7-5173.inc1.devtunnels.ms",
-];
 app.use(
   cors({
-    origin: allowedOrigins,
+    origin: "http://localhost:5173",
     credentials: true,
   }),
 );

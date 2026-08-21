@@ -1,189 +1,121 @@
-import {
-  ArrowUpRight,
-  Mail,
-  UserRound,
-} from "lucide-react";
+import { ArrowUpRight, Mail, UserRound } from "lucide-react";
 
 import { Link } from "react-router-dom";
-
 import StatusBadge from "./StatusBadge";
-
-import type {
-  DoctorRequest,
-} from "../types/doctorRequestList.types";
+import type { DoctorRequest } from "../types/doctorRequestList.types";
 
 import { formateDate } from "@/utils/formateDate";
+import type { TableColumn } from "@/types/dataTable";
+import DataTable from "@/components/dataTable";
 
 interface DoctorRequestTableProps {
   requests: DoctorRequest[];
 }
 
-const DoctorRequestTable = ({
-  requests,
-}: DoctorRequestTableProps) => {
+const DoctorRequestTable = ({ requests }: DoctorRequestTableProps) => {
+  const columns: TableColumn<DoctorRequest>[] = [
+    {
+      key: "doctor",
+      header: "Doctor",
 
-  /* -------------------------------------------------------
-     EMPTY STATE
-  ------------------------------------------------------- */
+      render: (request) => (
+        <div className="doctor-cell">
+          <div className="doctor-avatar">
+            {request.fullName.charAt(0).toUpperCase()}
+          </div>
 
-  if (requests.length === 0) {
-    return (
-      <div className="doctor-request-empty">
+          <div className="doctor-info">
+            <strong>{request.fullName}</strong>
 
-        <div className="doctor-request-empty-icon">
-          <UserRound size={23} />
+            <span>
+              <Mail size={12} />
+              {request.email}
+            </span>
+          </div>
         </div>
+      ),
+    },
 
-        <span>
-          NO APPLICATIONS
+    {
+      key: "department",
+      header: "Department",
+
+      render: (request) => (
+        <span className="doctor-specialization">{request.department}</span>
+      ),
+    },
+
+    {
+      key: "experience",
+      header: "Experience",
+
+      render: (request) => (
+        <span className="doctor-experience">
+          {request.experience}
+
+          <small>years</small>
         </span>
+      ),
+    },
 
-        <h3>
-          No doctor requests found
-        </h3>
+    {
+      key: "createdAt",
+      header: "Requested",
 
-        <p>
-          Try adjusting your search or status
-          filter to find what you're looking for.
-        </p>
+      render: (request) => (
+        <span className="doctor-date">{formateDate(request.createdAt)}</span>
+      ),
+    },
 
-      </div>
-    );
-  }
+    {
+      key: "status",
+      header: "Status",
+
+      render: (request) => <StatusBadge status={request.status} />,
+    },
+
+    {
+      key: "action",
+      header: "Action",
+      className: "doctor-action-heading",
+
+      render: (request) => (
+        <div className="doctor-action-cell">
+          <Link
+            to={`/admin/doctor-request/${request.id}`}
+            className="doctor-view-button"
+          >
+            <span>View Details</span>
+
+            <ArrowUpRight size={15} />
+          </Link>
+        </div>
+      ),
+    },
+  ];
 
   return (
-    <div className="doctor-request-table-wrapper">
+    <DataTable
+      data={requests}
+      columns={columns}
+      rowKey={(request) => request.id}
+      emptyState={
+        <div className="doctor-request-empty">
+          <div className="doctor-request-empty-icon">
+            <UserRound size={23} />
+          </div>
 
-      <table className="doctor-request-table">
+          <span>NO APPLICATIONS</span>
 
-        <thead>
-          <tr>
+          <h3>No doctor requests found</h3>
 
-            <th>
-              Doctor
-            </th>
-
-            <th>
-              Specialization
-            </th>
-
-            <th>
-              Experience
-            </th>
-
-            <th>
-              Requested
-            </th>
-
-            <th>
-              Status
-            </th>
-
-            <th className="doctor-action-heading">
-              Action
-            </th>
-
-          </tr>
-        </thead>
-
-
-        <tbody>
-
-          {requests.map((request) => (
-
-            <tr key={request.id}>
-
-              {/* Doctor */}
-              <td>
-                <div className="doctor-cell">
-
-                  <div className="doctor-avatar">
-                    {request.fullName
-                      .charAt(0)
-                      .toUpperCase()}
-                  </div>
-
-                  <div className="doctor-info">
-
-                    <strong>
-                      {request.fullName}
-                    </strong>
-
-                    <span>
-                      <Mail size={12} />
-                      {request.email}
-                    </span>
-
-                  </div>
-
-                </div>
-              </td>
-
-
-              {/* Specialization */}
-              <td>
-                <span className="doctor-specialization">
-                  {request.specialization}
-                </span>
-              </td>
-
-
-              {/* Experience */}
-              <td>
-                <span className="doctor-experience">
-                  {request.experience}
-                  <small>
-                    years
-                  </small>
-                </span>
-              </td>
-
-
-              {/* Date */}
-              <td>
-                <span className="doctor-date">
-                  {formateDate(
-                    request.createdAt,
-                  )}
-                </span>
-              </td>
-
-
-              {/* Status */}
-              <td>
-                <StatusBadge
-                  status={request.status}
-                />
-              </td>
-
-
-              {/* Action */}
-              <td className="doctor-action-cell">
-
-                <Link
-                  to={`/admin/doctor-request/${request.id}`}
-                  className="doctor-view-button"
-                >
-                  <span>
-                    View Details
-                  </span>
-
-                  <ArrowUpRight
-                    size={15}
-                  />
-                </Link>
-
-              </td>
-
-            </tr>
-
-          ))}
-
-        </tbody>
-
-      </table>
-
-    </div>
+          <p>
+            Try adjusting your search or status filter to find what you're
+            looking for.
+          </p>
+        </div>
+      }
+    />
   );
 };
 

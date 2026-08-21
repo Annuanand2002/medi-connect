@@ -5,8 +5,9 @@ import { IHashService } from "../../../../domain/services/IHashService";
 import HTTP_STATUS from "../../../../shared/constants/httpStatusCode";
 import AppError from "../../../../shared/errors/appErrors";
 import { SetDoctorPasswordDTO } from "../../../DTO/doctor/setPasswordDTO";
-import { ISetPasswordUsecase } from "../../../repository/doctor/ISetPasswordUsecase";
+
 import { TYPES } from "../../../../di/types/types";
+import { ISetPasswordUsecase } from "../../../../domain/repositories/doctor/repo.usecase/ISetPasswordUsecase";
 
 @injectable()
 export class SetPasswordUsecase implements ISetPasswordUsecase {

@@ -1,10 +1,10 @@
 import { inject, injectable } from "inversify";
 import { RetryDoctorRequestDTO } from "../../../application/DTO/doctorRequet/retryDoctorRequest.update.DTO";
-import { IRetryDoctorRequestUseCase } from "../../../application/repository/doctor/IRetryDoctorRequest";
 import HTTP_STATUS from "../../../shared/constants/httpStatusCode";
 import asyncHandler from "../../../shared/utils/asyncHandler";
 import { Request, Response } from "express";
 import { TYPES } from "../../../di/types/types";
+import { IRetryDoctorRequestUseCase } from "../../../domain/repositories/doctor/repo.usecase/IRetryDoctorRequest";
 
 type DoctorRequestFiles = {
   profileImg?: {

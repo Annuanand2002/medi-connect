@@ -2,8 +2,8 @@ import { injectable, inject } from "inversify";
 import { IDoctorRequest } from "../../../domain/repositories/doctor/IDoctorRequest";
 import { GetDoctorRequestDTO } from "../../DTO/doctorRequet/GetAllDoctorsRequestDTO";
 import { PaginationDoctorRequestDTO } from "../../DTO/doctorRequet/PaginationDoctorRequestDTO";
-import { IGetAllDoctorRequedstUseCase } from "../../repository/doctor/IGetAllDoctorRequets";
 import { TYPES } from "../../../di/types/types";
+import { IGetAllDoctorRequedstUseCase } from "../../../domain/repositories/doctor/repo.usecase/IGetAllDoctorRequets";
 
 @injectable()
 export class GetAllDoctorRequestUseCase implements IGetAllDoctorRequedstUseCase {
@@ -12,6 +12,6 @@ export class GetAllDoctorRequestUseCase implements IGetAllDoctorRequedstUseCase 
     private _doctorRequestRepo: IDoctorRequest,
   ) {}
   async execute(dto: GetDoctorRequestDTO): Promise<PaginationDoctorRequestDTO> {
-    return await this._doctorRequestRepo.findAll(dto);
+    return await this._doctorRequestRepo.findDoctorRequests(dto);
   }
 }

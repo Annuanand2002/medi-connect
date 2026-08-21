@@ -71,6 +71,11 @@ const patientSchema = new Schema(
       type: String,
       default: null,
     },
+    isBlocked: {
+      type: String,
+      enum: ["ACTIVE", "BLOCKED"],
+      default: "ACTIVE",
+    },
   },
   {
     timestamps: true,

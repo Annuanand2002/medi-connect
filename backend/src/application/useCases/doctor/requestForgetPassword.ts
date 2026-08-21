@@ -3,7 +3,7 @@ import { IDoctorRepo } from "../../../domain/repositories/doctor/IDoctor";
 import { IDoctorResetTokenRepo } from "../../../domain/repositories/doctor/IDoctorResetToken.repo";
 import HTTP_STATUS from "../../../shared/constants/httpStatusCode";
 import AppError from "../../../shared/errors/appErrors";
-import { IRequestForgetPassword } from "../../repository/common/IRequestForgetPassword.usecase";
+import { IRequestForgetPassword } from "../../../domain/repositories/common/IRequestForgetPassword.usecase";
 import IEmailService from "../../services/IEmailService";
 import { TYPES } from "../../../di/types/types";
 

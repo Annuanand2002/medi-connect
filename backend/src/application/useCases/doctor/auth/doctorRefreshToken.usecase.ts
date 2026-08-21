@@ -1,5 +1,4 @@
 import { inject, injectable } from "inversify";
-import { IRefreshDoctorUseCase } from "../../../repository/doctor/IDoctorRefresh.usecase";
 import { TYPES } from "../../../../di/types/types";
 import { IDoctorRepo } from "../../../../domain/repositories/doctor/IDoctor";
 import { JWTService } from "../../../../infrastructure/services/ITokenService.impl";
@@ -8,6 +7,7 @@ import { DoctorLoginResDTO } from "../../../DTO/doctor/loginDoctor.DTO";
 import { RefreshTokenReqDTO } from "../../../DTO/refreshTokenReqDTo";
 import AppError from "../../../../shared/errors/appErrors";
 import HTTP_STATUS from "../../../../shared/constants/httpStatusCode";
+import { IRefreshDoctorUseCase } from "../../../../domain/repositories/doctor/repo.usecase/IDoctorRefresh.usecase";
 
 @injectable()
 export class RefreshDoctorUseCase implements IRefreshDoctorUseCase {

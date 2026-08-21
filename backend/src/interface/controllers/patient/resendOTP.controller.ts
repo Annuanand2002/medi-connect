@@ -1,6 +1,6 @@
 import { inject, injectable } from "inversify";
 import { TYPES } from "../../../di/types/types";
-import { IResentOTPUseCase } from "../../../application/repository/patient/IResendOTP.usecase";
+import { IResentOTPUseCase } from "../../../domain/repositories/patient/repo.usecase/IResendOTP.usecase";
 import asyncHandler from "../../../shared/utils/asyncHandler";
 import { Request, Response } from "express";
 import HTTP_STATUS from "../../../shared/constants/httpStatusCode";

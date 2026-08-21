@@ -1,4 +1,4 @@
-import { useEffect, } from "react";
+import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
@@ -7,6 +7,7 @@ import Input from "@/components/Input";
 import FileUpload from "@/components/fileUpload";
 import Button from "@/components/button";
 import { doctorRequestSchema } from "../validation/doctorRequestSchema";
+import { Department } from "../constanst/department";
 
 type InitialDoctorValues = Pick<
   DoctorRequestFormData,
@@ -14,7 +15,7 @@ type InitialDoctorValues = Pick<
   | "email"
   | "dateOfBirth"
   | "qualification"
-  | "specialization"
+  | "department"
   | "experience"
 >;
 
@@ -39,7 +40,6 @@ const DoctorRequestForm = ({
     resolver: zodResolver(doctorRequestSchema),
   });
 
-
   useEffect(() => {
     if (initialValues) {
       reset(initialValues);
@@ -52,10 +52,7 @@ const DoctorRequestForm = ({
   const degreeCertificates = watch("degreeCertificates");
 
   return (
-    <form
-      onSubmit={handleSubmit(onSubmit)}
-      className="doctor-request-form"
-    >
+    <form onSubmit={handleSubmit(onSubmit)} className="doctor-request-form">
       <section className="doctor-request-form-section">
         <div className="doctor-request-section-heading">
           <span>01</span>
@@ -114,13 +111,21 @@ const DoctorRequestForm = ({
             error={errors.qualification?.message}
           />
 
-          <Input
-            label="Specialization"
-            type="text"
-            placeholder="Cardiology, Neurology..."
-            {...register("specialization")}
-            error={errors.specialization?.message}
-          />
+          <select
+            {...register("department")}
+            className="form-input"
+            defaultValue=""
+          >
+            <option value="" disabled>
+              Select Department
+            </option>
+
+            {Object.values(Department).map((department) => (
+              <option key={department} value={department}>
+                {department}
+              </option>
+            ))}
+          </select>
 
           <Input
             label="Years of Experience"
@@ -151,9 +156,7 @@ const DoctorRequestForm = ({
             accept="image/png,image/jpeg"
             helperText="Accepted: PNG, JPEG · Max 5 MB"
             fileNames={
-              profileImg
-                ? Array.from(profileImg).map((file) => file.name)
-                : []
+              profileImg ? Array.from(profileImg).map((file) => file.name) : []
             }
             {...register("profileImg")}
             error={errors.profileImg?.message}

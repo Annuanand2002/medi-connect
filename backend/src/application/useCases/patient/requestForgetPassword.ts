@@ -1,5 +1,5 @@
 import { inject, injectable } from "inversify";
-import { IRequestForgetPassword } from "../../repository/common/IRequestForgetPassword.usecase";
+import { IRequestForgetPassword } from "../../../domain/repositories/common/IRequestForgetPassword.usecase";
 import { TYPES } from "../../../di/types/types";
 import { IPatientRepo } from "../../../domain/repositories/patient/IPatient.repo";
 import { IPatientResetTokenRepo } from "../../../domain/repositories/patient/IResetToken.repo";

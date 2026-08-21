@@ -1,8 +1,8 @@
 import { inject, injectable } from "inversify";
 import { Department } from "../../../domain/entities/department/department.entities";
 import { IDepartmentRepo } from "../../../domain/repositories/department/IDepeartmentRepo";
-import { IGetDepartmentUseCase } from "../../repository/department/IGetDepartment";
 import { TYPES } from "../../../di/types/types";
+import { IGetDepartmentUseCase } from "../../../domain/repositories/department/IGetDepartment";
 
 @injectable()
 export default class GetDepartmentUsecase implements IGetDepartmentUseCase {

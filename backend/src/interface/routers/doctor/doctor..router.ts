@@ -11,12 +11,21 @@ import { DoctorRefreshTokenController } from "../../controllers/doctor/doctorRef
 import { DoctorLogoutController } from "../../controllers/doctor/doctorLogout.controller";
 import { RequestResetPasswordController } from "../../controllers/doctor/requestResetPassword.controller";
 import { ResetDoctorPasswordController } from "../../controllers/doctor/resetPassword.controller";
+import { DoctorAvailController } from "../../controllers/doctor/doctorAvailability.controller";
+import { ROUTES } from "../../../shared/constants/routes";
+import { authenticate } from "../../../shared/middlewares/authenticate";
+import { ITokenService } from "../../../domain/services/ITokenService";
+import { DoctorLeaveController } from "../../controllers/doctor/doctorLeave.controller";
+import { checkDoctorBlocked } from "../../../shared/middlewares/doctorBlock";
+import { DoctorBlockController } from "../../controllers/doctor/doctorBlock.controller";
 
 const router = Router();
 
 const doctorRequestController = container.get<DoctorRequestController>(
   TYPES.DoctorRequestController,
 );
+const tokenService = container.get<ITokenService>(TYPES.JWTService);
+const authenticateDoctor = authenticate(tokenService, "doctor");
 const setPasswordController = container.get<SetDoctorPasswordController>(
   TYPES.SetDoctorPasswordController,
 );
@@ -46,6 +55,17 @@ const resetDoctorPasswordController =
   container.get<ResetDoctorPasswordController>(
     TYPES.ResetDoctorPasswordController,
   );
+const doctorAvailabilityController = container.get<DoctorAvailController>(
+  TYPES.DoctorAvailController,
+);
+const doctorLeaveController = container.get<DoctorLeaveController>(
+  TYPES.DoctorLeaveController,
+);
+
+const doctorBlockController = container.get<DoctorBlockController>(
+  TYPES.DoctorBlockController,
+);
+
 //account set-up
 router.post(
   "/apply",
@@ -78,4 +98,27 @@ router.patch(
   requestResetPasswordController.requestReset,
 );
 router.patch("/reset-password", resetDoctorPasswordController.resetPassword);
+
+router.use(authenticateDoctor, checkDoctorBlocked);
+//availability
+router.post(ROUTES.DOCTOR.CREATE, doctorAvailabilityController.create);
+
+router.post(ROUTES.DOCTOR.UPDATE, doctorAvailabilityController.update);
+
+router.patch(ROUTES.DOCTOR.UPDATE, doctorAvailabilityController.delete);
+router.get(ROUTES.DOCTOR.GET, doctorAvailabilityController.getAvailability);
+
+//leave
+router.get(ROUTES.DOCTOR.GETLEAVE, doctorLeaveController.getAll);
+router.post(ROUTES.DOCTOR.CREATELEAVE, doctorLeaveController.create);
+router.put(ROUTES.DOCTOR.UPDATELEAVE, doctorLeaveController.update);
+router.patch(ROUTES.DOCTOR.UPDATELEAVE, doctorLeaveController.delete);
+
+//block
+
+router.get(ROUTES.DOCTOR.BLOCK.GET, doctorBlockController.getAll);
+router.post(ROUTES.DOCTOR.BLOCK.CREATE, doctorBlockController.create);
+router.put(ROUTES.DOCTOR.BLOCK.UPDATE, doctorBlockController.update);
+router.patch(ROUTES.DOCTOR.BLOCK.UPDATE, doctorBlockController.delete);
+
 export default router;

@@ -5,7 +5,7 @@ export interface PatientFile {
 
 export interface Patient {
   id?: string;
-  patientCode : string;
+  patientCode: string;
   fullName: string;
   email: string;
   dateOfBirth: Date;
@@ -17,6 +17,7 @@ export interface Patient {
   weight: number;
   height: number;
   refreshToken?: string;
+  isBlocked: "ACTIVE" | "BLOCKED";
   createdAt?: Date;
   updatedAt?: Date;
 }

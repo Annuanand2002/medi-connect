@@ -5,9 +5,9 @@ import HTTP_STATUS from "../../../shared/constants/httpStatusCode";
 import AppError from "../../../shared/errors/appErrors";
 import { RetryDoctorRequestDTO } from "../../DTO/doctorRequet/retryDoctorRequest.update.DTO";
 import { IDoctorRequestFileService } from "../../services/IDoctorRequestFileService";
-import { IRetryDoctorRequestUseCase } from "../../repository/doctor/IRetryDoctorRequest";
 import { inject, injectable } from "inversify";
 import { TYPES } from "../../../di/types/types";
+import { IRetryDoctorRequestUseCase } from "../../../domain/repositories/doctor/repo.usecase/IRetryDoctorRequest";
 
 @injectable()
 export class RetryDoctorRequestUseCase implements IRetryDoctorRequestUseCase {
@@ -40,7 +40,7 @@ export class RetryDoctorRequestUseCase implements IRetryDoctorRequestUseCase {
       email: doctorRequest.email,
       dateOfBirth: doctorRequest.dateOfBirth,
       qualification: doctorRequest.qualification,
-      specialization: doctorRequest.specialization,
+      department: doctorRequest.department,
       experience: doctorRequest.experience,
       profileImg,
       governmentId,

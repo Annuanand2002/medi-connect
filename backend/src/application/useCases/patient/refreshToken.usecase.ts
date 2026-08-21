@@ -6,7 +6,7 @@ import { ITokenService } from "../../../domain/services/ITokenService";
 import { IHashService } from "../../../domain/services/IHashService";
 import AppError from "../../../shared/errors/appErrors";
 import HTTP_STATUS from "../../../shared/constants/httpStatusCode";
-import { IPatientRefreshUseCase } from "../../repository/patient/IPatientRefreshToken";
+import { IPatientRefreshUseCase } from "../../../domain/repositories/patient/repo.usecase/IPatientRefreshToken";
 import { LoginPatientResponseDTO } from "../../DTO/patient/loginPatientDTO";
 
 @injectable()

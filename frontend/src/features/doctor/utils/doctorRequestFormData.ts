@@ -8,7 +8,7 @@ export const buildDoctorRequestFormData = (
   formData.append("email", data.email);
   formData.append("dateOfBirth", data.dateOfBirth);
   formData.append("qualification", data.qualification);
-  formData.append("specialization", data.specialization);
+  formData.append("department", data.department);
   formData.append("experience", data.experience.toString());
   if (data.profileImg.length > 0) {
     formData.append("profileImg", data.profileImg[0]);

@@ -4,8 +4,8 @@ import { IDoctorRequest } from "../../../domain/repositories/doctor/IDoctorReque
 import { IDoctorRetryTokenRepo } from "../../../domain/repositories/doctor/IDoctorRetry.repo";
 import HTTP_STATUS from "../../../shared/constants/httpStatusCode";
 import AppError from "../../../shared/errors/appErrors";
-import { IGetDoctorRetryRequest } from "../../repository/doctor/IGetDoctorRetryReq.usecase";
 import { TYPES } from "../../../di/types/types";
+import { IGetDoctorRetryRequest } from "../../../domain/repositories/doctor/repo.usecase/IGetDoctorRetryReq.usecase";
 
 @injectable()
 export class GetDoctorRetryRequest implements IGetDoctorRetryRequest {

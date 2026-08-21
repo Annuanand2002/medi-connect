@@ -61,11 +61,11 @@ const doctorRequestListSlice = createSlice({
 
       .addCase(getDoctorRequestListThunk.fulfilled, (state, action) => {
         state.loading = false;
-        state.requests = action.payload.result.requests;
-        state.page = action.payload.result.page;
-        state.limit = action.payload.result.limit;
-        state.total = action.payload.result.total;
-        state.totalPages = action.payload.result.totalPages;
+        state.requests = action.payload.data.requests;
+        state.page = action.payload.data.page;
+        state.limit = action.payload.data.limit;
+        state.total = action.payload.data.total;
+        state.totalPages = action.payload.data.totalPages;
       })
 
       .addCase(getDoctorRequestListThunk.rejected, (state, action) => {

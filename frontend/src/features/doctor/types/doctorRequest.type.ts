@@ -3,7 +3,7 @@ export interface DoctorRequestFormData {
   email: string;
   dateOfBirth: string;
   qualification: string;
-  specialization: string;
+  department: string;
   experience: number;
 
   profileImg: FileList;

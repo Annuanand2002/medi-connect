@@ -9,6 +9,7 @@ import { PatientLogoutController } from "../../controllers/patient/logout.contro
 import { RefreshPatientTokenController } from "../../controllers/patient/refreshToken.controller";
 import { RequestPatientResetPasswordController } from "../../controllers/patient/requestForgetPassword";
 import { ResetPatientPasswordController } from "../../controllers/patient/resetPassword";
+import { checkPatientBlocked } from "../../../shared/middlewares/patientBlock";
 
 const router = Router();
 
@@ -44,7 +45,7 @@ const resetPatientPasswordController =
 router.post("/create-patient", createPatientController.createPatient);
 router.patch("/verify-otp/:patientId", verifyPatientOTPController.verifyOTP);
 router.post("/resend-otp/:patientId", resendOTPController.resendOTP);
-router.post("/login", loginPatientController.login);
+router.post("/login",loginPatientController.login);
 router.post("/logout", patientLogoutController.logout);
 router.post("/refresh-token", refreshPatientTokenController.refreshToken);
 router.patch(

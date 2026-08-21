@@ -1,3 +1,6 @@
+import { Department } from "../../../shared/constants/department";
+
+
 export interface UploadFile {
   url: string;
   key: string;
@@ -11,11 +14,10 @@ export default interface Doctor {
   password?: string;
   profileImg: UploadFile;
   qualification: string;
-  specialization: string;
+  department: Department;
   experience: number;
-  departmentId: string;
   refreshToken?: string;
-  status: "PENDING_SETUP" | "ACTIVE" | "BLOCKED";
+  status: "ACTIVE" | "BLOCKED";
   createdAt?: Date;
   updatedAt?: Date;
 }

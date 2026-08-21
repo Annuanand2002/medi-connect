@@ -1,23 +1,12 @@
-import { useEffect, useState } from "react";
-import {
-  Check,
-  ChevronDown,
-  Plus,
-  X,
-} from "lucide-react";
-
+import { useState } from "react";
+import { Check, X } from "lucide-react";
 import { useAppDispatch, useAppSelector } from "@/hooks/hooks";
-
-import {
-  getDepartmentsThunk,
-  createDepartmentThunk,
-} from "../redux/department.thunk";
-
 import { approveDoctorThunk } from "../redux/approveDoctorThunk";
 
 interface ApproveDoctorModalProps {
   open: boolean;
   doctorRequestId: string;
+  department: string;
   onClose: () => void;
   onSuccess: () => void;
 }
@@ -25,84 +14,45 @@ interface ApproveDoctorModalProps {
 const ApproveDoctorModal = ({
   open,
   doctorRequestId,
+  department,
   onClose,
-  onSuccess
+  onSuccess,
 }: ApproveDoctorModalProps) => {
   const dispatch = useAppDispatch();
 
-  const {
-    departments,
-    loading,
-  } = useAppSelector(
-    (state) => state.department,
-  );
+  const { loading } = useAppSelector((state) => state.doctorRequest);
 
-  const [selectedDepartment, setSelectedDepartment] =
-    useState("");
-
-  const [newDepartment, setNewDepartment] =
-    useState("");
-
-  useEffect(() => {
-    if (open) {
-      dispatch(getDepartmentsThunk());
-    }
-  }, [dispatch, open]);
+  const [showConfirmation, setShowConfirmation] = useState(false);
 
   if (!open) {
     return null;
   }
 
-  const handleCreateDepartment = async () => {
-    if (!newDepartment.trim()) {
-      return;
-    }
-
-    const resultAction = await dispatch(
-      createDepartmentThunk({
-        name: newDepartment.trim(),
-      }),
-    );
-
-    if (
-      createDepartmentThunk.fulfilled.match(
-        resultAction,
-      )
-    ) {
-      setSelectedDepartment(
-        resultAction.payload.id,
-      );
-
-      setNewDepartment("");
-    }
+  const handleApproveClick = () => {
+    setShowConfirmation(true);
   };
 
-  const handleApprove = async () => {
-    if (!selectedDepartment) {
-      return;
-    }
-
+  const handleConfirmApprove = async () => {
     const resultAction = await dispatch(
       approveDoctorThunk({
         doctorRequestId,
-        departmentId: selectedDepartment,
       }),
     );
 
-    if (
-      approveDoctorThunk.fulfilled.match(
-        resultAction,
-      )
-    ) {
-      onSuccess()
+    if (approveDoctorThunk.fulfilled.match(resultAction)) {
+      setShowConfirmation(false);
+      onSuccess();
       onClose();
     }
   };
 
   const handleClose = () => {
-    setNewDepartment("");
-    setSelectedDepartment("");
+    setShowConfirmation(false);
     onClose();
+  };
+
+  const handleCancelConfirmation = () => {
+    setShowConfirmation(false);
   };
 
   return (
@@ -113,25 +63,17 @@ const ApproveDoctorModal = ({
       aria-labelledby="approve-doctor-title"
     >
       <div className="doctor-modal">
-
         <div className="doctor-modal-header">
-
           <div className="doctor-modal-heading">
-
             <div className="doctor-modal-icon doctor-modal-icon-success">
               <Check size={19} />
             </div>
 
             <div>
-              <span>
-                APPLICATION REVIEW
-              </span>
+              <span>APPLICATION REVIEW</span>
 
-              <h2 id="approve-doctor-title">
-                Approve Doctor
-              </h2>
+              <h2 id="approve-doctor-title">Approve Doctor</h2>
             </div>
-
           </div>
 
           <button
@@ -142,132 +84,94 @@ const ApproveDoctorModal = ({
           >
             <X size={18} />
           </button>
-
         </div>
 
-
+        {/* BODY */}
         <div className="doctor-modal-body">
+          {!showConfirmation ? (
+            <>
+              <p className="doctor-modal-description">
+                Review the department selected by the doctor before approving
+                the application.
+              </p>
 
-          <p className="doctor-modal-description">
-            Select the department this doctor will
-            belong to before approving the application.
-          </p>
+              <div className="doctor-modal-field">
+                <label>Department</label>
 
+                <div className="doctor-selected-department">{department}</div>
+              </div>
+            </>
+          ) : (
+            <>
+              <div className="doctor-modal-confirmation">
+                <div className="doctor-modal-icon doctor-modal-icon-success">
+                  <Check size={19} />
+                </div>
 
-          <div className="doctor-modal-field">
+                <div>
+                  <h3>Are you sure you want to approve?</h3>
 
-            <label>
-              Department
-            </label>
+                  <p>
+                    This will approve the doctor application and create the
+                    doctor account.
+                  </p>
+                </div>
+              </div>
 
-            <div className="doctor-select-wrapper">
+              <div className="doctor-modal-field">
+                <label>Department</label>
 
-              <select
-                value={selectedDepartment}
-                onChange={(event) =>
-                  setSelectedDepartment(
-                    event.target.value,
-                  )
-                }
+                <div className="doctor-selected-department">{department}</div>
+              </div>
+            </>
+          )}
+        </div>
+
+        {/* FOOTER */}
+        <div className="doctor-modal-footer">
+          {!showConfirmation ? (
+            <>
+              <button
+                type="button"
+                onClick={handleClose}
+                className="doctor-modal-cancel"
               >
-                <option value="">
-                  Select Department
-                </option>
-
-                {departments.map(
-                  (department) => (
-                    <option
-                      key={department.id}
-                      value={department.id}
-                    >
-                      {department.name}
-                    </option>
-                  ),
-                )}
-              </select>
-
-              <ChevronDown
-                size={16}
-              />
-
-            </div>
-
-          </div>
-
-
-          <div className="doctor-modal-divider">
-            <span />
-            OR
-            <span />
-          </div>
-
-
-          <div className="doctor-modal-field">
-
-            <label>
-              Create New Department
-            </label>
-
-            <div className="doctor-create-department">
-
-              <input
-                value={newDepartment}
-                onChange={(event) =>
-                  setNewDepartment(
-                    event.target.value,
-                  )
-                }
-                placeholder="Enter department name"
-              />
+                Cancel
+              </button>
 
               <button
                 type="button"
-                onClick={
-                  handleCreateDepartment
-                }
-                disabled={
-                  !newDepartment.trim()
-                }
+                onClick={handleApproveClick}
+                className="doctor-modal-confirm doctor-modal-confirm-success"
               >
-                <Plus size={15} />
-                Create
+                <Check size={16} />
+                Approve Doctor
+              </button>
+            </>
+          ) : (
+            <>
+              <button
+                type="button"
+                onClick={handleCancelConfirmation}
+                className="doctor-modal-cancel"
+                disabled={loading}
+              >
+                Cancel
               </button>
 
-            </div>
+              <button
+                type="button"
+                onClick={handleConfirmApprove}
+                disabled={loading}
+                className="doctor-modal-confirm doctor-modal-confirm-success"
+              >
+                <Check size={16} />
 
-          </div>
-
+                {loading ? "Approving..." : "Yes, Approve"}
+              </button>
+            </>
+          )}
         </div>
-
-
-        <div className="doctor-modal-footer">
-
-          <button
-            type="button"
-            onClick={handleClose}
-            className="doctor-modal-cancel"
-          >
-            Cancel
-          </button>
-
-          <button
-            type="button"
-            disabled={
-              loading ||
-              !selectedDepartment
-            }
-            onClick={handleApprove}
-            className="doctor-modal-confirm doctor-modal-confirm-success"
-          >
-            <Check size={16} />
-
-            {loading
-              ? "Approving..."
-              : "Approve Doctor"}
-          </button>
-
-        </div>
-
       </div>
     </div>
   );

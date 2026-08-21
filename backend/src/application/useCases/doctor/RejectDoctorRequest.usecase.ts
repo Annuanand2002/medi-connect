@@ -5,10 +5,10 @@ import HTTP_STATUS from "../../../shared/constants/httpStatusCode";
 import AppError from "../../../shared/errors/appErrors";
 import { RejectDoctorRequestDTO } from "../../DTO/doctorRequet/rejectDoctorRequest.dto";
 import IEmailService from "../../services/IEmailService";
-import { IRejectDoctorRequestUseCase } from "../../repository/doctor/IRejectDoctorRequest.usecase";
 import crypto from "crypto";
 import { inject, injectable } from "inversify";
 import { TYPES } from "../../../di/types/types";
+import { IRejectDoctorRequestUseCase } from "../../../domain/repositories/doctor/repo.usecase/IRejectDoctorRequest.usecase";
 
 @injectable()
 export class RejectdoctorRequestUseCase implements IRejectDoctorRequestUseCase {

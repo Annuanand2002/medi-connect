@@ -4,7 +4,7 @@ import { IDepartmentRepo } from "../../../domain/repositories/department/IDepear
 import HTTP_STATUS from "../../../shared/constants/httpStatusCode";
 import AppError from "../../../shared/errors/appErrors";
 import { UpdateDepartmentDTO } from "../../DTO/department/updateDepartmentDTO";
-import { IUpdateDepartmentUseCase } from "../../repository/department/IUpdateDepartmentUseCase";
+import { IUpdateDepartmentUseCase } from "../../../domain/repositories/department/IUpdateDepartmentUseCase";
 import { TYPES } from "../../../di/types/types";
 
 @injectable()

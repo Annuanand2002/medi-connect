@@ -1,6 +1,8 @@
 import { Schema, model, InferSchemaType, HydratedDocument } from "mongoose";
+import DoctorRequest, { UploadFile } from "../../../domain/entities/doctor/doctorRequestEntity";
+import { Department } from "../../../shared/constants/department";
 
-const uploadFileSchema = new Schema({
+const uploadFileSchema = new Schema<UploadFile>({
   url: {
     type: String,
     required: true,
@@ -11,7 +13,7 @@ const uploadFileSchema = new Schema({
   },
 });
 
-const doctorRequestSchema = new Schema(
+const doctorRequestSchema = new Schema<DoctorRequest>(
   {
     fullName: {
       type: String,
@@ -28,10 +30,10 @@ const doctorRequestSchema = new Schema(
       type: Date,
       required: true,
     },
-    specialization: {
+    department: {
       type: String,
+      enum : Object.values(Department),
       required: true,
-      trim: true,
     },
     profileImg: {
       type: uploadFileSchema,

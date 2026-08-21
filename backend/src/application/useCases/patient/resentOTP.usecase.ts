@@ -1,5 +1,5 @@
 import { inject, injectable } from "inversify";
-import { IResentOTPUseCase } from "../../repository/patient/IResendOTP.usecase";
+import { IResentOTPUseCase } from "../../../domain/repositories/patient/repo.usecase/IResendOTP.usecase";
 import { TYPES } from "../../../di/types/types";
 import { IPatientRepo } from "../../../domain/repositories/patient/IPatient.repo";
 import AppError from "../../../shared/errors/appErrors";

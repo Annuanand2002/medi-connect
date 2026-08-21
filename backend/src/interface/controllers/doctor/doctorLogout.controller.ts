@@ -1,11 +1,11 @@
 import { inject, injectable } from "inversify";
 import { TYPES } from "../../../di/types/types";
-import { ILogoutUseCase } from "../../../application/repository/common/ILogoutUseCase";
 import asyncHandler from "../../../shared/utils/asyncHandler";
 import { Request, Response } from "express";
 import AppError from "../../../shared/errors/appErrors";
 import HTTP_STATUS from "../../../shared/constants/httpStatusCode";
 import { clearRefershTokenCookie } from "../../../shared/utils/cookies";
+import { ILogoutUseCase } from "../../../domain/repositories/common/ILogoutUseCase";
 
 @injectable()
 export class DoctorLogoutController {
