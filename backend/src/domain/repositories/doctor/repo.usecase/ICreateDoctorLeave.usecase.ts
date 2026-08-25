@@ -1,6 +1,6 @@
-import { createDoctorLeaveDTO } from "../../../../application/DTO/doctor/doctorLeave.DTO";
+import { CreateDoctorLeaveDTO } from "../../../../application/DTO/doctor/doctorLeave.DTO";
 import { DoctorLeave } from "../../../entities/doctor/doctorLeave";
 
 export interface ICreateDoctorLeaveUsecase {
-    execute(dto:createDoctorLeaveDTO):Promise<DoctorLeave>
+    execute(dto:CreateDoctorLeaveDTO):Promise<DoctorLeave>
 }

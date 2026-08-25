@@ -1,26 +1,39 @@
-import { useNavigate } from "react-router-dom";
-import { useAppDispatch } from "@/hooks/hooks";
-import { logoutPatientThunk } from "../auth/redux/logout.thunk";
-import { logoutPatient } from "../auth/redux/patient.auth.slice";
+import { Activity } from "lucide-react";
+import "@/styles/admin/adminDashboard.css";
+import PatientLayout from "@/layout/PatientLayout";
 
 const PatientDashboard = () => {
-  const navigate = useNavigate();
-  const dispatch = useAppDispatch();
-
-  const handleLogout = async () => {
-    const result = await dispatch(logoutPatientThunk());
-    if (logoutPatientThunk.fulfilled.match(result)) {
-      dispatch(logoutPatient());
-      navigate("/patient/login", { replace: true });
-    }
-  };
-
   return (
-   <div>
-     <h1>Patient Dashboard</h1>
-  <button onClick={handleLogout}>Logout</button>
-   </div>
-);
+    <PatientLayout title="Dashboard" subtitle="Welcome back, Admin">
+      <div className="dashboard-empty-state">
+        <div className="empty-state-orbit">
+          <div className="empty-state-orbit-ring" />
+
+          <div className="empty-state-orbit-icon">
+            <Activity size={23} />
+          </div>
+
+          <span className="orbit-dot orbit-dot-one" />
+          <span className="orbit-dot orbit-dot-two" />
+          <span className="orbit-dot orbit-dot-three" />
+        </div>
+
+        <span className="empty-state-label">YOUR COMMAND CENTER</span>
+
+        <h4>Everything is ready.</h4>
+
+        <p>
+          Your latest platform activity will appear here as MediConnect gets
+          moving.
+        </p>
+
+        <div className="empty-state-status">
+          <span />
+          System ready
+        </div>
+      </div>
+    </PatientLayout>
+  );
 };
 
 export default PatientDashboard;

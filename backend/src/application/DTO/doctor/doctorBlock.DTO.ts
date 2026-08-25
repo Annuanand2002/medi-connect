@@ -18,7 +18,7 @@ export interface PaginationDoctorBlockResDTO {
 
 export interface createDoctorBlockDTO {
   doctorId: string;
-  date: Date;
+  date : Date;
   startTime: string;
   endTime: string;
   reason: string;

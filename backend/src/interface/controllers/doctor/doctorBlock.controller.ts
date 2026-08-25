@@ -41,6 +41,7 @@ export class DoctorBlockController {
       .status(HTTP_STATUS.CREATED)
       .json(sendResponse(RESPONSE_MESSAGES.CREATED, result));
   });
+  
   update = asyncHandler(async (req: Request, res: Response) => {
     if (!req.user) {
       throw new AppError("unauthorized", HTTP_STATUS.UNAUTHORIZED);
@@ -59,13 +60,19 @@ export class DoctorBlockController {
       .status(HTTP_STATUS.OK)
       .json(sendResponse(RESPONSE_MESSAGES.UPDATED, result));
   });
+
   delete = asyncHandler(async (req: Request, res: Response) => {
+    if (!req.user) {
+      throw new AppError("unauthorized", HTTP_STATUS.UNAUTHORIZED);
+    }
+    const doctorId = req.user.id;
     const id = req.params.id as string;
-    const result = await this._deletBlock.execute(id);
+    const result = await this._deletBlock.execute(doctorId, id);
     res
       .status(HTTP_STATUS.OK)
       .json(sendResponse(RESPONSE_MESSAGES.DELETED, result));
   });
+
   getAll = asyncHandler(async (req: Request, res: Response) => {
     if (!req.user) {
       throw new AppError("unathorized", HTTP_STATUS.UNAUTHORIZED);

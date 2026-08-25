@@ -16,7 +16,7 @@ export interface PaginationDoctorLeaveResDTO {
   totalPages: number;
 }
 
-export interface createDoctorLeaveDTO {
+export interface CreateDoctorLeaveDTO {
     doctorId : string;
     startDate : Date;
     endDate : Date;

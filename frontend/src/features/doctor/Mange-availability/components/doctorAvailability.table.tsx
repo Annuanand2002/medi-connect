@@ -26,26 +26,37 @@ const AvailabilityTable = ({
       key: "dayOfWeek",
       header: "Day",
       render: (row) => (
-        <span className="availability-day-chip">
-          {row.dayOfWeek}
+        <span className="availability-day-chip">{row.dayOfWeek}</span>
+      ),
+    },
+
+    // NEW: START DATE
+    {
+      key: "date",
+      header: "Date",
+      render: (row) => (
+        <span>
+          {new Date(row.startDate).toLocaleDateString()} –{" "}
+          {new Date(row.endDate).toLocaleDateString()}
         </span>
       ),
     },
     {
-      key: "startTime",
-      header: "Start time",
-      render: (row) => row.startTime,
+      key: "time",
+      header: "Time",
+      render: (row) => (
+        <span>
+          {row.startTime} – {row.endTime}
+        </span>
+      ),
     },
-    {
-      key: "endTime",
-      header: "End time",
-      render: (row) => row.endTime,
-    },
+
     {
       key: "duration",
       header: "Duration",
       render: (row) => `${row.duration} min`,
     },
+
     {
       key: "breaks",
       header: "Breaks",
@@ -53,12 +64,12 @@ const AvailabilityTable = ({
         row.breaks.length > 0
           ? row.breaks
               .map(
-                (breakTime) =>
-                  `${breakTime.startTime} – ${breakTime.endTime}`,
+                (breakTime) => `${breakTime.startTime} – ${breakTime.endTime}`,
               )
               .join(", ")
           : "No breaks",
     },
+
     {
       key: "actions",
       header: "Actions",
@@ -98,7 +109,9 @@ const AvailabilityTable = ({
         emptyState={
           <div className="availability-empty-state">
             <span>+</span>
+
             <h3>No availability added yet</h3>
+
             <p>Add your first consultation slot to start accepting bookings.</p>
           </div>
         }

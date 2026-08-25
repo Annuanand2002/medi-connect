@@ -58,8 +58,12 @@ export class DoctorLeaveController {
       .json(sendResponse(RESPONSE_MESSAGES.UPDATED, result));
   });
   delete = asyncHandler(async (req: Request, res: Response) => {
+    if (!req.user) {
+      throw new AppError("unathorized", HTTP_STATUS.UNAUTHORIZED);
+    }
+    const doctorId = req.user.id;
     const id = req.params.id as string;
-    const result = await this._deleteLeave.execute(id);
+    const result = await this._deleteLeave.execute(doctorId, id);
     res
       .status(HTTP_STATUS.OK)
       .json(sendResponse(RESPONSE_MESSAGES.DELETED, result));

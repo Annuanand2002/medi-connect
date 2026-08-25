@@ -13,10 +13,16 @@ export class DeleteDoctorBlockUsecase implements IDeleteDoctorBlockUseCase {
     private _doctorBlock: IDoctorBlockRepo,
   ) {}
 
-  async execute(id: string): Promise<DoctorBlock | null> {
+  async execute(doctorId: string, id: string): Promise<DoctorBlock | null> {
     const block = await this._doctorBlock.findById(id);
     if (!block) {
       throw new AppError("blcok not found", HTTP_STATUS.NOT_FOUND);
+    }
+    if (block.doctorId !== doctorId) {
+      throw new AppError("unauthorized doctor", HTTP_STATUS.UNAUTHORIZED);
+    }
+    if (block.isDeleted) {
+      throw new AppError("Block is already deleted", HTTP_STATUS.CONFLICT);
     }
     return await this._doctorBlock.update(id, { isDeleted: true });
   }

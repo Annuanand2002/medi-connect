@@ -87,10 +87,15 @@ const DoctorTable = ({ requests }: DoctorTableProps) => {
 
       render: (request) => (
         <div className="doctor-action-cell">
-         <button type="button" onClick={()=>handleToggleStastus(request.id)}
-         className="doctor-view-button"
+         <button type="button" onClick={()=>{
+          alert("Are you sure uou want to do the action")
+          handleToggleStastus(request.id)
+         }}
+         className="doctor-view-buttons"
+        
           >
-            <span>{request.status==="BLOCKED"?"ACTIVE":"BLOCK"}</span>
+            {request.status==="BLOCKED"?<span style={{backgroundColor:"red"}}>ACTIVE</span>:<span style={{backgroundColor:"blue"}}>BLOCK</span>}
+            {/* <span style={{backgroundColor:"red"}} >{request.status==="BLOCKED"?"ACTIVE":"BLOCK"}</span> */}
             <ArrowUpRight size={15}/>
           </button>
         </div>

@@ -12,12 +12,22 @@ export class DeleteDoctorAvailUsecase implements IDeleteDoctorAvailUsecase {
     @inject(TYPES.DoctorAvailabilityRepo)
     private _doctorAvailRepo: IDoctorAvailabilityRepo,
   ) {}
-  async execute(id: string): Promise<DoctorAvailability | null> {
-    const doctor = await this._doctorAvailRepo.findById(id);
-    if (!doctor) {
-      throw new AppError("Doctor not found", HTTP_STATUS.NOT_FOUND);
+  async execute(
+    doctorId: string,
+    id: string,
+  ): Promise<DoctorAvailability | null> {
+    const availability = await this._doctorAvailRepo.findById(id);
+    console.log(id)
+    if (!availability) {
+      throw new AppError("Doctor availability not found", HTTP_STATUS.NOT_FOUND);
     }
-    if (doctor.isDeleted === true) {
+    if (availability.doctorId !== doctorId) {
+      throw new AppError(
+        "You are not authorized to delete this availability",
+        HTTP_STATUS.UNAUTHORIZED,
+      );
+    }
+    if (availability.isDeleted === true) {
       throw new AppError("This slot is already deleted", HTTP_STATUS.CONFLICT);
     }
     const updated = await this._doctorAvailRepo.update(id, {

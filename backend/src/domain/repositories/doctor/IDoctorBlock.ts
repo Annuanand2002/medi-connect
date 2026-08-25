@@ -14,6 +14,6 @@ export interface IDoctorBlockRepo extends IBaseRepository<DoctorBlock> {
     date: Date,
     startTime: string,
     endTime: string,
-    excludeId ?: string
+    excludeId?: string,
   ): Promise<DoctorBlock | null>;
 }

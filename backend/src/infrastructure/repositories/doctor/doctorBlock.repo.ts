@@ -23,19 +23,28 @@ export class DoctorBlockRepo
       DoctorBlockMapper.toPersistence,
     );
   }
+
   async findByDoctorId(doctorId: string): Promise<DoctorBlock[]> {
     const blocks = await DoctorBlockModel.find({
       doctorId,
       isDeleted: false,
     });
-    return blocks.map((block) => DoctorBlockMapper.toDomain(block));
+
+    return blocks.map((block) =>
+      DoctorBlockMapper.toDomain(block),
+    );
   }
+
   async findByDoctorAndDate(
     doctorId: string,
     date: Date,
   ): Promise<DoctorBlock[]> {
-    const startOfDay = new Date(`${date}T00:00:00.000Z`);
-    const endOfDay = new Date(`${date}T23:59:59.999Z`);
+    const startOfDay = new Date(date);
+    startOfDay.setHours(0, 0, 0, 0);
+
+    const endOfDay = new Date(date);
+    endOfDay.setHours(23, 59, 59, 999);
+
     const documents = await DoctorBlockModel.find({
       doctorId,
       date: {
@@ -44,43 +53,67 @@ export class DoctorBlockRepo
       },
       isDeleted: false,
     });
-    return documents.map((doc) => DoctorBlockMapper.toDomain(doc));
+
+    return documents.map((doc) =>
+      DoctorBlockMapper.toDomain(doc),
+    );
   }
+
   async findOverlappingBlock(
     doctorId: string,
     date: Date,
     startTime: string,
     endTime: string,
-    excludeId ?: string
+    excludeId?: string,
   ): Promise<DoctorBlock | null> {
     const startOfDay = new Date(date);
     startOfDay.setHours(0, 0, 0, 0);
+
     const endOfDay = new Date(date);
     endOfDay.setHours(23, 59, 59, 999);
 
-    const query : Record<string,unknown> = {
-        doctorId,
-        isDeleted : false,
-        date : {
-            $gte : startOfDay,
-            $lte : endOfDay
-        },
-          $or: [
-        {
-          startTime: { $lt: endTime },
-          endTime: { $gt: startTime },
-        },
-      ]
+    const query: Record<string, unknown> = {
+      doctorId,
+      date: {
+        $gte: startOfDay,
+        $lte: endOfDay,
+      },
+      isDeleted: false,
+
+      // Time overlap condition
+      startTime: {
+        $lt: endTime,
+      },
+      endTime: {
+        $gt: startTime,
+      },
+    };
+
+    if (excludeId) {
+      query._id = {
+        $ne: excludeId,
+      };
     }
-     if (excludeId) {
-      query._id = { $ne: excludeId };
-    }
+
     const document = await DoctorBlockModel.findOne(query);
-    if (!document) return null;
+
+    if (!document) {
+      return null;
+    }
+
     return DoctorBlockMapper.toDomain(document);
   }
-  async findBlocks(dto: GetBlockReqDTO): Promise<PaginationDoctorBlockResDTO> {
-    const { page, limit, doctorId, date, search } = dto;
+
+  async findBlocks(
+    dto: GetBlockReqDTO,
+  ): Promise<PaginationDoctorBlockResDTO> {
+    const {
+      page,
+      limit,
+      doctorId,
+      date,
+      search,
+    } = dto;
 
     const query: Record<string, unknown> = {
       doctorId,
@@ -88,14 +121,17 @@ export class DoctorBlockRepo
     };
 
     if (date) {
-      const startOfDay = new Date(`${date}T00:00:00.000Z`);
+      const selectedDate = new Date(date);
 
-      const nextDay = new Date(startOfDay);
-      nextDay.setUTCDate(nextDay.getUTCDate() + 1);
+      const startOfDay = new Date(selectedDate);
+      startOfDay.setHours(0, 0, 0, 0);
+
+      const endOfDay = new Date(selectedDate);
+      endOfDay.setHours(23, 59, 59, 999);
 
       query.date = {
         $gte: startOfDay,
-        $lt: nextDay,
+        $lte: endOfDay,
       };
     }
 
@@ -106,7 +142,11 @@ export class DoctorBlockRepo
       };
     }
 
-    const result = await super.findAll(page, limit, query);
+    const result = await super.findAll(
+      page,
+      limit,
+      query,
+    );
 
     return {
       requests: result.data,

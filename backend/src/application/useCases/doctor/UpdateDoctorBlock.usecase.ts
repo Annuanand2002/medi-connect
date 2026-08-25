@@ -7,12 +7,17 @@ import { createDoctorBlockDTO } from "../../DTO/doctor/doctorBlock.DTO";
 import AppError from "../../../shared/errors/appErrors";
 import HTTP_STATUS from "../../../shared/constants/httpStatusCode";
 import { convertTimeToMinutes } from "../../../shared/utils/time.helper";
+import { IDoctorAvailabilityRepo } from "../../../domain/repositories/doctor/IDoctorAvailability";
+import { isDateCoveredByRRule } from "../../../shared/utils/getDayOfWeek";
 
 @injectable()
 export class UpdateDoctorBlockUsecase implements IUpdateDoctorBlockUsecase {
   constructor(
     @inject(TYPES.DoctorBlockRepo)
     private _doctorBlock: IDoctorBlockRepo,
+
+    @inject(TYPES.DoctorAvailabilityRepo)
+    private _doctorAvail: IDoctorAvailabilityRepo,
   ) {}
 
   async execute(
@@ -20,6 +25,18 @@ export class UpdateDoctorBlockUsecase implements IUpdateDoctorBlockUsecase {
     dto: createDoctorBlockDTO,
   ): Promise<DoctorBlock | null> {
     const { doctorId, date, startTime, endTime, reason } = dto;
+    const existing = await this._doctorBlock.findById(id);
+
+    if (!existing || existing.isDeleted) {
+      throw new AppError("Block not found", HTTP_STATUS.NOT_FOUND);
+    }
+
+    if (existing.doctorId !== doctorId) {
+      throw new AppError(
+        "You are not allowed to update this block",
+        HTTP_STATUS.FORBIDDEN,
+      );
+    }
     const blockDate = new Date(date);
 
     if (isNaN(blockDate.getTime())) {
@@ -33,7 +50,9 @@ export class UpdateDoctorBlockUsecase implements IUpdateDoctorBlockUsecase {
         HTTP_STATUS.BAD_REQUEST,
       );
     }
+
     const startMinutes = convertTimeToMinutes(startTime);
+
     const endMinutes = convertTimeToMinutes(endTime);
 
     if (startMinutes >= endMinutes) {
@@ -42,29 +61,72 @@ export class UpdateDoctorBlockUsecase implements IUpdateDoctorBlockUsecase {
         HTTP_STATUS.BAD_REQUEST,
       );
     }
-    const existingBlock = await this._doctorBlock.findById(id);
-    if (!existingBlock || existingBlock.isDeleted) {
-      throw new AppError("block not found", HTTP_STATUS.NOT_FOUND);
-    }
-    if (existingBlock.doctorId !== doctorId) {
+    const availability = await this._doctorAvail.findAvailabilityForLeave(
+      doctorId,
+      blockDate,
+      blockDate,
+    );
+
+    if (!availability.length) {
       throw new AppError(
-        "You are not allowed to update this block",
-        HTTP_STATUS.FORBIDDEN,
+        "The doctor is not available on the selected date",
+        HTTP_STATUS.CONFLICT,
+      );
+    }
+
+    const validAvailability = availability.filter((item) => {
+      if (!item.recurrenceRule) {
+        return false;
+      }
+
+      return isDateCoveredByRRule(new Date(blockDate), item.recurrenceRule);
+    });
+
+    if (!validAvailability.length) {
+      throw new AppError(
+        "The doctor is not available on the selected date",
+        HTTP_STATUS.CONFLICT,
+      );
+    }
+    const isWithinAvailability = availability.some((item) => {
+      const availabilityStart = convertTimeToMinutes(item.startTime);
+
+      const availabilityEnd = convertTimeToMinutes(item.endTime);
+      if (startMinutes < availabilityStart || endMinutes > availabilityEnd) {
+        return false;
+      }
+      const overlapsBreak = item.breaks.some((breakItem) => {
+        const breakStart = convertTimeToMinutes(breakItem.startTime);
+
+        const breakEnd = convertTimeToMinutes(breakItem.endTime);
+
+        return startMinutes < breakEnd && endMinutes > breakStart;
+      });
+
+      return !overlapsBreak;
+    });
+
+    if (!isWithinAvailability) {
+      throw new AppError(
+        "Block time must be within the doctor's available time and cannot overlap a break",
+        HTTP_STATUS.CONFLICT,
       );
     }
     const overlap = await this._doctorBlock.findOverlappingBlock(
       doctorId,
-      new Date(date),
+      blockDate,
       startTime,
       endTime,
       id,
     );
+
     if (overlap) {
       throw new AppError(
-        "block time already exist.Please choose another time",
+        "Block time already exists. Please choose another time",
         HTTP_STATUS.CONFLICT,
       );
     }
+
     const updated = await this._doctorBlock.update(id, {
       doctorId,
       date: blockDate,
@@ -73,6 +135,7 @@ export class UpdateDoctorBlockUsecase implements IUpdateDoctorBlockUsecase {
       reason,
       isDeleted: false,
     });
+
     return updated;
   }
 }

@@ -47,80 +47,149 @@ const availabilitySlice = createSlice({
 
   extraReducers: (builder) => {
     builder
-      .addCase(fetchDoctorAvailability.pending, (state) => {
-        state.isLoading = true;
-        state.error = null;
-      })
 
-      .addCase(fetchDoctorAvailability.fulfilled, (state, action) => {
-        state.isLoading = false;
-        state.availability = action.payload;
-      })
+      // =========================
+      // GET
+      // =========================
 
-      .addCase(fetchDoctorAvailability.rejected, (state, action) => {
-        state.isLoading = false;
-        state.error = action.payload ?? "Failed to fetch availability";
-      })
+      .addCase(
+        fetchDoctorAvailability.pending,
+        (state) => {
+          state.isLoading = true;
+          state.error = null;
+        },
+      )
 
-      .addCase(createAvailability.pending, (state) => {
-        state.isCreating = true;
-        state.createError = null;
-      })
+      .addCase(
+        fetchDoctorAvailability.fulfilled,
+        (state, action) => {
+          state.isLoading = false;
+          state.availability = action.payload;
+        },
+      )
 
-      .addCase(createAvailability.fulfilled, (state, action) => {
-        state.isCreating = false;
+      .addCase(
+        fetchDoctorAvailability.rejected,
+        (state, action) => {
+          state.isLoading = false;
+          state.error =
+            action.payload ??
+            "Failed to fetch availability";
+        },
+      )
 
-        state.availability.push(action.payload.data);
-      })
+      // =========================
+      // CREATE
+      // =========================
 
-      .addCase(createAvailability.rejected, (state, action) => {
-        state.isCreating = false;
+      .addCase(
+        createAvailability.pending,
+        (state) => {
+          state.isCreating = true;
+          state.createError = null;
+        },
+      )
 
-        state.createError = action.payload ?? "Failed to create availability";
-      })
+      .addCase(
+        createAvailability.fulfilled,
+        (state, action) => {
+          state.isCreating = false;
 
-      .addCase(updateAvailability.pending, (state) => {
-        state.isUpdating = true;
-        state.updateError = null;
-      })
+          // Create returns multiple records
+          state.availability.push(
+            ...action.payload.data,
+          );
+        },
+      )
 
-      .addCase(updateAvailability.fulfilled, (state, action) => {
-        state.isUpdating = false;
+      .addCase(
+        createAvailability.rejected,
+        (state, action) => {
+          state.isCreating = false;
+          state.createError =
+            action.payload ??
+            "Failed to create availability";
+        },
+      )
 
-        const updatedAvailability = action.payload.data;
+      // =========================
+      // UPDATE
+      // =========================
 
-        const index = state.availability.findIndex(
-          (item) => item.id === updatedAvailability.id,
-        );
+      .addCase(
+        updateAvailability.pending,
+        (state) => {
+          state.isUpdating = true;
+          state.updateError = null;
+        },
+      )
 
-        if (index !== -1) {
-          state.availability[index] = updatedAvailability;
-        }
-      })
+      .addCase(
+        updateAvailability.fulfilled,
+        (state, action) => {
+          state.isUpdating = false;
 
-      .addCase(updateAvailability.rejected, (state, action) => {
-        state.isUpdating = false;
+          const updatedAvailability =
+            action.payload.data;
 
-        state.updateError = action.payload ?? "Failed to update availability";
-      })
-      .addCase(deleteAvailability.pending, (state) => {
-        state.isDeleting = true;
-        state.deleteError = null;
-      })
+          const index =
+            state.availability.findIndex(
+              (item) =>
+                item.id ===
+                updatedAvailability.id,
+            );
 
-      .addCase(deleteAvailability.fulfilled, (state, action) => {
-        state.isDeleting = false;
+          if (index !== -1) {
+            state.availability[index] =
+              updatedAvailability;
+          }
+        },
+      )
 
-        state.availability = state.availability.filter(
-          (item) => item.id !== action.payload,
-        );
-      })
+      .addCase(
+        updateAvailability.rejected,
+        (state, action) => {
+          state.isUpdating = false;
+          state.updateError =
+            action.payload ??
+            "Failed to update availability";
+        },
+      )
 
-      .addCase(deleteAvailability.rejected, (state, action) => {
-        state.isDeleting = false;
+      // =========================
+      // DELETE
+      // =========================
 
-        state.deleteError = action.payload ?? "Failed to delete availability";
-      });
+      .addCase(
+        deleteAvailability.pending,
+        (state) => {
+          state.isDeleting = true;
+          state.deleteError = null;
+        },
+      )
+
+      .addCase(
+        deleteAvailability.fulfilled,
+        (state, action) => {
+          state.isDeleting = false;
+
+          state.availability =
+            state.availability.filter(
+              (item) =>
+                item.id !== action.payload,
+            );
+        },
+      )
+
+      .addCase(
+        deleteAvailability.rejected,
+        (state, action) => {
+          state.isDeleting = false;
+          state.deleteError =
+            action.payload ??
+            "Failed to delete availability";
+        },
+      );
   },
 });
 

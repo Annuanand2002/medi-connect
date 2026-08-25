@@ -1,19 +1,27 @@
 import { useState } from "react";
+
 import type {
-  CreateDoctorAvailability,
-  Week,
+
+  UpdateDoctorAvailability,
 } from "../types/addDoctorAvail.type";
-import type { DoctorAvailability } from "../types/doctorAvail.type";
-import { addAvailabilitySchema } from "../services/avilability.modal";
+
+import type { DoctorAvailability, Week } from "../types/doctorAvail.type";
+import { updateAvailabilitySchema } from "../services/updateAvail";
+
+
 
 interface UpdateAvailabilityModalProps {
   isOpen: boolean;
+
   availability: DoctorAvailability | null;
+
   onClose: () => void;
+
   onSubmit: (
     id: string,
-    data: CreateDoctorAvailability,
+    data: UpdateDoctorAvailability,
   ) => Promise<string | null>;
+
   isLoading: boolean;
 }
 
@@ -40,11 +48,14 @@ const UpdateAvailabilityModal = ({
 
 interface UpdateAvailabilityFormProps {
   availability: DoctorAvailability;
+
   onClose: () => void;
+
   onSubmit: (
     id: string,
-    data: CreateDoctorAvailability,
+    data: UpdateDoctorAvailability,
   ) => Promise<string | null>;
+
   isLoading: boolean;
 }
 
@@ -54,35 +65,71 @@ const UpdateAvailabilityForm = ({
   onSubmit,
   isLoading,
 }: UpdateAvailabilityFormProps) => {
-  const [dayOfWeek, setDayOfWeek] = useState<Week>(
-    availability.dayOfWeek,
-  );
+  // -------------------------
+  // FORM STATE
+  // -------------------------
 
-  const [startTime, setStartTime] = useState(
-    availability.startTime,
-  );
+  const [dayOfWeek, setDayOfWeek] =
+    useState<Week>(
+      availability.dayOfWeek,
+    );
 
-  const [endTime, setEndTime] = useState(
-    availability.endTime,
-  );
+  const [startDate, setStartDate] =
+    useState(
+      availability.startDate
+        ? String(
+            availability.startDate,
+          ).slice(0, 10)
+        : "",
+    );
 
-  const [duration, setDuration] = useState(
-    String(availability.duration),
-  );
+  const [endDate, setEndDate] =
+    useState(
+      availability.endDate
+        ? String(
+            availability.endDate,
+          ).slice(0, 10)
+        : "",
+    );
 
-  const [breakStartTime, setBreakStartTime] = useState(
-    availability.breaks[0]?.startTime ?? "",
-  );
+  const [startTime, setStartTime] =
+    useState(
+      availability.startTime,
+    );
 
-  const [breakEndTime, setBreakEndTime] = useState(
-    availability.breaks[0]?.endTime ?? "",
-  );
+  const [endTime, setEndTime] =
+    useState(
+      availability.endTime,
+    );
 
-  const [errors, setErrors] = useState<
-    Record<string, string>
-  >({});
+  const [duration, setDuration] =
+    useState(
+      String(availability.duration),
+    );
 
-  const [backendError, setBackendError] = useState("");
+  const [breakStartTime, setBreakStartTime] =
+    useState(
+      availability.breaks[0]
+        ?.startTime ?? "",
+    );
+
+  const [breakEndTime, setBreakEndTime] =
+    useState(
+      availability.breaks[0]
+        ?.endTime ?? "",
+    );
+
+  const [errors, setErrors] =
+    useState<Record<string, string>>(
+      {},
+    );
+
+  const [backendError, setBackendError] =
+    useState("");
+
+  // -------------------------
+  // SUBMIT
+  // -------------------------
 
   const handleSubmit = async (
     e: React.FormEvent,
@@ -92,60 +139,101 @@ const UpdateAvailabilityForm = ({
     setErrors({});
     setBackendError("");
 
-    const validation =
-      addAvailabilitySchema.safeParse({
-        dayOfWeek,
-        startTime,
-        endTime,
-        duration: duration
-          ? Number(duration)
-          : undefined,
-        breakStartTime,
-        breakEndTime,
-      });
-
-    if (!validation.success) {
-      const fieldErrors: Record<string, string> = {};
-
-      validation.error.issues.forEach((issue) => {
-        const field = issue.path[0];
-
-        if (field) {
-          fieldErrors[String(field)] = issue.message;
-        }
-      });
-
-      setErrors(fieldErrors);
-      return;
-    }
+    // -------------------------
+    // CREATE BREAKS ARRAY
+    // -------------------------
 
     const breaks =
       breakStartTime && breakEndTime
         ? [
             {
-              startTime: breakStartTime,
-              endTime: breakEndTime,
+              startTime:
+                breakStartTime,
+              endTime:
+                breakEndTime,
             },
           ]
         : [];
 
-    const data: CreateDoctorAvailability = {
-      dayOfWeek,
-      startTime,
-      endTime,
-      breaks,
-      duration: Number(duration),
-      isAvailable: availability.isAvailable,
-    };
+    // -------------------------
+    // CREATE UPDATE DATA
+    // -------------------------
+
+    const data: UpdateDoctorAvailability =
+      {
+        dayOfWeek,
+
+        startTime,
+
+        endTime,
+
+        duration: Number(
+          duration,
+        ),
+
+        breaks,
+
+        startDate,
+
+        endDate,
+      };
+
+    console.log(
+      "UPDATE AVAILABILITY DATA:",
+      data,
+    );
+
+    // -------------------------
+    // ZOD VALIDATION
+    // -------------------------
+
+    const validation =
+      updateAvailabilitySchema.safeParse(
+        data,
+      );
+
+    if (!validation.success) {
+      const fieldErrors: Record<
+        string,
+        string
+      > = {};
+
+      validation.error.issues.forEach(
+        (issue) => {
+          const field =
+            issue.path.join(".");
+
+          fieldErrors[field] =
+            issue.message;
+        },
+      );
+
+      setErrors(fieldErrors);
+
+      return;
+    }
+
+    // -------------------------
+    // CALL PARENT
+    // -------------------------
 
     const error = await onSubmit(
       availability.id,
       data,
     );
 
+    // -------------------------
+    // BACKEND ERROR
+    // -------------------------
+
     if (error) {
       setBackendError(error);
+
+      return;
     }
+
+    // Parent should normally close
+    // the modal after successful update.
   };
 
   return (
@@ -154,24 +242,39 @@ const UpdateAvailabilityForm = ({
         position: "fixed",
         inset: 0,
         zIndex: 9999,
-        backgroundColor: "rgba(0, 0, 0, 0.5)",
+        backgroundColor:
+          "rgba(0, 0, 0, 0.5)",
+
         display: "flex",
+
         alignItems: "center",
+
         justifyContent: "center",
       }}
     >
       <div
         style={{
           backgroundColor: "white",
+
           padding: "30px",
+
           width: "500px",
+
           maxHeight: "90vh",
+
           overflowY: "auto",
+
           borderRadius: "8px",
         }}
       >
+        {/* ========================
+            HEADER
+        ======================== */}
+
         <div className="modal-header">
-          <h2>Update Availability</h2>
+          <h2>
+            Update Availability
+          </h2>
 
           <button
             type="button"
@@ -183,29 +286,62 @@ const UpdateAvailabilityForm = ({
         </div>
 
         <form onSubmit={handleSubmit}>
+          {/* ========================
+              BACKEND ERROR
+          ======================== */}
+
           {backendError && (
             <p className="form-error">
               {backendError}
             </p>
           )}
 
-          {/* DAY */}
+          {/* ========================
+              DAY
+          ======================== */}
+
           <div>
-            <label>Day</label>
+            <label>
+              Day
+            </label>
 
             <select
               value={dayOfWeek}
               onChange={(e) =>
-                setDayOfWeek(e.target.value as Week)
+                setDayOfWeek(
+                  e.target
+                    .value as Week,
+                )
               }
+              disabled={isLoading}
             >
-              <option value="MONDAY">Monday</option>
-              <option value="TUESDAY">Tuesday</option>
-              <option value="WEDNESDAY">Wednesday</option>
-              <option value="THURSDAY">Thursday</option>
-              <option value="FRIDAY">Friday</option>
-              <option value="SATURDAY">Saturday</option>
-              <option value="SUNDAY">Sunday</option>
+              <option value="MONDAY">
+                Monday
+              </option>
+
+              <option value="TUESDAY">
+                Tuesday
+              </option>
+
+              <option value="WEDNESDAY">
+                Wednesday
+              </option>
+
+              <option value="THURSDAY">
+                Thursday
+              </option>
+
+              <option value="FRIDAY">
+                Friday
+              </option>
+
+              <option value="SATURDAY">
+                Saturday
+              </option>
+
+              <option value="SUNDAY">
+                Sunday
+              </option>
             </select>
 
             {errors.dayOfWeek && (
@@ -215,16 +351,78 @@ const UpdateAvailabilityForm = ({
             )}
           </div>
 
-          {/* START TIME */}
+          {/* ========================
+              START DATE
+          ======================== */}
+
           <div>
-            <label>Start Time</label>
+            <label>
+              Start Date
+            </label>
+
+            <input
+              type="date"
+              value={startDate}
+              onChange={(e) =>
+                setStartDate(
+                  e.target.value,
+                )
+              }
+              disabled={isLoading}
+            />
+
+            {errors.startDate && (
+              <p className="form-error">
+                {errors.startDate}
+              </p>
+            )}
+          </div>
+
+          {/* ========================
+              END DATE
+          ======================== */}
+
+          <div>
+            <label>
+              End Date
+            </label>
+
+            <input
+              type="date"
+              value={endDate}
+              onChange={(e) =>
+                setEndDate(
+                  e.target.value,
+                )
+              }
+              disabled={isLoading}
+            />
+
+            {errors.endDate && (
+              <p className="form-error">
+                {errors.endDate}
+              </p>
+            )}
+          </div>
+
+          {/* ========================
+              START TIME
+          ======================== */}
+
+          <div>
+            <label>
+              Start Time
+            </label>
 
             <input
               type="time"
               value={startTime}
               onChange={(e) =>
-                setStartTime(e.target.value)
+                setStartTime(
+                  e.target.value,
+                )
               }
+              disabled={isLoading}
             />
 
             {errors.startTime && (
@@ -234,16 +432,24 @@ const UpdateAvailabilityForm = ({
             )}
           </div>
 
-          {/* END TIME */}
+          {/* ========================
+              END TIME
+          ======================== */}
+
           <div>
-            <label>End Time</label>
+            <label>
+              End Time
+            </label>
 
             <input
               type="time"
               value={endTime}
               onChange={(e) =>
-                setEndTime(e.target.value)
+                setEndTime(
+                  e.target.value,
+                )
               }
+              disabled={isLoading}
             />
 
             {errors.endTime && (
@@ -253,17 +459,25 @@ const UpdateAvailabilityForm = ({
             )}
           </div>
 
-          {/* DURATION */}
+          {/* ========================
+              DURATION
+          ======================== */}
+
           <div>
-            <label>Duration</label>
+            <label>
+              Duration
+            </label>
 
             <input
               type="number"
               min="1"
               value={duration}
               onChange={(e) =>
-                setDuration(e.target.value)
+                setDuration(
+                  e.target.value,
+                )
               }
+              disabled={isLoading}
             />
 
             {errors.duration && (
@@ -273,43 +487,75 @@ const UpdateAvailabilityForm = ({
             )}
           </div>
 
-          {/* BREAK START */}
+          {/* ========================
+              BREAK START
+          ======================== */}
+
           <div>
-            <label>Break Start</label>
+            <label>
+              Break Start
+            </label>
 
             <input
               type="time"
               value={breakStartTime}
               onChange={(e) =>
-                setBreakStartTime(e.target.value)
+                setBreakStartTime(
+                  e.target.value,
+                )
               }
+              disabled={isLoading}
             />
 
-            {errors.breakStartTime && (
+            {errors[
+              "breaks.0.startTime"
+            ] && (
               <p className="form-error">
-                {errors.breakStartTime}
+                {
+                  errors[
+                    "breaks.0.startTime"
+                  ]
+                }
               </p>
             )}
           </div>
 
-          {/* BREAK END */}
+          {/* ========================
+              BREAK END
+          ======================== */}
+
           <div>
-            <label>Break End</label>
+            <label>
+              Break End
+            </label>
 
             <input
               type="time"
               value={breakEndTime}
               onChange={(e) =>
-                setBreakEndTime(e.target.value)
+                setBreakEndTime(
+                  e.target.value,
+                )
               }
+              disabled={isLoading}
             />
 
-            {errors.breakEndTime && (
+            {errors[
+              "breaks.0.endTime"
+            ] && (
               <p className="form-error">
-                {errors.breakEndTime}
+                {
+                  errors[
+                    "breaks.0.endTime"
+                  ]
+                }
               </p>
             )}
           </div>
+
+          {/* ========================
+              BUTTONS
+          ======================== */}
 
           <div>
             <button
@@ -318,7 +564,7 @@ const UpdateAvailabilityForm = ({
             >
               {isLoading
                 ? "Updating..."
-                : "Update Slot"}
+                : "Update Availability"}
             </button>
 
             <button

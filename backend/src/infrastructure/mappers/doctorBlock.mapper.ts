@@ -12,7 +12,7 @@ export class DoctorBlockMapper {
 
       doctorId: document.doctorId.toString(),
 
-      date: document.date,
+      date : document.date,
 
       startTime: document.startTime,
 
@@ -35,7 +35,7 @@ export class DoctorBlockMapper {
       doctorId: entity.doctorId
         ? new Types.ObjectId(entity.doctorId)
         : undefined,
-      date: entity.date,
+      date : entity.date,
       startTime: entity.startTime,
       endTime: entity.endTime,
       isDeleted: entity.isDeleted,

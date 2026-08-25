@@ -35,6 +35,7 @@ const RequestResetPatientPasswordForm = () => {
       setMessage(response.message);
     } catch (error) {
       if (axios.isAxiosError(error)) {
+        console.log(error,"error")
         setError(error.response?.data?.message || "Something went wrong");
       } else {
         setError("Something went wrong");

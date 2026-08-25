@@ -22,6 +22,7 @@ export class RequestDoctorForgetPasswordUseCase implements IRequestForgetPasswor
     if (!doctor) {
       throw new AppError("Inavild email", HTTP_STATUS.UNAUTHORIZED);
     }
+
     await this._doctorResetTokenRepo.deleteByToken(doctor.id!);
     const token = crypto.randomUUID();
     const expiresAt = new Date(Date.now() + 15 * 60 * 1000);

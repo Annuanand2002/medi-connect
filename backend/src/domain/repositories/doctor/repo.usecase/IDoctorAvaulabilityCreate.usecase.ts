@@ -2,5 +2,5 @@ import { CreateDoctorAvailabilityDTO } from "../../../../application/DTO/doctor/
 import { DoctorAvailability } from "../../../entities/doctor/doctorAvailability";
 
 export interface ICreateDoctorAvailUseCase{
-    exceute(dto :CreateDoctorAvailabilityDTO):Promise<DoctorAvailability>
+    exceute(doctorId:string,dto :CreateDoctorAvailabilityDTO):Promise<DoctorAvailability[]>
 }

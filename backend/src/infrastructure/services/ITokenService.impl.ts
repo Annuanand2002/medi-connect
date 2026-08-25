@@ -16,9 +16,6 @@ export class JWTService implements ITokenService {
     const refreshToken = jwt.sign(paylaod, env.REFRESH_TOKEN_SECRET, {
       expiresIn: env.REFRESH_TOKEN_EXPIRES_IN,
     });
-
-  console.log("Access secret:");
-  console.log(env.ACCESS_TOKEN_SECRET);
     return {
       accessToken,
       refreshToken,

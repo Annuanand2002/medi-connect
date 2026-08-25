@@ -11,4 +11,5 @@ export const resetDoctorPasswordRequest = async (
     },
   );
   return response.data;
+  
 };

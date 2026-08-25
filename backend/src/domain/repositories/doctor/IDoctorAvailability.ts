@@ -2,8 +2,22 @@ import { Week } from "../../../shared/constants/week";
 import { DoctorAvailability } from "../../entities/doctor/doctorAvailability";
 import { IBaseRepository } from "../base/IBaseRepository";
 
-export interface IDoctorAvailabilityRepo extends IBaseRepository<DoctorAvailability>{
-   findByDoctor(doctorId : string):Promise<DoctorAvailability[]>
-   findByDoctorAndDay(doctorId:string,dayOfWeek:Week):Promise<DoctorAvailability|null>
-   findAvailability(doctorId:string):Promise<DoctorAvailability[]>
+export interface IDoctorAvailabilityRepo extends IBaseRepository<DoctorAvailability> {
+  findAvailability(doctorId: string): Promise<DoctorAvailability[]>;
+  findOverlapAvailability(
+    doctorId: string,
+    dayOfWeek: Week,
+    startDate: Date,
+    endDate: Date,
+    excludeId ?: string
+  ): Promise<DoctorAvailability | null>;
+  findAvailabilityForLeave(
+    doctorId: string,
+    startDate: Date,
+    endDate: Date,
+  ): Promise<DoctorAvailability[]>;
+  findAvailabiltyForDate(
+    doctorId: string,
+    date: Date,
+  ): Promise<DoctorAvailability[]>;
 }

@@ -83,11 +83,9 @@ const authRoutes = [
   "/patient/login",
   "/patient/refresh-token",
 
-  "/admin/forgot-password",
-  "/admin/reset-password",
-
-  "/doctor/forgot-password",
+  "/doctor/request-resetpassword",
   "/doctor/reset-password",
+  "/doctor/setup-password",
 
   "/patient/forgot-password",
   "/patient/reset-password",
@@ -193,9 +191,7 @@ axiosInstance.interceptors.response.use(
         // Retry original request
         return axiosInstance(originalRequest);
       } catch (err) {
-        // =========================
-        // REFRESH TOKEN FAILED
-        // =========================
+
 
         const role = getRoleFromUrl(originalRequest.url);
 

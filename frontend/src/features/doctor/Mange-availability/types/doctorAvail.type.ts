@@ -9,21 +9,31 @@ export const Week  = {
 }
 export type Week = (typeof Week)[keyof typeof Week];
 
+
 export interface DoctorAvailability {
   id: string;
   doctorId: string;
+
   dayOfWeek: Week;
+
   startTime: string;
   endTime: string;
+
   breaks: {
     startTime: string;
     endTime: string;
   }[];
-  createdAt: string;
-  updatedAt: string;
+
+  duration: number;
+
   isAvailable: boolean;
   isDeleted: boolean;
-  duration: number;
+
+  startDate: string;
+  endDate: string;
+
+  createdAt: string;
+  updatedAt: string;
 }
 export interface DoctorAvailResponse {
   success: boolean;

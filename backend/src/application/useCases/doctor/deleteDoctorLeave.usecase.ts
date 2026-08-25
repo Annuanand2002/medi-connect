@@ -12,10 +12,16 @@ export class DeleteDoctorLeaveusecase implements IDeleteDoctorLeaveUsecase {
     @inject(TYPES.DoctorLeaveRepo)
     private _doctorLeave: ILeaveDoctor,
   ) {}
-  async execute(id: string): Promise<DoctorLeave | null> {
+  async execute(doctorId: string, id: string): Promise<DoctorLeave | null> {
     const leave = await this._doctorLeave.findById(id);
     if (!leave) {
       throw new AppError("Leave not found", HTTP_STATUS.NOT_FOUND);
+    }
+    if (leave.doctorId !== doctorId) {
+      throw new AppError(
+        "You are not authorized to delete this leave",
+        HTTP_STATUS.UNAUTHORIZED,
+      );
     }
     if (leave.isDeleted === true) {
       throw new AppError("leave already deleted", HTTP_STATUS.CONFLICT);

@@ -11,6 +11,7 @@ import {
 import { DoctorLeave } from "../../../domain/entities/doctor/doctorLeave";
 import { DoctorLeaveMapper } from "../../mappers/doctorLeave";
 
+
 @injectable()
 export class DoctorLeaveRepo
   extends BaseRepository<DoctorLeaveSchema, DoctorLeave>
@@ -30,11 +31,12 @@ export class DoctorLeaveRepo
       isDeleted: false,
     };
     if (date) {
+      const selectedDate = new Date(date);
       query.startDate = {
-        $lte: new Date(date),
+        $lte: selectedDate,
       };
       query.endDate = {
-        $gte: new Date(date),
+        $gte: selectedDate,
       };
     }
     if (search) {
@@ -84,4 +86,5 @@ export class DoctorLeaveRepo
     if (!leave) return null;
     return DoctorLeaveMapper.toDomain(leave);
   }
+
 }
