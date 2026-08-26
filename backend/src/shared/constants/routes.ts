@@ -20,10 +20,21 @@ export const ROUTES = {
       CREATE : '/doctorBlock/create',
       UPDATE :'/doctorBlock/:id',
       GET : '/doctorBlock'
+    },
+    APPOINTMENT : {
+      GET :'/appointment'
     }
   },
   PATIENT: {
     GETALL: "/patient",
     TOGGLE: "/patient/:id",
+    DOCTOTLIST : '/doctors',
+    GETDATES : '/dates/:doctorId',
+    GETTIMESLOT : '/timeslots/:doctorId',
+    GETDETAIlS : '/appointment/:doctorId/details',
+    APPOINTMENT : {
+      CREATE : '/appointment/create',
+      GET : '/appointment'
+    }
   },
 } as const;

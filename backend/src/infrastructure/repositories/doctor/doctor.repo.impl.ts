@@ -38,10 +38,13 @@ export class DoctorRepo
     return doctor ? DoctorMapper.toDomain(doctor) : null;
   }
   async findDoctors(dto: GetDoctorReqDTO): Promise<PaginationDoctorResDTO> {
-    const { page, limit, status, search } = dto;
+    const { page, limit, status, department, search } = dto;
     const query: Record<string, unknown> = {};
-    if(status){
+    if (status) {
       query.status = status;
+    }
+    if (department) {
+      query.department = department;
     }
     if (search) {
       query.$or = [

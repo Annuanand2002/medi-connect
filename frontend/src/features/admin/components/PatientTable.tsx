@@ -5,7 +5,8 @@ import type { TableColumn } from "@/types/dataTable";
 import type { Patients } from "../types/patientList";
 import { formateDate } from "@/utils/formateDate";
 import DataTable from "@/components/dataTable";
-
+import { useState } from "react";
+import PatientStatusModal from "./patientStatusModal";
 
 interface PatientTableProps {
   requests: Patients[];
@@ -13,9 +14,25 @@ interface PatientTableProps {
 
 const PatientTable = ({ requests }: PatientTableProps) => {
   const dispatch = useAppDispatch();
-  const handleToggleStastus = async(id:string)=>{
-    await dispatch(togglePatientStatusThunk(id))
-  }
+  const [selectedPatient, setSelectedPatient] = useState<Patients | null>(null);
+
+  const [isUpdating, setIsUpdating] = useState(false);
+
+  const handleConfirmStatusChange = async () => {
+    if (!selectedPatient) return;
+
+    try {
+      setIsUpdating(true);
+
+      await dispatch(togglePatientStatusThunk(selectedPatient.id)).unwrap();
+
+      setSelectedPatient(null);
+    } catch (error) {
+      console.error("Failed to update patient status:", error);
+    } finally {
+      setIsUpdating(false);
+    }
+  };
   const columns: TableColumn<Patients>[] = [
     {
       key: "patient",
@@ -46,8 +63,10 @@ const PatientTable = ({ requests }: PatientTableProps) => {
       key: "dateOfBirth",
       header: "DOB",
 
-      render: (request) => ( 
-        <span className="doctor-specialization">{formateDate(request.dateOfBirth.toString())}</span>
+      render: (request) => (
+        <span className="doctor-specialization">
+          {formateDate(request.dateOfBirth.toString())}
+        </span>
       ),
     },
 
@@ -70,7 +89,9 @@ const PatientTable = ({ requests }: PatientTableProps) => {
       header: "Joined",
 
       render: (request) => (
-        <span className="doctor-date">{formateDate(request.createdAt.toString())}</span>
+        <span className="doctor-date">
+          {formateDate(request.createdAt.toString())}
+        </span>
       ),
     },
     {
@@ -89,11 +110,14 @@ const PatientTable = ({ requests }: PatientTableProps) => {
 
       render: (request) => (
         <div className="doctor-action-cell">
-         <button type="button" onClick={()=>handleToggleStastus(request.id)}
-         className="doctor-view-button"
+          <button
+            type="button"
+            onClick={() => setSelectedPatient(request)}
+            className="doctor-view-button"
           >
-            <span>{request.isBlocked==="BLOCKED"?"ACTIVE":"BLOCK"}</span>
-            <ArrowUpRight size={15}/>
+            <span>{request.isBlocked === "BLOCKED" ? "ACTIVE" : "BLOCK"}</span>
+
+            <ArrowUpRight size={15} />
           </button>
         </div>
       ),
@@ -101,27 +125,38 @@ const PatientTable = ({ requests }: PatientTableProps) => {
   ];
 
   return (
-    <DataTable
-      data={requests}
-      columns={columns}
-      rowKey={(request) => request.id}
-      emptyState={
-        <div className="doctor-request-empty">
-          <div className="doctor-request-empty-icon">
-            <UserRound size={23} />
+    <>
+      <DataTable
+        data={requests}
+        columns={columns}
+        rowKey={(request) => request.id}
+        emptyState={
+          <div className="doctor-request-empty">
+            <div className="doctor-request-empty-icon">
+              <UserRound size={23} />
+            </div>
+
+            <span>NO APPLICATIONS</span>
+
+            <h3>No patients found</h3>
+
+            <p>
+              Try adjusting your search or status filter to find what you're
+              looking for.
+            </p>
           </div>
+        }
+      />
 
-          <span>NO APPLICATIONS</span>
-
-          <h3>No doctor requests found</h3>
-
-          <p>
-            Try adjusting your search or status filter to find what you're
-            looking for.
-          </p>
-        </div>
-      }
-    />
+      <PatientStatusModal
+        isOpen={selectedPatient !== null}
+        patientName={selectedPatient?.fullName ?? ""}
+        action={selectedPatient?.isBlocked === "BLOCKED" ? "ACTIVE" : "BLOCK"}
+        isLoading={isUpdating}
+        onClose={() => setSelectedPatient(null)}
+        onConfirm={handleConfirmStatusChange}
+      />
+    </>
   );
 };
 

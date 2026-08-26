@@ -58,3 +58,44 @@ export const hasAvailableDateInRange  = (
    }
    return false
 }
+
+
+interface AvailabilityRuleInput {
+  recurrenceRule: string;
+  startDate: Date;
+  endDate: Date;
+}
+
+export const getDatesFromAvailabilityRule = ({
+  recurrenceRule,
+  startDate,
+  endDate,
+}: AvailabilityRuleInput): Date[] => {
+  const rule = RRule.fromString(recurrenceRule);
+
+  const dates = rule.between(
+    startDate,
+    endDate,
+    true,
+  );
+
+  return dates;
+};
+
+export const isDateAvailableFromRule = (
+  recurrenceRule: string,
+  date: Date,
+): boolean => {
+  const dates = getDatesFromAvailabilityRule({
+    recurrenceRule,
+    startDate: date,
+    endDate: new Date(date.getTime() + 24 * 60 * 60 * 1000),
+  });
+
+  const selectedDate = date.toISOString().split("T")[0];
+
+  return dates.some(
+    (availableDate) =>
+      availableDate.toISOString().split("T")[0] === selectedDate,
+  );
+};

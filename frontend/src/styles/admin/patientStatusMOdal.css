@@ -1,0 +1,142 @@
+.patient-status-modal-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 20px;
+
+  background: rgba(0, 0, 0, 0.5);
+}
+
+.patient-status-modal {
+  width: 420px;
+  max-width: 100%;
+
+  padding: 28px;
+
+  background: #ffffff;
+  border-radius: 12px;
+
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.2);
+
+  animation: patientStatusModalShow 0.2s ease-out;
+}
+
+.patient-status-modal-icon {
+  width: 48px;
+  height: 48px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  margin-bottom: 18px;
+
+  border-radius: 50%;
+
+  font-size: 22px;
+  font-weight: 700;
+}
+
+.patient-status-modal-icon.block {
+  background: #fef2f2;
+  color: #dc2626;
+}
+
+.patient-status-modal-icon.active {
+  background: #f0fdf4;
+  color: #16a34a;
+}
+
+.patient-status-modal-content h2 {
+  margin: 0 0 10px;
+
+  color: #111827;
+
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.patient-status-modal-content p {
+  margin: 0;
+
+  color: #4b5563;
+
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.patient-status-modal-warning {
+  margin-top: 10px !important;
+  color: #6b7280 !important;
+}
+
+.patient-status-modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+
+  margin-top: 24px;
+}
+
+.patient-status-modal-actions button {
+  border: none;
+  border-radius: 7px;
+
+  padding: 9px 16px;
+
+  font-size: 14px;
+  font-weight: 500;
+
+  cursor: pointer;
+
+  transition: 0.2s ease;
+}
+
+.patient-status-modal-actions button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.patient-status-modal-cancel {
+  background: #f3f4f6;
+  color: #374151;
+}
+
+.patient-status-modal-cancel:hover:not(:disabled) {
+  background: #e5e7eb;
+}
+
+.patient-status-modal-confirm.block {
+  background: #dc2626;
+  color: #ffffff;
+}
+
+.patient-status-modal-confirm.block:hover:not(:disabled) {
+  background: #b91c1c;
+}
+
+.patient-status-modal-confirm.active {
+  background: #16a34a;
+  color: #ffffff;
+}
+
+.patient-status-modal-confirm.active:hover:not(:disabled) {
+  background: #15803d;
+}
+
+@keyframes patientStatusModalShow {
+  from {
+    opacity: 0;
+    transform: translateY(-8px) scale(0.98);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}

@@ -1,4 +1,5 @@
 import { useState } from "react";
+import "@/styles/doctor/addLeaveModal.css"
 import { createDoctorBlockSchema } from "../types/createDoctorModal";
 
 interface CreateDoctorBlockData {
@@ -96,124 +97,140 @@ const CreateDoctorBlockModal = ({
     onClose();
   };
 
-  return (
-    <div
-      style={{
-        position: "fixed",
-        inset: 0,
-        zIndex: 9999,
-        backgroundColor: "rgba(0, 0, 0, 0.5)",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-      }}
-    >
-      <div
-        style={{
-          backgroundColor: "white",
-          padding: "30px",
-          width: "500px",
-          maxWidth: "90%",
-          borderRadius: "8px",
-        }}
-      >
-        {/* HEADER */}
+return (
+  <div className="modal-overlay">
+    <div className="modal-container">
+      {/* HEADER */}
+      <div className="modal-header">
+        <h2>Block Doctor Availability</h2>
 
-        <div className="modal-header">
-          <h2>Block Doctor Availability</h2>
+        <button
+          type="button"
+          className="modal-close-button"
+          onClick={handleClose}
+          disabled={isLoading}
+        >
+          ×
+        </button>
+      </div>
 
-          <button type="button" onClick={handleClose} disabled={isLoading}>
-            ×
-          </button>
+      <form onSubmit={handleSubmit} className="modal-form">
+        {/* BACKEND ERROR */}
+        {backendError && (
+          <div className="form-error">
+            {backendError}
+          </div>
+        )}
+
+        {/* DATE */}
+        <div className="form-group">
+          <label htmlFor="block-date">
+            Date
+          </label>
+
+          <input
+            id="block-date"
+            type="date"
+            value={date}
+            onChange={(e) => setDate(e.target.value)}
+            disabled={isLoading}
+          />
+
+          {errors.date && (
+            <p className="form-error">
+              {errors.date}
+            </p>
+          )}
         </div>
 
-        <form onSubmit={handleSubmit}>
-          {/* BACKEND ERROR */}
+        {/* START TIME */}
+        <div className="form-group">
+          <label htmlFor="block-start-time">
+            Start Time
+          </label>
 
-          {backendError && <div className="form-error">{backendError}</div>}
+          <input
+            id="block-start-time"
+            type="time"
+            value={startTime}
+            onChange={(e) => setStartTime(e.target.value)}
+            disabled={isLoading}
+          />
 
-          {/* DATE */}
+          {errors.startTime && (
+            <p className="form-error">
+              {errors.startTime}
+            </p>
+          )}
+        </div>
 
-          <div>
-            <label htmlFor="block-date">Date</label>
+        {/* END TIME */}
+        <div className="form-group">
+          <label htmlFor="block-end-time">
+            End Time
+          </label>
 
-            <input
-              id="block-date"
-              type="date"
-              value={date}
-              onChange={(e) => setDate(e.target.value)}
-              disabled={isLoading}
-            />
+          <input
+            id="block-end-time"
+            type="time"
+            value={endTime}
+            min={startTime}
+            onChange={(e) => setEndTime(e.target.value)}
+            disabled={isLoading}
+          />
 
-            {errors.date && <p className="form-error">{errors.date}</p>}
-          </div>
+          {errors.endTime && (
+            <p className="form-error">
+              {errors.endTime}
+            </p>
+          )}
+        </div>
 
-          {/* START TIME */}
+        {/* REASON */}
+        <div className="form-group">
+          <label htmlFor="block-reason">
+            Reason
+          </label>
 
-          <div>
-            <label htmlFor="block-start-time">Start Time</label>
+          <textarea
+            id="block-reason"
+            value={reason}
+            onChange={(e) => setReason(e.target.value)}
+            placeholder="Enter reason for block"
+            rows={4}
+            disabled={isLoading}
+          />
 
-            <input
-              id="block-start-time"
-              type="time"
-              value={startTime}
-              onChange={(e) => setStartTime(e.target.value)}
-              disabled={isLoading}
-            />
+          {errors.reason && (
+            <p className="form-error">
+              {errors.reason}
+            </p>
+          )}
+        </div>
 
-            {errors.startTime && (
-              <p className="form-error">{errors.startTime}</p>
-            )}
-          </div>
+        {/* BUTTONS */}
+        <div className="modal-actions">
+          <button
+            type="submit"
+            className="modal-submit-button"
+            disabled={isLoading}
+          >
+            {isLoading ? "Blocking..." : "Block Time"}
+          </button>
 
-          {/* END TIME */}
-
-          <div>
-            <label htmlFor="block-end-time">End Time</label>
-
-            <input
-              id="block-end-time"
-              type="time"
-              value={endTime}
-              onChange={(e) => setEndTime(e.target.value)}
-              disabled={isLoading}
-            />
-
-            {errors.endTime && <p className="form-error">{errors.endTime}</p>}
-          </div>
-
-          {/* REASON */}
-
-          <div>
-            <label htmlFor="block-reason">Reason</label>
-
-            <textarea
-              id="block-reason"
-              value={reason}
-              onChange={(e) => setReason(e.target.value)}
-              placeholder="Enter reason for block"
-              rows={4}
-              disabled={isLoading}
-            />
-
-            {errors.reason && <p className="form-error">{errors.reason}</p>}
-          </div>
-
-          {/* BUTTONS */}
-
-          <div>
-            <button type="submit" disabled={isLoading}>
-              {isLoading ? "Blocking..." : "Block Time"}
-            </button>
-
-            <button type="button" onClick={handleClose} disabled={isLoading}>
-              Cancel
-            </button>
-          </div>
-        </form>
-      </div>
+          <button
+            type="button"
+            className="modal-cancel-button"
+            onClick={handleClose}
+            disabled={isLoading}
+          >
+            Cancel
+          </button>
+        </div>
+      </form>
     </div>
-  );
+  </div>
+);
 };
 
 export default CreateDoctorBlockModal;

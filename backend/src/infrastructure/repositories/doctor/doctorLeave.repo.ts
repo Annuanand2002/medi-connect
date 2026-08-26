@@ -11,7 +11,6 @@ import {
 import { DoctorLeave } from "../../../domain/entities/doctor/doctorLeave";
 import { DoctorLeaveMapper } from "../../mappers/doctorLeave";
 
-
 @injectable()
 export class DoctorLeaveRepo
   extends BaseRepository<DoctorLeaveSchema, DoctorLeave>
@@ -86,5 +85,18 @@ export class DoctorLeaveRepo
     if (!leave) return null;
     return DoctorLeaveMapper.toDomain(leave);
   }
+  async findLeavesInRange(
+    doctorId: string,
+    startDate: Date,
+    endDate: Date,
+  ): Promise<DoctorLeave[]> {
+    const leaves = await DoctorLeaveModel.find({
+      doctorId,
+      isDeleted: false,
+      startDate: { $lte: endDate },
+      endDate: { $gte: startDate },
+    });
 
+    return leaves.map((leave) => DoctorLeaveMapper.toDomain(leave));
+  }
 }

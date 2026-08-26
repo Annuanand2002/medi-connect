@@ -17,4 +17,10 @@ export interface ILeaveDoctor extends IBaseRepository<DoctorLeave> {
     endDate: Date,
     excludeId?: string,
   ): Promise<DoctorLeave | null>;
+
+  findLeavesInRange(
+    doctorId: string,
+    startDate: Date,
+    endDate: Date,
+  ): Promise<DoctorLeave[]>;
 }

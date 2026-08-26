@@ -1,4 +1,6 @@
 import { useState } from "react";
+import "@/styles/doctor/addLeaveModal.css"
+
 import { createDoctorLeaveSchema } from "../service/doctorLeave.modal";
 import type { DoctorLeave } from "../types/doctorLeave.type";
 
@@ -88,41 +90,32 @@ const UpdateDoctorLeaveModal = ({
   };
 
   return (
-    <div
-      style={{
-        position: "fixed",
-        inset: 0,
-        zIndex: 9999,
-        backgroundColor: "rgba(0, 0, 0, 0.5)",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-      }}
-    >
-      <div
-        style={{
-          backgroundColor: "white",
-          padding: "30px",
-          width: "500px",
-          maxWidth: "90%",
-          borderRadius: "8px",
-        }}
-      >
+    <div className="modal-overlay">
+      <div className="modal-container">
+        {/* HEADER */}
         <div className="modal-header">
           <h2>Update Leave</h2>
 
-          <button type="button" onClick={handleClose} disabled={isLoading}>
+          <button
+            type="button"
+            className="modal-close-button"
+            onClick={handleClose}
+            disabled={isLoading}
+          >
             ×
           </button>
         </div>
 
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} className="modal-form">
+          {/* BACKEND ERROR */}
           {backendError && <div className="form-error">{backendError}</div>}
 
-          <div>
-            <label>Start Date</label>
+          {/* START DATE */}
+          <div className="form-group">
+            <label htmlFor="update-leave-start-date">Start Date</label>
 
             <input
+              id="update-leave-start-date"
               type="date"
               value={startDate}
               onChange={(e) => setStartDate(e.target.value)}
@@ -134,12 +127,15 @@ const UpdateDoctorLeaveModal = ({
             )}
           </div>
 
-          <div>
-            <label>End Date</label>
+          {/* END DATE */}
+          <div className="form-group">
+            <label htmlFor="update-leave-end-date">End Date</label>
 
             <input
+              id="update-leave-end-date"
               type="date"
               value={endDate}
+              min={startDate}
               onChange={(e) => setEndDate(e.target.value)}
               disabled={isLoading}
             />
@@ -147,10 +143,12 @@ const UpdateDoctorLeaveModal = ({
             {errors.endDate && <p className="form-error">{errors.endDate}</p>}
           </div>
 
-          <div>
-            <label>Reason</label>
+          {/* REASON */}
+          <div className="form-group">
+            <label htmlFor="update-leave-reason">Reason</label>
 
             <textarea
+              id="update-leave-reason"
               value={reason}
               onChange={(e) => setReason(e.target.value)}
               placeholder="Enter reason for leave"
@@ -161,12 +159,22 @@ const UpdateDoctorLeaveModal = ({
             {errors.reason && <p className="form-error">{errors.reason}</p>}
           </div>
 
-          <div>
-            <button type="submit" disabled={isLoading}>
+          {/* BUTTONS */}
+          <div className="modal-actions">
+            <button
+              type="submit"
+              className="modal-submit-button"
+              disabled={isLoading}
+            >
               {isLoading ? "Updating..." : "Update Leave"}
             </button>
 
-            <button type="button" onClick={handleClose} disabled={isLoading}>
+            <button
+              type="button"
+              className="modal-cancel-button"
+              onClick={handleClose}
+              disabled={isLoading}
+            >
               Cancel
             </button>
           </div>

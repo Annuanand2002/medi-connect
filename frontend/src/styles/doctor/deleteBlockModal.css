@@ -1,0 +1,214 @@
+.delete-block-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 20px;
+
+  background-color: rgba(15, 23, 42, 0.55);
+  backdrop-filter: blur(3px);
+}
+
+/* Modal */
+
+.delete-block-modal {
+  width: 400px;
+  max-width: 90%;
+
+  padding: 28px;
+
+  background-color: #ffffff;
+
+  border-radius: 12px;
+
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.2);
+
+  animation: deleteBlockAppear 0.2s ease-out;
+}
+
+/* Header */
+
+.delete-block-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  margin-bottom: 18px;
+}
+
+.delete-block-header h2 {
+  margin: 0;
+
+  color: #111827;
+
+  font-size: 20px;
+  font-weight: 600;
+}
+
+/* Warning Icon */
+
+.delete-block-warning-icon {
+  width: 42px;
+  height: 42px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  flex-shrink: 0;
+
+  border-radius: 50%;
+
+  background-color: #fee2e2;
+  color: #dc2626;
+
+  font-size: 20px;
+  font-weight: 700;
+}
+
+/* Message */
+
+.delete-block-message {
+  margin: 0 0 14px;
+
+  color: #4b5563;
+
+  font-size: 15px;
+  line-height: 1.6;
+}
+
+/* Reason */
+
+.delete-block-reason {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+
+  margin-bottom: 14px;
+  padding: 12px 14px;
+
+  background-color: #f9fafb;
+
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+}
+
+.delete-block-reason span {
+  color: #6b7280;
+
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.delete-block-reason strong {
+  color: #111827;
+
+  font-size: 14px;
+  font-weight: 600;
+
+  word-break: break-word;
+}
+
+/* Warning */
+
+.delete-block-warning {
+  margin: 0;
+
+  color: #dc2626;
+
+  font-size: 13px;
+  font-weight: 500;
+}
+
+/* Actions */
+
+.delete-block-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+
+  margin-top: 24px;
+}
+
+.delete-block-actions button {
+  padding: 10px 18px;
+
+  border-radius: 7px;
+
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition: all 0.2s ease;
+}
+
+/* Cancel */
+
+.delete-block-cancel-btn {
+  border: 1px solid #d1d5db;
+
+  background-color: #ffffff;
+  color: #374151;
+}
+
+.delete-block-cancel-btn:hover:not(:disabled) {
+  background-color: #f3f4f6;
+}
+
+/* Delete */
+
+.delete-block-confirm-btn {
+  border: none;
+
+  background-color: #dc2626;
+  color: #ffffff;
+
+  box-shadow: 0 2px 5px rgba(220, 38, 38, 0.25);
+}
+
+.delete-block-confirm-btn:hover:not(:disabled) {
+  background-color: #b91c1c;
+}
+
+/* Disabled */
+
+.delete-block-actions button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Animation */
+
+@keyframes deleteBlockAppear {
+  from {
+    opacity: 0;
+    transform: scale(0.95) translateY(5px);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+/* Mobile */
+
+@media (max-width: 480px) {
+  .delete-block-modal {
+    padding: 22px;
+  }
+
+  .delete-block-actions {
+    flex-direction: column-reverse;
+  }
+
+  .delete-block-actions button {
+    width: 100%;
+  }
+}

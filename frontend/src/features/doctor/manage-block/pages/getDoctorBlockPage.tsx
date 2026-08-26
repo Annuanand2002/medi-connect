@@ -123,7 +123,7 @@ const DoctorBlockPageList = () => {
 
             <p>View doctor block requests and filter them by date or reason.</p>
 
-            <button type="button" onClick={() => setIsModalOpen(true)}>
+            <button type="button" className="doctor-add-leave-button" onClick={() => setIsModalOpen(true)}>
               Add Block
             </button>
           </div>

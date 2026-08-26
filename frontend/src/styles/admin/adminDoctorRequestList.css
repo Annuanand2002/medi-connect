@@ -1,12 +1,4 @@
-/* =========================================================
-   MEDICONNECT
-   DOCTOR REQUEST MANAGEMENT
-   ========================================================= */
 
-
-/* =========================================================
-   PAGE
-   ========================================================= */
 
 .doctor-request-page {
   display: flex;
@@ -22,7 +14,27 @@
   background: #f6f7fa;
 }
 
+.doctor-add-leave-button {
+  margin-top: 16px;
+  padding: 10px 18px;
+  border: none;
+  border-radius: 6px;
+  background-color: #2563eb;
+  color: white;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
 
+.doctor-add-leave-button:hover {
+  background-color: #1d4ed8;
+}
+
+.doctor-add-leave-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
 
 /* =========================================================
    INTRO

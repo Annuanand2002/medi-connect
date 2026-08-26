@@ -1,3 +1,5 @@
+import "@/styles/doctor/deleteBlockModal.css"
+
 interface DeleteBlockConfirmModalProps {
   isOpen: boolean;
   blockReason?: string;
@@ -18,44 +20,43 @@ const DeleteBlockConfirmModal = ({
   }
 
   return (
-    <div
-      style={{
-        position: "fixed",
-        inset: 0,
-        zIndex: 9999,
-        backgroundColor: "rgba(0, 0, 0, 0.5)",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-      }}
-    >
-      <div
-        style={{
-          backgroundColor: "white",
-          padding: "30px",
-          width: "400px",
-          maxWidth: "90%",
-          borderRadius: "8px",
-        }}
-      >
-        <h2>Delete Block</h2>
+    <div className="delete-block-overlay">
+      <div className="delete-block-modal">
+        <div className="delete-block-header">
+          <div className="delete-block-warning-icon">!</div>
 
-        <p>Are you sure you want to delete this Block?</p>
+          <h2>Delete Block</h2>
+        </div>
+
+        <p className="delete-block-message">
+          Are you sure you want to delete this block?
+        </p>
 
         {blockReason && (
-          <p>
-            Reason: <strong>{blockReason}</strong>
-          </p>
-          
+          <div className="delete-block-reason">
+            <span>Reason</span>
+            <strong>{blockReason}</strong>
+          </div>
         )}
-        <p>This action cannot be undone.</p>
 
-        <div className="flex items-center gap-2">
-          <button type="button" onClick={onClose} disabled={isDeleting}>
+        <p className="delete-block-warning">This action cannot be undone.</p>
+
+        <div className="delete-block-actions">
+          <button
+            type="button"
+            onClick={onClose}
+            disabled={isDeleting}
+            className="delete-block-cancel-btn"
+          >
             Cancel
           </button>
 
-          <button type="button" onClick={onConfirm} disabled={isDeleting}>
+          <button
+            type="button"
+            onClick={onConfirm}
+            disabled={isDeleting}
+            className="delete-block-confirm-btn"
+          >
             {isDeleting ? "Deleting..." : "Delete"}
           </button>
         </div>

@@ -1,5 +1,5 @@
 import { useState } from "react";
-
+import "@/styles/doctor/updateModal.css"
 import type {
 
   UpdateDoctorAvailability,
@@ -236,349 +236,220 @@ const UpdateAvailabilityForm = ({
     // the modal after successful update.
   };
 
-  return (
-    <div
-      style={{
-        position: "fixed",
-        inset: 0,
-        zIndex: 9999,
-        backgroundColor:
-          "rgba(0, 0, 0, 0.5)",
-
-        display: "flex",
-
-        alignItems: "center",
-
-        justifyContent: "center",
-      }}
-    >
-      <div
-        style={{
-          backgroundColor: "white",
-
-          padding: "30px",
-
-          width: "500px",
-
-          maxHeight: "90vh",
-
-          overflowY: "auto",
-
-          borderRadius: "8px",
-        }}
-      >
-        {/* ========================
-            HEADER
-        ======================== */}
-
-        <div className="modal-header">
-          <h2>
-            Update Availability
-          </h2>
-
-          <button
-            type="button"
-            onClick={onClose}
-            disabled={isLoading}
-          >
-            ×
-          </button>
+return (
+  <div className="availability-modal-overlay">
+    <div className="availability-modal availability-modal-update">
+      {/* Header */}
+      <div className="modal-header">
+        <div>
+          <span className="modal-eyebrow">SCHEDULE</span>
+          <h2>Update Availability</h2>
+          <p>Modify the doctor's weekly availability.</p>
         </div>
 
-        <form onSubmit={handleSubmit}>
-          {/* ========================
-              BACKEND ERROR
-          ======================== */}
+        <button
+          type="button"
+          className="modal-close"
+          onClick={onClose}
+          disabled={isLoading}
+        >
+          ×
+        </button>
+      </div>
 
-          {backendError && (
-            <p className="form-error">
-              {backendError}
-            </p>
-          )}
-
-          {/* ========================
-              DAY
-          ======================== */}
-
-          <div>
-            <label>
-              Day
-            </label>
-
-            <select
-              value={dayOfWeek}
-              onChange={(e) =>
-                setDayOfWeek(
-                  e.target
-                    .value as Week,
-                )
-              }
-              disabled={isLoading}
-            >
-              <option value="MONDAY">
-                Monday
-              </option>
-
-              <option value="TUESDAY">
-                Tuesday
-              </option>
-
-              <option value="WEDNESDAY">
-                Wednesday
-              </option>
-
-              <option value="THURSDAY">
-                Thursday
-              </option>
-
-              <option value="FRIDAY">
-                Friday
-              </option>
-
-              <option value="SATURDAY">
-                Saturday
-              </option>
-
-              <option value="SUNDAY">
-                Sunday
-              </option>
-            </select>
-
-            {errors.dayOfWeek && (
-              <p className="form-error">
-                {errors.dayOfWeek}
-              </p>
-            )}
+      <form onSubmit={handleSubmit} className="availability-form">
+        {/* Backend Error */}
+        {backendError && (
+          <div className="form-error-box">
+            {backendError}
           </div>
+        )}
 
-          {/* ========================
-              START DATE
-          ======================== */}
+        {/* Day */}
+        <div className="availability-form-group">
+          <label>Day</label>
 
-          <div>
-            <label>
-              Start Date
-            </label>
+          <select
+            value={dayOfWeek}
+            onChange={(e) =>
+              setDayOfWeek(e.target.value as Week)
+            }
+            disabled={isLoading}
+          >
+            <option value="MONDAY">Monday</option>
+            <option value="TUESDAY">Tuesday</option>
+            <option value="WEDNESDAY">Wednesday</option>
+            <option value="THURSDAY">Thursday</option>
+            <option value="FRIDAY">Friday</option>
+            <option value="SATURDAY">Saturday</option>
+            <option value="SUNDAY">Sunday</option>
+          </select>
+
+          {errors.dayOfWeek && (
+            <p className="field-error">{errors.dayOfWeek}</p>
+          )}
+        </div>
+
+        {/* Date Range */}
+        <div className="availability-form-row">
+          <div className="availability-form-group">
+            <label>Start Date</label>
 
             <input
               type="date"
               value={startDate}
-              onChange={(e) =>
-                setStartDate(
-                  e.target.value,
-                )
-              }
+              onChange={(e) => setStartDate(e.target.value)}
               disabled={isLoading}
             />
 
             {errors.startDate && (
-              <p className="form-error">
-                {errors.startDate}
-              </p>
+              <p className="field-error">{errors.startDate}</p>
             )}
           </div>
 
-          {/* ========================
-              END DATE
-          ======================== */}
-
-          <div>
-            <label>
-              End Date
-            </label>
+          <div className="availability-form-group">
+            <label>End Date</label>
 
             <input
               type="date"
               value={endDate}
-              onChange={(e) =>
-                setEndDate(
-                  e.target.value,
-                )
-              }
+              onChange={(e) => setEndDate(e.target.value)}
               disabled={isLoading}
             />
 
             {errors.endDate && (
-              <p className="form-error">
-                {errors.endDate}
-              </p>
+              <p className="field-error">{errors.endDate}</p>
             )}
           </div>
+        </div>
 
-          {/* ========================
-              START TIME
-          ======================== */}
-
-          <div>
-            <label>
-              Start Time
-            </label>
+        {/* Time */}
+        <div className="availability-form-row">
+          <div className="availability-form-group">
+            <label>Start Time</label>
 
             <input
               type="time"
               value={startTime}
-              onChange={(e) =>
-                setStartTime(
-                  e.target.value,
-                )
-              }
+              onChange={(e) => setStartTime(e.target.value)}
               disabled={isLoading}
             />
 
             {errors.startTime && (
-              <p className="form-error">
-                {errors.startTime}
-              </p>
+              <p className="field-error">{errors.startTime}</p>
             )}
           </div>
 
-          {/* ========================
-              END TIME
-          ======================== */}
-
-          <div>
-            <label>
-              End Time
-            </label>
+          <div className="availability-form-group">
+            <label>End Time</label>
 
             <input
               type="time"
               value={endTime}
-              onChange={(e) =>
-                setEndTime(
-                  e.target.value,
-                )
-              }
+              onChange={(e) => setEndTime(e.target.value)}
               disabled={isLoading}
             />
 
             {errors.endTime && (
-              <p className="form-error">
-                {errors.endTime}
-              </p>
+              <p className="field-error">{errors.endTime}</p>
             )}
           </div>
+        </div>
 
-          {/* ========================
-              DURATION
-          ======================== */}
+        {/* Duration */}
+        <div className="availability-form-group">
+          <label>Duration</label>
 
-          <div>
-            <label>
-              Duration
-            </label>
+          <input
+            type="number"
+            min="1"
+            value={duration}
+            onChange={(e) => setDuration(e.target.value)}
+            disabled={isLoading}
+          />
 
-            <input
-              type="number"
-              min="1"
-              value={duration}
-              onChange={(e) =>
-                setDuration(
-                  e.target.value,
-                )
-              }
-              disabled={isLoading}
-            />
+          <span className="input-hint">
+            Duration of each appointment slot in minutes.
+          </span>
 
-            {errors.duration && (
-              <p className="form-error">
-                {errors.duration}
-              </p>
-            )}
+          {errors.duration && (
+            <p className="field-error">{errors.duration}</p>
+          )}
+        </div>
+
+        {/* Break */}
+        <div className="availability-section">
+          <div className="availability-section-title">
+            <div>
+              <h3>Break Time</h3>
+              <p>Set the break period during this availability.</p>
+            </div>
           </div>
 
-          {/* ========================
-              BREAK START
-          ======================== */}
+          <div className="availability-form-row">
+            <div className="availability-form-group">
+              <label>Break Start</label>
 
-          <div>
-            <label>
-              Break Start
-            </label>
-
-            <input
-              type="time"
-              value={breakStartTime}
-              onChange={(e) =>
-                setBreakStartTime(
-                  e.target.value,
-                )
-              }
-              disabled={isLoading}
-            />
-
-            {errors[
-              "breaks.0.startTime"
-            ] && (
-              <p className="form-error">
-                {
-                  errors[
-                    "breaks.0.startTime"
-                  ]
+              <input
+                type="time"
+                value={breakStartTime}
+                onChange={(e) =>
+                  setBreakStartTime(e.target.value)
                 }
-              </p>
-            )}
-          </div>
+                disabled={isLoading}
+              />
 
-          {/* ========================
-              BREAK END
-          ======================== */}
+              {errors["breaks.0.startTime"] && (
+                <p className="field-error">
+                  {errors["breaks.0.startTime"]}
+                </p>
+              )}
+            </div>
 
-          <div>
-            <label>
-              Break End
-            </label>
+            <div className="availability-form-group">
+              <label>Break End</label>
 
-            <input
-              type="time"
-              value={breakEndTime}
-              onChange={(e) =>
-                setBreakEndTime(
-                  e.target.value,
-                )
-              }
-              disabled={isLoading}
-            />
-
-            {errors[
-              "breaks.0.endTime"
-            ] && (
-              <p className="form-error">
-                {
-                  errors[
-                    "breaks.0.endTime"
-                  ]
+              <input
+                type="time"
+                value={breakEndTime}
+                onChange={(e) =>
+                  setBreakEndTime(e.target.value)
                 }
-              </p>
-            )}
+                disabled={isLoading}
+              />
+
+              {errors["breaks.0.endTime"] && (
+                <p className="field-error">
+                  {errors["breaks.0.endTime"]}
+                </p>
+              )}
+            </div>
           </div>
+        </div>
 
-          {/* ========================
-              BUTTONS
-          ======================== */}
+        {/* Buttons */}
+        <div className="availability-modal-actions">
+          <button
+            type="button"
+            className="availability-cancel-btn"
+            onClick={onClose}
+            disabled={isLoading}
+          >
+            Cancel
+          </button>
 
-          <div>
-            <button
-              type="submit"
-              disabled={isLoading}
-            >
-              {isLoading
-                ? "Updating..."
-                : "Update Availability"}
-            </button>
-
-            <button
-              type="button"
-              onClick={onClose}
-              disabled={isLoading}
-            >
-              Cancel
-            </button>
-          </div>
-        </form>
-      </div>
+          <button
+            type="submit"
+            className="availability-submit-btn"
+            disabled={isLoading}
+          >
+            {isLoading ? "Updating..." : "Update Availability"}
+          </button>
+        </div>
+      </form>
     </div>
-  );
+  </div>
+);
 };
 
 export default UpdateAvailabilityModal;

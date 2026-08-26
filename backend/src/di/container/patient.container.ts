@@ -22,6 +22,14 @@ import { ResetPatientPasswordController } from "../../interface/controllers/pati
 import { GetAllPatientUseCase } from "../../application/useCases/patient/getAllPatient";
 import { PatientController } from "../../interface/controllers/patient/patient.controller";
 import { TogglePatientUsecase } from "../../application/useCases/patient/toggle.usecase";
+import { GetDoctorsController } from "../../interface/controllers/patient/GetDoctorsController";
+import { GetDatesForAppointment } from "../../application/useCases/patient/getDateForAppointment";
+import { AppointmentController } from "../../interface/controllers/patient/appoinment.controller";
+import { GetTimeSlotUseCase } from "../../application/useCases/patient/getTimeSlotForAppointment.usecase";
+import { AppoitmentRepo } from "../../infrastructure/repositories/patient/appointment.repo";
+import { CreateAppointmentUsecase } from "../../application/useCases/patient/createAppointment";
+import { GetAppointmentDetailsUseCase } from "../../application/useCases/patient/getConfirmationPage";
+import { GetAppointmentHistory } from "../../application/useCases/patient/getAppointmentHistory";
 
 export function patientBinding(container: Container) {
   container.bind(TYPES.PatientRepo).to(PatientRepo);
@@ -37,13 +45,31 @@ export function patientBinding(container: Container) {
   container.bind(TYPES.LogoutPatientUseCase).to(LogoutPatientUseCase);
   container.bind(TYPES.PatientLogoutController).to(PatientLogoutController);
   container.bind(TYPES.RefreshPatientToken).to(RefreshPatientToken);
-  container.bind(TYPES.RefreshPatientTokenController).to(RefreshPatientTokenController);
+  container
+    .bind(TYPES.RefreshPatientTokenController)
+    .to(RefreshPatientTokenController);
   container.bind(TYPES.PatientrResetTokenRepo).to(PatientrResetTokenRepo);
-  container.bind(TYPES.RequestPatientForgetPasswordUseCase).to(RequestPatientForgetPasswordUseCase)
+  container
+    .bind(TYPES.RequestPatientForgetPasswordUseCase)
+    .to(RequestPatientForgetPasswordUseCase);
   container.bind(TYPES.ResetPatientPassowrd).to(ResetPatientPassowrd);
-  container.bind(TYPES.RequestPatientResetPasswordController).to(RequestPatientResetPasswordController)
-  container.bind(TYPES.ResetPatientPasswordController).to(ResetPatientPasswordController)
-  container.bind(TYPES.GetAllPatientUseCase).to(GetAllPatientUseCase)
-  container.bind(TYPES.PatientController).to(PatientController)
-  container.bind(TYPES.TogglePatientUsecase).to(TogglePatientUsecase)
+  container
+    .bind(TYPES.RequestPatientResetPasswordController)
+    .to(RequestPatientResetPasswordController);
+  container
+    .bind(TYPES.ResetPatientPasswordController)
+    .to(ResetPatientPasswordController);
+  container.bind(TYPES.GetAllPatientUseCase).to(GetAllPatientUseCase);
+  container.bind(TYPES.PatientController).to(PatientController);
+  container.bind(TYPES.TogglePatientUsecase).to(TogglePatientUsecase);
+  container.bind(TYPES.GetDoctorsController).to(GetDoctorsController);
+  container.bind(TYPES.GetDatesForAppointment).to(GetDatesForAppointment);
+  container.bind(TYPES.AppointmentController).to(AppointmentController);
+  container.bind(TYPES.GetTimeSlotUseCase).to(GetTimeSlotUseCase);
+  container.bind(TYPES.AppoitmentRepo).to(AppoitmentRepo);
+  container.bind(TYPES.CreateAppointmentUsecase).to(CreateAppointmentUsecase);
+  container
+    .bind(TYPES.GetAppointmentDetailsUseCase)
+    .to(GetAppointmentDetailsUseCase);
+  container.bind(TYPES.GetAppointmentHistory).to(GetAppointmentHistory);
 }

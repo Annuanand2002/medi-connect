@@ -33,6 +33,7 @@ export class DoctorAvailabilityRepo
     doctorId: string,
     date: Date,
   ): Promise<DoctorAvailability[]> {
+
     const records = await DoctorAvailabilityModel.find({
       doctorId,
       startDate: { $lte: date },
@@ -40,6 +41,7 @@ export class DoctorAvailabilityRepo
       isAvailable: true,
       isDeleted: false,
     });
+    console.log("records:", records);
     return records.map((record) => DoctorAvailabilityMapper.toDomain(record));
   }
 
@@ -90,6 +92,35 @@ export class DoctorAvailabilityRepo
       startDate: { $lte: endDate },
       endDate: { $gte: startDate },
     });
+    return records.map((record) => DoctorAvailabilityMapper.toDomain(record));
+  }
+
+  async getAvailableSlots(
+    doctorId: string,
+    date: Date,
+  ): Promise<DoctorAvailability | null> {
+    const record = await DoctorAvailabilityModel.findOne({
+      doctorId,
+      startDate: date,
+      endDate: date,
+    });
+    if (!record) return null;
+    return DoctorAvailabilityMapper.toDomain(record);
+  }
+  async getAvailabilityForDateRange(
+    doctorId: string,
+    startDate: Date,
+    endDate: Date,
+  ): Promise<DoctorAvailability[]> {
+    const records = await DoctorAvailabilityModel.find({
+      doctorId,
+      isAvailable: true,
+      isDeleted: false,
+
+      startDate: { $lte: endDate },
+      endDate: { $gte: startDate },
+    });
+
     return records.map((record) => DoctorAvailabilityMapper.toDomain(record));
   }
 }

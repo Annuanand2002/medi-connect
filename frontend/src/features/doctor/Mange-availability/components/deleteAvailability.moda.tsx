@@ -1,3 +1,5 @@
+import "@/styles/doctor/deleteModal.css"
+
 interface DeleteAvailabilityModalProps {
   isOpen: boolean;
   dayOfWeek?: string;
@@ -17,60 +19,44 @@ const DeleteAvailabilityModal = ({
     return null;
   }
 
-  return (
-    <div
-      style={{
-        position: "fixed",
-        inset: 0,
-        zIndex: 9999,
-        backgroundColor: "rgba(0, 0, 0, 0.5)",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-      }}
-    >
-      <div
-        style={{
-          backgroundColor: "white",
-          padding: "25px",
-          width: "400px",
-          borderRadius: "8px",
-        }}
-      >
+
+return (
+  <div className="delete-modal-overlay">
+    <div className="delete-modal">
+      <div className="delete-modal-header">
+        <div className="delete-warning-icon">!</div>
+
         <h2>Delete Availability</h2>
+      </div>
 
-        <p>
-          Are you sure you want to delete the{" "}
-          <strong>{dayOfWeek}</strong> availability?
-        </p>
+      <p className="delete-modal-message">
+        Are you sure you want to delete the{" "}
+        <strong>{dayOfWeek}</strong> availability?
+      </p>
 
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "flex-end",
-            gap: "10px",
-            marginTop: "20px",
-          }}
+
+      <div className="delete-modal-actions">
+        <button
+          type="button"
+          onClick={onClose}
+          disabled={isLoading}
+          className="delete-cancel-btn"
         >
-          <button
-            type="button"
-            onClick={onClose}
-            disabled={isLoading}
-          >
-            Cancel
-          </button>
+          Cancel
+        </button>
 
-          <button
-            type="button"
-            onClick={onConfirm}
-            disabled={isLoading}
-          >
-            {isLoading ? "Deleting..." : "Delete"}
-          </button>
-        </div>
+        <button
+          type="button"
+          onClick={onConfirm}
+          disabled={isLoading}
+          className="delete-confirm-btn"
+        >
+          {isLoading ? "Deleting..." : "Delete"}
+        </button>
       </div>
     </div>
-  );
+  </div>
+);
 };
 
 export default DeleteAvailabilityModal;

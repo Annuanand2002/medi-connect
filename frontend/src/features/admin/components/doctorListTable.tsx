@@ -5,6 +5,8 @@ import { ArrowUpRight, Code, Mail, UserRound } from "lucide-react";
 import DataTable from "@/components/dataTable";
 import { useAppDispatch } from "@/hooks/hooks";
 import { toggleDoctorStatusThunk } from "../redux/toggleDoctorStatus.thunk";
+import { useState } from "react";
+import DoctorStatusModal from "./statusModa";
 
 interface DoctorTableProps {
   requests: Doctor[];
@@ -12,9 +14,24 @@ interface DoctorTableProps {
 
 const DoctorTable = ({ requests }: DoctorTableProps) => {
   const dispatch = useAppDispatch();
-  const handleToggleStastus = async(id:string)=>{
-    await dispatch(toggleDoctorStatusThunk(id))
-  }
+  const [selectedDoctor, setSelectedDoctor] = useState<Doctor | null>(null);
+  const [isUpdating, setIsUpdating] = useState(false);
+
+  const handleConfirmStatusChange = async () => {
+    if (!selectedDoctor) return;
+
+    try {
+      setIsUpdating(true);
+
+      await dispatch(toggleDoctorStatusThunk(selectedDoctor.id)).unwrap();
+
+      setSelectedDoctor(null);
+    } catch (error) {
+      console.error("Failed to update doctor status:", error);
+    } finally {
+      setIsUpdating(false);
+    }
+  };
   const columns: TableColumn<Doctor>[] = [
     {
       key: "doctor",
@@ -87,16 +104,14 @@ const DoctorTable = ({ requests }: DoctorTableProps) => {
 
       render: (request) => (
         <div className="doctor-action-cell">
-         <button type="button" onClick={()=>{
-          alert("Are you sure uou want to do the action")
-          handleToggleStastus(request.id)
-         }}
-         className="doctor-view-buttons"
-        
+          <button
+            type="button"
+            onClick={() => setSelectedDoctor(request)}
+            className="doctor-view-buttons"
           >
-            {request.status==="BLOCKED"?<span style={{backgroundColor:"red"}}>ACTIVE</span>:<span style={{backgroundColor:"blue"}}>BLOCK</span>}
-            {/* <span style={{backgroundColor:"red"}} >{request.status==="BLOCKED"?"ACTIVE":"BLOCK"}</span> */}
-            <ArrowUpRight size={15}/>
+            <span>{request.status === "BLOCKED" ? "ACTIVE" : "BLOCK"}</span>
+
+            <ArrowUpRight size={15} />
           </button>
         </div>
       ),
@@ -104,27 +119,38 @@ const DoctorTable = ({ requests }: DoctorTableProps) => {
   ];
 
   return (
-    <DataTable
-      data={requests}
-      columns={columns}
-      rowKey={(request) => request.id}
-      emptyState={
-        <div className="doctor-request-empty">
-          <div className="doctor-request-empty-icon">
-            <UserRound size={23} />
+    <>
+      <DataTable
+        data={requests}
+        columns={columns}
+        rowKey={(request) => request.id}
+        emptyState={
+          <div className="doctor-request-empty">
+            <div className="doctor-request-empty-icon">
+              <UserRound size={23} />
+            </div>
+
+            <span>NO APPLICATIONS</span>
+
+            <h3>No doctor requests found</h3>
+
+            <p>
+              Try adjusting your search or status filter to find what you're
+              looking for.
+            </p>
           </div>
+        }
+      />
 
-          <span>NO APPLICATIONS</span>
-
-          <h3>No doctor requests found</h3>
-
-          <p>
-            Try adjusting your search or status filter to find what you're
-            looking for.
-          </p>
-        </div>
-      }
-    />
+      <DoctorStatusModal
+        isOpen={selectedDoctor !== null}
+        doctorName={selectedDoctor?.fullName ?? ""}
+        action={selectedDoctor?.status === "BLOCKED" ? "ACTIVE" : "BLOCK"}
+        isLoading={isUpdating}
+        onClose={() => setSelectedDoctor(null)}
+        onConfirm={handleConfirmStatusChange}
+      />
+    </>
   );
 };
 

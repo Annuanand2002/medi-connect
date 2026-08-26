@@ -14,4 +14,5 @@ export interface GetDoctorReqDTO {
   limit: number;
   status?: DoctorStatus;
   search?: string;
+  department ?:string
 }

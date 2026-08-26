@@ -51,18 +51,18 @@ const PatientSidebar = () => {
         />
 
         <SidebarItem
-          to="/patient/doctor-list"
+          to="/patient/doctors-list"
           icon={ClipboardList}
           label="Doctor List"
         />
 
         <SidebarItem
-          to="/patient/appointments"
+          to="/patient/appointment-history"
           icon={Stethoscope}
           label="Appointments"
         />
 
-        <SidebarItem to="/admin/settings" icon={Settings} label="Settings" />
+        <SidebarItem to="/patient/settings" icon={Settings} label="Settings" />
       </nav>
 
       {/* Logout */}

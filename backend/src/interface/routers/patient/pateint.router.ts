@@ -10,9 +10,16 @@ import { RefreshPatientTokenController } from "../../controllers/patient/refresh
 import { RequestPatientResetPasswordController } from "../../controllers/patient/requestForgetPassword";
 import { ResetPatientPasswordController } from "../../controllers/patient/resetPassword";
 import { checkPatientBlocked } from "../../../shared/middlewares/patientBlock";
+import { ITokenService } from "../../../domain/services/ITokenService";
+import { authenticate } from "../../../shared/middlewares/authenticate";
+import { ROUTES } from "../../../shared/constants/routes";
+import { GetDoctorsController } from "../../controllers/patient/GetDoctorsController";
+import { AppointmentController } from "../../controllers/patient/appoinment.controller";
 
 const router = Router();
 
+const tokenService = container.get<ITokenService>(TYPES.JWTService);
+const authenticatePatient = authenticate(tokenService, "patient");
 const createPatientController = container.get<CreatePatientController>(
   TYPES.CreatePatientController,
 );
@@ -41,11 +48,19 @@ const resetPatientPasswordController =
     TYPES.ResetPatientPasswordController,
   );
 
+const getDoctorController = container.get<GetDoctorsController>(
+  TYPES.GetDoctorsController,
+);
+
+const appointmentController = container.get<AppointmentController>(
+  TYPES.AppointmentController,
+);
+
 //auth
 router.post("/create-patient", createPatientController.createPatient);
 router.patch("/verify-otp/:patientId", verifyPatientOTPController.verifyOTP);
 router.post("/resend-otp/:patientId", resendOTPController.resendOTP);
-router.post("/login",loginPatientController.login);
+router.post("/login", loginPatientController.login);
 router.post("/logout", patientLogoutController.logout);
 router.post("/refresh-token", refreshPatientTokenController.refreshToken);
 router.patch(
@@ -53,5 +68,31 @@ router.patch(
   requestPatientResetPasswordController.requestReset,
 );
 router.patch("/reset-password", resetPatientPasswordController.resetPassword);
+
+//appointment
+router.use(authenticatePatient, checkPatientBlocked);
+
+router.get(
+  ROUTES.PATIENT.DOCTOTLIST,
+
+  getDoctorController.getAll,
+);
+
+router.get(
+  ROUTES.PATIENT.GETDATES,
+
+  appointmentController.getDates,
+);
+router.get(ROUTES.PATIENT.GETTIMESLOT, appointmentController.getTimeSlot);
+router.get(
+  ROUTES.PATIENT.GETDETAIlS,
+  appointmentController.getAppointmentDetails,
+);
+router.post(ROUTES.PATIENT.APPOINTMENT.CREATE, appointmentController.create);
+
+router.get(
+  ROUTES.PATIENT.APPOINTMENT.GET,
+  appointmentController.getAppointmentHistory,
+);
 
 export default router;

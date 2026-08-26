@@ -1,3 +1,5 @@
+import "@/styles/doctor/deleteLeaveModal.css"
+
 interface DeleteLeaveConfirmModalProps {
   isOpen: boolean;
   leaveReason?: string;
@@ -18,44 +20,52 @@ const DeleteLeaveConfirmModal = ({
   }
 
   return (
-    <div
-      style={{
-        position: "fixed",
-        inset: 0,
-        zIndex: 9999,
-        backgroundColor: "rgba(0, 0, 0, 0.5)",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-      }}
-    >
-      <div
-        style={{
-          backgroundColor: "white",
-          padding: "30px",
-          width: "400px",
-          maxWidth: "90%",
-          borderRadius: "8px",
-        }}
-      >
-        <h2>Delete Leave</h2>
+    <div className="modal-overlay">
+      <div className="modal-container delete-modal">
+        {/* HEADER */}
+        <div className="modal-header">
+          <h2>Delete Leave</h2>
 
-        <p>Are you sure you want to delete this leave?</p>
+          <button
+            type="button"
+            className="modal-close-button"
+            onClick={onClose}
+            disabled={isDeleting}
+          >
+            ×
+          </button>
+        </div>
 
-        {leaveReason && (
-          <p>
-            Reason: <strong>{leaveReason}</strong>
-          </p>
-          
-        )}
-        <p>This action cannot be undone.</p>
+        {/* CONTENT */}
+        <div className="delete-modal-content">
+          <p>Are you sure you want to delete this leave?</p>
 
-        <div className="flex items-center gap-2">
-          <button type="button" onClick={onClose} disabled={isDeleting}>
+          {leaveReason && (
+            <p>
+              Reason: <strong>{leaveReason}</strong>
+            </p>
+          )}
+
+          <p className="delete-warning">This action cannot be undone.</p>
+        </div>
+
+        {/* BUTTONS */}
+        <div className="modal-actions">
+          <button
+            type="button"
+            className="modal-cancel-button"
+            onClick={onClose}
+            disabled={isDeleting}
+          >
             Cancel
           </button>
 
-          <button type="button" onClick={onConfirm} disabled={isDeleting}>
+          <button
+            type="button"
+            className="modal-delete-button"
+            onClick={onConfirm}
+            disabled={isDeleting}
+          >
             {isDeleting ? "Deleting..." : "Delete"}
           </button>
         </div>

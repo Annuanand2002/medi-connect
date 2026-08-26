@@ -18,6 +18,7 @@ import { ITokenService } from "../../../domain/services/ITokenService";
 import { DoctorLeaveController } from "../../controllers/doctor/doctorLeave.controller";
 import { checkDoctorBlocked } from "../../../shared/middlewares/doctorBlock";
 import { DoctorBlockController } from "../../controllers/doctor/doctorBlock.controller";
+import { DoctorAppointmentCOntroller } from "../../controllers/doctor/appointment.doctor.controlller";
 
 const router = Router();
 
@@ -64,6 +65,10 @@ const doctorLeaveController = container.get<DoctorLeaveController>(
 
 const doctorBlockController = container.get<DoctorBlockController>(
   TYPES.DoctorBlockController,
+);
+
+const appointmentController = container.get<DoctorAppointmentCOntroller>(
+  TYPES.DoctorAppointmentCOntroller,
 );
 
 //account set-up
@@ -120,5 +125,8 @@ router.get(ROUTES.DOCTOR.BLOCK.GET, doctorBlockController.getAll);
 router.post(ROUTES.DOCTOR.BLOCK.CREATE, doctorBlockController.create);
 router.put(ROUTES.DOCTOR.BLOCK.UPDATE, doctorBlockController.update);
 router.patch(ROUTES.DOCTOR.BLOCK.UPDATE, doctorBlockController.delete);
+
+//appointment
+router.get(ROUTES.DOCTOR.APPOINTMENT.GET, appointmentController.getAll);
 
 export default router;

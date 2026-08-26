@@ -105,5 +105,15 @@ export const TYPES = {
   UpdateDoctorBlockUsecase: Symbol.for("UpdateDoctorBlockUsecase"),
   DeleteDoctorBlockUsecase: Symbol.for("DeleteDoctorBlockUsecase"),
   GetDoctorBlockUsecase : Symbol.for("GetDoctorBlockUsecase"),
-  DoctorBlockController : Symbol.for("DoctorBlockController")
+  DoctorBlockController : Symbol.for("DoctorBlockController"),
+  GetDoctorsController : Symbol.for("GetDoctorsController"),
+  GetDatesForAppointment : Symbol.for("GetDatesForAppointment"),
+  AppointmentController : Symbol.for("AppointmentController"),
+  GetTimeSlotUseCase : Symbol.for("GetTimeSlotUseCase"),
+  AppoitmentRepo : Symbol.for("AppoitmentRepo"),
+  CreateAppointmentUsecase : Symbol.for("CreateAppointmentUsecase"),
+  GetAppointmentDetailsUseCase : Symbol.for("GetAppointmentDetailsUseCase"),
+  GetAppointmentHistory : Symbol.for("GetAppointmentHistory"),
+  GetAppointmentDoctorHistory : Symbol.for("GetAppointmentDoctorHistory"),
+  DoctorAppointmentCOntroller : Symbol.for("DoctorAppointmentCOntroller")
 };

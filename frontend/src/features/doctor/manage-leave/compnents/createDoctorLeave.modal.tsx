@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { createDoctorLeaveSchema } from "../service/doctorLeave.modal";
+import "@/styles/doctor/addLeaveModal.css"
 
 interface CreateDoctorLeaveData {
   startDate: string;
@@ -89,105 +90,119 @@ const CreateDoctorLeaveModal = ({
     onClose();
   };
 
-  return (
-    <div
-      style={{
-        position: "fixed",
-        inset: 0,
-        zIndex: 9999,
-        backgroundColor: "rgba(0, 0, 0, 0.5)",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-      }}
-    >
-      <div
-        style={{
-          backgroundColor: "white",
-          padding: "30px",
-          width: "500px",
-          maxWidth: "90%",
-          borderRadius: "8px",
-        }}
-      >
-        {/* HEADER */}
+return (
+  <div className="modal-overlay">
+    <div className="modal-container">
+      {/* HEADER */}
+      <div className="modal-header">
+        <h2>Apply for Leave</h2>
 
-        <div className="modal-header">
-          <h2>Apply for Leave</h2>
+        <button
+          type="button"
+          className="modal-close-button"
+          onClick={handleClose}
+          disabled={isLoading}
+        >
+          ×
+        </button>
+      </div>
 
-          <button type="button" onClick={handleClose} disabled={isLoading}>
-            ×
-          </button>
+      <form onSubmit={handleSubmit} className="modal-form">
+        {/* BACKEND ERROR */}
+        {backendError && (
+          <div className="form-error">
+            {backendError}
+          </div>
+        )}
+
+        {/* START DATE */}
+        <div className="form-group">
+          <label htmlFor="leave-start-date">
+            Start Date
+          </label>
+
+          <input
+            id="leave-start-date"
+            type="date"
+            value={startDate}
+            onChange={(e) => setStartDate(e.target.value)}
+            disabled={isLoading}
+          />
+
+          {errors.startDate && (
+            <p className="form-error">
+              {errors.startDate}
+            </p>
+          )}
         </div>
 
-        <form onSubmit={handleSubmit}>
-          {/* BACKEND ERROR */}
+        {/* END DATE */}
+        <div className="form-group">
+          <label htmlFor="leave-end-date">
+            End Date
+          </label>
 
-          {backendError && <div className="form-error">{backendError}</div>}
+          <input
+            id="leave-end-date"
+            type="date"
+            value={endDate}
+            min={startDate}
+            onChange={(e) => setEndDate(e.target.value)}
+            disabled={isLoading}
+          />
 
-          {/* START DATE */}
+          {errors.endDate && (
+            <p className="form-error">
+              {errors.endDate}
+            </p>
+          )}
+        </div>
 
-          <div>
-            <label>Start Date</label>
+        {/* REASON */}
+        <div className="form-group">
+          <label htmlFor="leave-reason">
+            Reason
+          </label>
 
-            <input
-              type="date"
-              value={startDate}
-              onChange={(e) => setStartDate(e.target.value)}
-              disabled={isLoading}
-            />
+          <textarea
+            id="leave-reason"
+            value={reason}
+            onChange={(e) => setReason(e.target.value)}
+            placeholder="Enter reason for leave"
+            rows={4}
+            disabled={isLoading}
+          />
 
-            {errors.startDate && (
-              <p className="form-error">{errors.startDate}</p>
-            )}
-          </div>
+          {errors.reason && (
+            <p className="form-error">
+              {errors.reason}
+            </p>
+          )}
+        </div>
 
-          {/* END DATE */}
+        {/* BUTTONS */}
+        <div className="modal-actions">
+          <button
+            type="submit"
+            className="modal-submit-button"
+            disabled={isLoading}
+          >
+            {isLoading ? "Submitting..." : "Apply Leave"}
+          </button>
 
-          <div>
-            <label>End Date</label>
-
-            <input
-              type="date"
-              value={endDate}
-              onChange={(e) => setEndDate(e.target.value)}
-              disabled={isLoading}
-            />
-
-            {errors.endDate && <p className="form-error">{errors.endDate}</p>}
-          </div>
-
-          {/* REASON */}
-
-          <div>
-            <label>Reason</label>
-
-            <textarea
-              value={reason}
-              onChange={(e) => setReason(e.target.value)}
-              placeholder="Enter reason for leave"
-              rows={4}
-              disabled={isLoading}
-            />
-
-            {errors.reason && <p className="form-error">{errors.reason}</p>}
-          </div>
-
-          {/* BUTTONS */}
-
-          <div>
-            <button type="submit" disabled={isLoading}>
-              {isLoading ? "Submitting..." : "Apply Leave"}
-            </button>
-
-            <button type="button" onClick={handleClose} disabled={isLoading}>
-              Cancel
-            </button>
-          </div>
-        </form>
-      </div>
+          <button
+            type="button"
+            className="modal-cancel-button"
+            onClick={handleClose}
+            disabled={isLoading}
+          >
+            Cancel
+          </button>
+        </div>
+      </form>
     </div>
-  );
+  </div>
+);
 };
 
 export default CreateDoctorLeaveModal;

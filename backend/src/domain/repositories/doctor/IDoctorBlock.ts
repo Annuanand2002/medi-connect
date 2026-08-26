@@ -16,4 +16,8 @@ export interface IDoctorBlockRepo extends IBaseRepository<DoctorBlock> {
     endTime: string,
     excludeId?: string,
   ): Promise<DoctorBlock | null>;
+  findBlocksByDoctorAndDate(
+  doctorId: string,
+  date: Date,
+): Promise<DoctorBlock[]>;
 }

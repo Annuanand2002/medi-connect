@@ -1,4 +1,5 @@
 import { useState } from "react";
+import "@/styles/doctor/updateBlockModal.css"
 import type { DoctorBlock } from "../types/doctorBlock";
 import {
   DoctorBlockSchema,
@@ -90,38 +91,27 @@ const UpdateDoctorBlockModal = ({
   };
 
   return (
-    <div
-      style={{
-        position: "fixed",
-        inset: 0,
-        zIndex: 9999,
-        backgroundColor: "rgba(0, 0, 0, 0.5)",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-      }}
-    >
-      <div
-        style={{
-          backgroundColor: "white",
-          padding: "30px",
-          width: "500px",
-          maxWidth: "90%",
-          borderRadius: "8px",
-        }}
-      >
+    <div className="block-modal-overlay">
+      <div className="block-modal">
         <div className="modal-header">
           <h2>Update Block</h2>
 
-          <button type="button" onClick={handleClose} disabled={isLoading}>
+          <button
+            type="button"
+            onClick={handleClose}
+            disabled={isLoading}
+            className="modal-close-btn"
+          >
             ×
           </button>
         </div>
 
-        <form onSubmit={handleSubmit}>
-          {backendError && <div className="form-error">{backendError}</div>}
+        <form onSubmit={handleSubmit} className="block-form">
+          {backendError && (
+            <div className="form-error backend-error">{backendError}</div>
+          )}
 
-          <div>
+          <div className="form-group">
             <label htmlFor="block-date">Date</label>
 
             <input
@@ -135,7 +125,7 @@ const UpdateDoctorBlockModal = ({
             {errors.date && <p className="form-error">{errors.date}</p>}
           </div>
 
-          <div>
+          <div className="form-group">
             <label htmlFor="block-start-time">Start Time</label>
 
             <input
@@ -151,7 +141,7 @@ const UpdateDoctorBlockModal = ({
             )}
           </div>
 
-          <div>
+          <div className="form-group">
             <label htmlFor="block-end-time">End Time</label>
 
             <input
@@ -165,7 +155,7 @@ const UpdateDoctorBlockModal = ({
             {errors.endTime && <p className="form-error">{errors.endTime}</p>}
           </div>
 
-          <div>
+          <div className="form-group">
             <label htmlFor="block-reason">Reason</label>
 
             <textarea
@@ -180,13 +170,22 @@ const UpdateDoctorBlockModal = ({
             {errors.reason && <p className="form-error">{errors.reason}</p>}
           </div>
 
-          <div>
-            <button type="submit" disabled={isLoading}>
-              {isLoading ? "Updating..." : "Update Block"}
+          <div className="block-form-actions">
+            <button
+              type="button"
+              onClick={handleClose}
+              disabled={isLoading}
+              className="block-cancel-btn"
+            >
+              Cancel
             </button>
 
-            <button type="button" onClick={handleClose} disabled={isLoading}>
-              Cancel
+            <button
+              type="submit"
+              disabled={isLoading}
+              className="block-submit-btn"
+            >
+              {isLoading ? "Updating..." : "Update Block"}
             </button>
           </div>
         </form>

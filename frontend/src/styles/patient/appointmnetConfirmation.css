@@ -1,0 +1,142 @@
+.appointment-confirmation-header {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.appointment-confirmation-header > span {
+  display: block;
+
+  margin-bottom: 6px;
+
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1px;
+
+  color: #21428b;
+}
+
+.appointment-confirmation-header h2 {
+  margin-bottom: 8px;
+}
+
+.appointment-confirmation-header p {
+  color: #6b7280;
+  font-size: 14px;
+}
+
+.appointment-confirmation {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 30px 20px;
+}
+
+.appointment-confirmation-card {
+  width: 100%;
+  max-width: 520px;
+
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+
+  padding: 30px;
+
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+}
+
+.appointment-confirmation-card h2 {
+  margin: 0 0 25px;
+
+  font-size: 22px;
+  font-weight: 600;
+  color: #111827;
+
+  text-align: center;
+}
+
+.appointment-detail {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  padding: 15px 0;
+
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.appointment-detail:last-of-type {
+  border-bottom: none;
+}
+
+.appointment-detail span {
+  font-size: 14px;
+  color: #6b7280;
+}
+
+.appointment-detail strong {
+  font-size: 15px;
+  font-weight: 600;
+  color: #111827;
+  text-align: right;
+}
+
+.confirm-appointment-button {
+  width: 100%;
+
+  margin-top: 25px;
+  padding: 12px 18px;
+
+  border: none;
+  border-radius: 7px;
+
+  background: #13347a;
+  color: #ffffff;
+
+  font-size: 15px;
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition:
+    background 0.2s ease,
+    transform 0.1s ease;
+}
+
+.confirm-appointment-button:hover {
+  background: #1d4ed8;
+}
+
+.confirm-appointment-button:active {
+  transform: scale(0.98);
+}
+
+.confirm-appointment-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Error */
+.appointment-error {
+  max-width: 520px;
+
+  margin: 30px auto;
+  padding: 15px 18px;
+
+  border: 1px solid #fecaca;
+  border-radius: 8px;
+
+  background: #fef2f2;
+  color: #dc2626;
+
+  font-size: 14px;
+  text-align: center;
+}
+
+/* Loading */
+.appointment-confirmation-card p {
+  margin: 0;
+
+  color: #6b7280;
+  font-size: 14px;
+  text-align: center;
+}

@@ -53,6 +53,8 @@ import { UpdateDoctorBlockUsecase } from "../../application/useCases/doctor/Upda
 import { DeleteDoctorBlockUsecase } from "../../application/useCases/doctor/DeleteDoctorBlock.usecase";
 import { GetDoctorBlockUsecase } from "../../application/useCases/doctor/GetDoctorBlock.usecase";
 import { DoctorBlockController } from "../../interface/controllers/doctor/doctorBlock.controller";
+import { GetAppointmentDoctorHistory } from "../../application/useCases/doctor/IAppointmentHistory";
+import { DoctorAppointmentCOntroller } from "../../interface/controllers/doctor/appointment.doctor.controlller";
 
 export function doctorBinding(container: Container) {
   container.bind(TYPES.DoctorRepo).to(DoctorRepo);
@@ -141,5 +143,7 @@ export function doctorBinding(container: Container) {
   container.bind(TYPES.UpdateDoctorBlockUsecase).to(UpdateDoctorBlockUsecase);
   container.bind(TYPES.DeleteDoctorBlockUsecase).to(DeleteDoctorBlockUsecase);
   container.bind(TYPES.GetDoctorBlockUsecase).to(GetDoctorBlockUsecase);
-  container.bind(TYPES.DoctorBlockController).to(DoctorBlockController)
+  container.bind(TYPES.DoctorBlockController).to(DoctorBlockController);
+  container.bind(TYPES.GetAppointmentDoctorHistory).to(GetAppointmentDoctorHistory);
+  container.bind(TYPES.DoctorAppointmentCOntroller).to(DoctorAppointmentCOntroller)
 }

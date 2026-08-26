@@ -1,3 +1,4 @@
+import "@/styles/doctor/addModal.css"
 import { useState } from "react";
 import type {
   CreateDoctorAvailability,
@@ -117,9 +118,6 @@ const AddAvailabilityModal = ({
     }));
   };
 
-  // -------------------------
-  // UPDATE BREAK
-  // -------------------------
 
   const updateBreak = (
     day: Week,
@@ -152,9 +150,7 @@ const AddAvailabilityModal = ({
     });
   };
 
-  // -------------------------
-  // REMOVE BREAK
-  // -------------------------
+
 
   const removeBreak = (day: Week) => {
 
@@ -330,75 +326,50 @@ const AddAvailabilityModal = ({
     }
   };
 
-  return (
-    <div
-      style={{
-        position: "fixed",
-        inset: 0,
-        zIndex: 9999,
-        backgroundColor:
-          "rgba(0, 0, 0, 0.5)",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-      }}
-    >
+return (
+  <div className="availability-modal-overlay">
+    <div className="availability-modal">
+      {/* HEADER */}
+      <div className="availability-modal-header">
+        <div>
+          <span className="availability-modal-eyebrow">
+            DOCTOR SCHEDULE
+          </span>
 
-      <div
-        style={{
-          backgroundColor: "white",
-          padding: "30px",
-          width: "600px",
-          maxHeight: "90vh",
-          overflowY: "auto",
-          borderRadius: "8px",
-        }}
-      >
+          <h2>Add Weekly Availability</h2>
 
-        {/* HEADER */}
-
-        <div className="modal-header">
-
-          <h2>
-            Add Weekly Availability
-          </h2>
-
-          <button
-            type="button"
-            onClick={onClose}
-            disabled={isLoading}
-          >
-            ×
-          </button>
-
+          <p>
+            Set the dates and working hours for your availability.
+          </p>
         </div>
 
-        <form onSubmit={handleSubmit}>
+        <button
+          type="button"
+          className="availability-modal-close"
+          onClick={onClose}
+          disabled={isLoading}
+        >
+          ×
+        </button>
+      </div>
 
-          {/* BACKEND ERROR */}
+      <form onSubmit={handleSubmit} className="availability-form">
+        {/* BACKEND ERROR */}
+        {backendError && (
+          <div className="form-error availability-backend-error">
+            {backendError}
+          </div>
+        )}
 
-          {backendError && (
-            <div className="form-error">
-              {backendError}
-            </div>
-          )}
-
-          {/* DATE RANGE */}
-
-          <div>
-
-            <label>
-              Start Date
-            </label>
+        {/* DATE RANGE */}
+        <div className="availability-date-grid">
+          <div className="availability-form-group">
+            <label>Start Date</label>
 
             <input
               type="date"
               value={startDate}
-              onChange={(e) =>
-                setStartDate(
-                  e.target.value,
-                )
-              }
+              onChange={(e) => setStartDate(e.target.value)}
             />
 
             {errors.startDate && (
@@ -406,23 +377,15 @@ const AddAvailabilityModal = ({
                 {errors.startDate}
               </p>
             )}
-
           </div>
 
-          <div>
-
-            <label>
-              End Date
-            </label>
+          <div className="availability-form-group">
+            <label>End Date</label>
 
             <input
               type="date"
               value={endDate}
-              onChange={(e) =>
-                setEndDate(
-                  e.target.value,
-                )
-              }
+              onChange={(e) => setEndDate(e.target.value)}
             />
 
             {errors.endDate && (
@@ -430,267 +393,219 @@ const AddAvailabilityModal = ({
                 {errors.endDate}
               </p>
             )}
-
           </div>
+        </div>
 
-          {/* DAYS */}
+        {/* DAYS */}
+        <div className="availability-form-group">
+          <label>Select Days</label>
 
-          <div>
-
-            <label>
-              Select Days
-            </label>
-
+          <div className="availability-days">
             {days.map((day) => (
-
               <label
                 key={day}
-                style={{
-                  display: "block",
-                }}
+                className={`availability-day ${
+                  selectedDays.includes(day)
+                    ? "selected"
+                    : ""
+                }`}
               >
-
                 <input
                   type="checkbox"
-                  checked={selectedDays.includes(
-                    day,
-                  )}
-                  onChange={() =>
-                    handleDayToggle(day)
-                  }
+                  checked={selectedDays.includes(day)}
+                  onChange={() => handleDayToggle(day)}
                 />
 
-                {day}
-
+                <span>{day}</span>
               </label>
-
             ))}
-
-            {errors.days && (
-              <p className="form-error">
-                {errors.days}
-              </p>
-            )}
-
           </div>
 
-          {/* SELECTED DAY DETAILS */}
+          {errors.days && (
+            <p className="form-error">
+              {errors.days}
+            </p>
+          )}
+        </div>
 
+        {/* SELECTED DAY DETAILS */}
+        <div className="availability-day-details">
           {selectedDays.map((day) => {
-
-            const details =
-              dayDetails[day];
+            const details = dayDetails[day];
 
             if (!details) {
               return null;
             }
 
             return (
-
               <div
                 key={day}
-                style={{
-                  marginTop: "20px",
-                  padding: "15px",
-                  border:
-                    "1px solid #ddd",
-                  borderRadius: "8px",
-                }}
+                className="availability-day-card"
               >
-
-                <h3>
-                  {day}
-                </h3>
-
-                {/* START */}
-
-                <div>
-
-                  <label>
-                    Start Time
-                  </label>
-
-                  <input
-                    type="time"
-                    value={
-                      details.startTime
-                    }
-                    onChange={(e) =>
-                      updateDay(
-                        day,
-                        "startTime",
-                        e.target.value,
-                      )
-                    }
-                  />
-
+                <div className="availability-day-card-header">
+                  <h3>{day}</h3>
                 </div>
 
-                {/* END */}
-
-                <div>
-
-                  <label>
-                    End Time
-                  </label>
-
-                  <input
-                    type="time"
-                    value={
-                      details.endTime
-                    }
-                    onChange={(e) =>
-                      updateDay(
-                        day,
-                        "endTime",
-                        e.target.value,
-                      )
-                    }
-                  />
-
-                </div>
-
-                {/* DURATION */}
-
-                <div>
-
-                  <label>
-                    Duration
-                  </label>
-
-                  <input
-                    type="number"
-                    min="1"
-                    value={
-                      details.duration
-                    }
-                    onChange={(e) =>
-                      updateDay(
-                        day,
-                        "duration",
-                        e.target.value,
-                      )
-                    }
-                  />
-
-                </div>
-
-                {/* BREAK */}
-
-                {details.breaks.length ===
-                0 ? (
-
-                  <button
-                    type="button"
-                    onClick={() =>
-                      addBreak(day)
-                    }
-                  >
-                    Add Break
-                  </button>
-
-                ) : (
-
-                  <div>
-
-                    <label>
-                      Break Start
-                    </label>
+                {/* TIME */}
+                <div className="availability-time-grid">
+                  <div className="availability-form-group">
+                    <label>Start Time</label>
 
                     <input
                       type="time"
-                      value={
-                        details
-                          .breaks[0]
-                          .startTime
-                      }
+                      value={details.startTime}
                       onChange={(e) =>
-                        updateBreak(
+                        updateDay(
                           day,
                           "startTime",
                           e.target.value,
                         )
                       }
                     />
+                  </div>
 
-                    <label>
-                      Break End
-                    </label>
+                  <div className="availability-form-group">
+                    <label>End Time</label>
 
                     <input
                       type="time"
-                      value={
-                        details
-                          .breaks[0]
-                          .endTime
-                      }
+                      value={details.endTime}
                       onChange={(e) =>
-                        updateBreak(
+                        updateDay(
                           day,
                           "endTime",
                           e.target.value,
                         )
                       }
                     />
+                  </div>
+                </div>
 
-                    <button
-                      type="button"
-                      onClick={() =>
-                        removeBreak(day)
+                {/* DURATION */}
+                <div className="availability-form-group">
+                  <label>Slot Duration</label>
+
+                  <div className="availability-duration-input">
+                    <input
+                      type="number"
+                      min="1"
+                      value={details.duration}
+                      onChange={(e) =>
+                        updateDay(
+                          day,
+                          "duration",
+                          e.target.value,
+                        )
                       }
-                    >
-                      Remove Break
-                    </button>
+                    />
 
+                    <span>minutes</span>
+                  </div>
+                </div>
+
+                {/* BREAK */}
+                <div className="availability-break-section">
+                  <div className="availability-break-header">
+                    <label>Break</label>
+
+                    {details.breaks.length === 0 && (
+                      <button
+                        type="button"
+                        className="availability-add-break"
+                        onClick={() => addBreak(day)}
+                      >
+                        + Add Break
+                      </button>
+                    )}
                   </div>
 
-                )}
+                  {details.breaks.length > 0 && (
+                    <div className="availability-break-row">
+                      <div className="availability-form-group">
+                        <label>Break Start</label>
+
+                        <input
+                          type="time"
+                          value={
+                            details.breaks[0].startTime
+                          }
+                          onChange={(e) =>
+                            updateBreak(
+                              day,
+                              "startTime",
+                              e.target.value,
+                            )
+                          }
+                        />
+                      </div>
+
+                      <div className="availability-form-group">
+                        <label>Break End</label>
+
+                        <input
+                          type="time"
+                          value={
+                            details.breaks[0].endTime
+                          }
+                          onChange={(e) =>
+                            updateBreak(
+                              day,
+                              "endTime",
+                              e.target.value,
+                            )
+                          }
+                        />
+                      </div>
+
+                      <button
+                        type="button"
+                        className="availability-remove-break"
+                        onClick={() =>
+                          removeBreak(day)
+                        }
+                      >
+                        Remove
+                      </button>
+                    </div>
+                  )}
+                </div>
 
                 {/* DAY ERROR */}
-
                 {errors[day] && (
                   <p className="form-error">
                     {errors[day]}
                   </p>
                 )}
-
               </div>
             );
           })}
+        </div>
 
-          {/* BUTTONS */}
-
-          <div
-            style={{
-              marginTop: "20px",
-            }}
+        {/* BUTTONS */}
+        <div className="availability-modal-footer">
+          <button
+            type="button"
+            className="availability-cancel-btn"
+            onClick={onClose}
+            disabled={isLoading}
           >
+            Cancel
+          </button>
 
-            <button
-              type="submit"
-              disabled={isLoading}
-            >
-              {isLoading
-                ? "Adding..."
-                : "Add Availability"}
-            </button>
-
-            <button
-              type="button"
-              onClick={onClose}
-              disabled={isLoading}
-            >
-              Cancel
-            </button>
-
-          </div>
-
-        </form>
-
-      </div>
-
+          <button
+            type="submit"
+            className="availability-submit-btn"
+            disabled={isLoading}
+          >
+            {isLoading
+              ? "Adding..."
+              : "Add Availability"}
+          </button>
+        </div>
+      </form>
     </div>
-  );
+  </div>
+);
 };
 
 export default AddAvailabilityModal;

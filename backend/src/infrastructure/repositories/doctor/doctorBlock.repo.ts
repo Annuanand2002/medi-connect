@@ -156,4 +156,15 @@ export class DoctorBlockRepo
       totalPages: result.totalPages,
     };
   }
+  async findBlocksByDoctorAndDate(
+  doctorId: string,
+  date: Date,
+): Promise<DoctorBlock[]> {
+  const blocks =  await DoctorBlockModel.find({
+    doctorId,
+    date,
+    isDeleted: false,
+  })
+  return blocks.map(block=>DoctorBlockMapper.toDomain(block))
+}
 }

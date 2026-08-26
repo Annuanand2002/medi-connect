@@ -60,9 +60,7 @@ export class PatientRepo
         },
       ];
     }
-    console.log("query",query)
     const result = await super.findAll(page, limit, query);
-    console.log("result",result)
     return {
       requests: result.data,
       page: result.page,
