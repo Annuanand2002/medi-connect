@@ -1,13 +1,12 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-
+import "@/styles/patient/appointmentBooking.css"
 import PatientLayout from "@/layout/PatientLayout";
 import { useAppDispatch, useAppSelector } from "@/hooks/hooks";
 
 import { fetchAvailableDates } from "../redux/getDates.Thunk";
 import AppointmentCalendar from "../components/appointmentCalnder";
 import DateRangeFilter from "../components/DateFilter";
-
 
 import type { AvailableTimeSlot } from "../type/appointmentTime";
 import { fetchTimeSlots } from "../redux/appointmentSlot.thunk";
@@ -25,17 +24,9 @@ const formatDate = (date: Date): string => {
 const getCurrentMonthRange = () => {
   const today = new Date();
 
-  const start = new Date(
-    today.getFullYear(),
-    today.getMonth(),
-    1,
-  );
+  const start = new Date(today.getFullYear(), today.getMonth(), 1);
 
-  const end = new Date(
-    today.getFullYear(),
-    today.getMonth() + 1,
-    0,
-  );
+  const end = new Date(today.getFullYear(), today.getMonth() + 1, 0);
 
   return {
     startDate: formatDate(start),
@@ -53,30 +44,23 @@ const AppointmentBookingPage = () => {
     dates,
     isLoading: dateLoading,
     error: dateError,
-  } = useAppSelector(
-    (state) => state.appointmentDate,
-  );
+  } = useAppSelector((state) => state.appointmentDate);
 
- const {
-  slots,
-  selectedStartTime,
-  selectedEndTime,
-  isLoading: timeSlotLoading,
-  error: timeSlotError,
-} = useAppSelector((state) => state.timeSlots);
+  const {
+    slots,
+    selectedStartTime,
+    selectedEndTime,
+    isLoading: timeSlotLoading,
+    error: timeSlotError,
+  } = useAppSelector((state) => state.timeSlots);
 
   const currentMonth = getCurrentMonthRange();
 
-  const [selectedDate, setSelectedDate] =
-    useState<Date | null>(null);
+  const [selectedDate, setSelectedDate] = useState<Date | null>(null);
 
-  const [startDate, setStartDate] = useState(
-    currentMonth.startDate,
-  );
+  const [startDate, setStartDate] = useState(currentMonth.startDate);
 
-  const [endDate, setEndDate] = useState(
-    currentMonth.endDate,
-  );
+  const [endDate, setEndDate] = useState(currentMonth.endDate);
 
   // Fetch current month's available dates
   useEffect(() => {
@@ -84,17 +68,9 @@ const AppointmentBookingPage = () => {
 
     const today = new Date();
 
-    const start = new Date(
-      today.getFullYear(),
-      today.getMonth(),
-      1,
-    );
+    const start = new Date(today.getFullYear(), today.getMonth(), 1);
 
-    const end = new Date(
-      today.getFullYear(),
-      today.getMonth() + 1,
-      0,
-    );
+    const end = new Date(today.getFullYear(), today.getMonth() + 1, 0);
 
     dispatch(
       fetchAvailableDates({
@@ -146,26 +122,22 @@ const AppointmentBookingPage = () => {
   };
 
   // Select time slot
-  const handleTimeSelect = (
-    slot: AvailableTimeSlot,
-  ) => {
+  const handleTimeSelect = (slot: AvailableTimeSlot) => {
     dispatch(selectTimeSlot(slot));
   };
 
-  const availableDates = dates.map(
-    (item) => item.date,
-  );
+  const availableDates = dates.map((item) => item.date);
   const handleConfirm = () => {
-  if (!doctorId || !selectedDate || !selectedStartTime || !selectedEndTime) {
-    return;
-  }
+    if (!doctorId || !selectedDate || !selectedStartTime || !selectedEndTime) {
+      return;
+    }
 
-  const date = formatDate(selectedDate);
+    const date = formatDate(selectedDate);
 
-  navigate(
-    `/patient/appointment/${doctorId}/details?date=${date}&startTime=${selectedStartTime}&endTime=${selectedEndTime}`,
-  );
-};
+    navigate(
+      `/patient/appointment/${doctorId}/details?date=${date}&startTime=${selectedStartTime}&endTime=${selectedEndTime}`,
+    );
+  };
 
   return (
     <PatientLayout
@@ -173,17 +145,10 @@ const AppointmentBookingPage = () => {
       subtitle="Select an available date and time for your appointment."
     >
       <div className="appointment-booking-page">
-
-        {dateError && (
-          <div className="appointment-error">
-            {dateError}
-          </div>
-        )}
+        {dateError && <div className="appointment-error">{dateError}</div>}
 
         {timeSlotError && (
-          <div className="appointment-error">
-            {timeSlotError}
-          </div>
+          <div className="appointment-error">{timeSlotError}</div>
         )}
 
         <DateRangeFilter
@@ -195,7 +160,6 @@ const AppointmentBookingPage = () => {
         />
 
         <div className="appointment-booking-content">
-
           {/* Calendar */}
           <AppointmentCalendar
             availableDates={availableDates}
@@ -203,11 +167,7 @@ const AppointmentBookingPage = () => {
             onDateSelect={handleDateSelect}
           />
 
-          {dateLoading && (
-            <p>Loading available dates...</p>
-          )}
-
-          {/* Time slots */}
+          {dateLoading && <p>Loading available dates...</p>}
           <TimeSlot
             slots={slots}
             selectedStartTime={selectedStartTime}
@@ -216,17 +176,15 @@ const AppointmentBookingPage = () => {
             isLoading={timeSlotLoading}
           />
           {selectedStartTime && selectedEndTime && (
-  <button
-    type="button"
-    onClick={handleConfirm}
-    className="confirm-appointment-button"
-  >
-    Confirm Appointment
-  </button>
-)}
-
+            <button
+              type="button"
+              onClick={handleConfirm}
+              className="confirm-appointment-button"
+            >
+              Confirm Appointment
+            </button>
+          )}
         </div>
-
       </div>
     </PatientLayout>
   );

@@ -1,3 +1,5 @@
+import { AppointmentStatus } from "../../../shared/constants/appointmentEnum";
+
 export interface AvailableTimeSlot {
   startTime: string;
   endTime: string;
@@ -20,6 +22,11 @@ export interface GetAppointmentDetailsDTO {
   startTime: string;
   endTime: string;
 }
+export interface GetAppointmentRescheduleDetails {
+  date: Date;
+  startTime: string;
+  endTime: string;
+}
 
 export interface AppointmentDetails {
   doctorId: string;
@@ -29,4 +36,15 @@ export interface AppointmentDetails {
   date: Date;
   startTime: string;
   endTime: string;
+}
+export interface AppointmentDet {
+  doctorId: string;
+  doctorCode ?: string;
+  doctorName: string;
+  department: string;
+  date: Date;
+  startTime: string;
+  endTime: string;
+  status: AppointmentStatus;
+  appointmentCode: string;
 }

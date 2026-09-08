@@ -8,7 +8,7 @@ export interface Doctor {
  export interface LoginDoctorResponse {
     success : boolean;
     message : string;
-    result : {
+    data : {
         accessToken : string;
         refreshToken : string;
         doctor : Doctor

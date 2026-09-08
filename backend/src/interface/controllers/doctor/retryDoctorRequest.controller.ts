@@ -5,6 +5,9 @@ import asyncHandler from "../../../shared/utils/asyncHandler";
 import { Request, Response } from "express";
 import { TYPES } from "../../../di/types/types";
 import { IRetryDoctorRequestUseCase } from "../../../domain/repositories/doctor/repo.usecase/IRetryDoctorRequest";
+import sendResponse from "../../../shared/utils/apiResponse";
+import { RESPONSE_MESSAGES } from "../../../shared/constants/message";
+import { IGetDoctorRetryRequest } from "../../../domain/repositories/doctor/repo.usecase/IGetDoctorRetryReq.usecase";
 
 type DoctorRequestFiles = {
   profileImg?: {
@@ -34,6 +37,8 @@ export class RetryDoctorRequestController {
   constructor(
     @inject(TYPES.RetryDoctorRequestUseCase)
     private _retryDoctorRequestUsecase: IRetryDoctorRequestUseCase,
+    @inject(TYPES.GetDoctorRetryRequest)
+        private _getRetryDoctorRequest: IGetDoctorRetryRequest
   ) {}
   handle = asyncHandler(async (req: Request, res: Response) => {
     const files = req.files as unknown as DoctorRequestFiles;
@@ -43,7 +48,7 @@ export class RetryDoctorRequestController {
       email: req.body.email,
       dateOfBirth: req.body.dateOfBirth,
       qualification: req.body.qualification,
-      specialization: req.body.specialization,
+      department: req.body.department,
       experience: Number(req.body.experience),
       profileImg: files.profileImg?.[0]
         ? {
@@ -71,12 +76,18 @@ export class RetryDoctorRequestController {
         originalName: file.originalname,
       })),
     };
-    const doctorRequest = await this._retryDoctorRequestUsecase.execute(dto);
-    res.status(HTTP_STATUS.OK).json({
-      success: true,
-      message:
-        "request updated succesfully.We will review it within 2-3 business days.Please check your mail.",
-      result: doctorRequest,
-    });
+    const result = await this._retryDoctorRequestUsecase.execute(dto);
+    res
+      .status(HTTP_STATUS.OK)
+      .json(sendResponse(RESPONSE_MESSAGES.UPDATED, result));
+  });
+
+    //getRetryReq
+   getRetry = asyncHandler(async (req: Request, res: Response) => {
+    const token = req.query.token as string;
+    const result = await this._getRetryDoctorRequest.execute(token);
+    res
+      .status(HTTP_STATUS.OK)
+      .json(sendResponse(RESPONSE_MESSAGES.FETCH, result));
   });
 }

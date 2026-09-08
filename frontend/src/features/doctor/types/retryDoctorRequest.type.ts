@@ -11,3 +11,10 @@ export interface RetryDoctorRequest {
   medicalLicense: string;
   degreeCertificates: string[];
 }
+
+
+export interface DoctorRetryRequestResponse {
+  success: boolean;
+  message: string;
+  data : RetryDoctorRequest;
+}

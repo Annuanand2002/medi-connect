@@ -50,7 +50,7 @@ export class GetDatesForAppointment
       return [];
     }
     const availableDates: Dates[] = [];
-
+  
     for (const item of availability) {
       const start =
         item.startDate > startDate

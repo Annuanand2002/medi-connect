@@ -34,7 +34,15 @@ export const ROUTES = {
     GETDETAIlS : '/appointment/:doctorId/details',
     APPOINTMENT : {
       CREATE : '/appointment/create',
-      GET : '/appointment'
+      GET : '/appointment',
+      GETPAGE : '/appointment/:appointmentId',
+      CANCEL : '/appointment/cancel/:id',
+      RESCHEDULE :{
+        DATE : '/appointment/reschedule/dates/:doctorId',
+        TIMESLOT : "/appointment/reschedule/time-slots/:doctorId",
+        UPDATE : '/appointment/reschedule/:appointmentId',
+        CONFIRM : '/appointment/reschedule/:doctorId'
+      } 
     }
   },
 } as const;

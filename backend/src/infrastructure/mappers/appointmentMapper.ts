@@ -18,7 +18,6 @@ export class AppointmentMapper {
 
       endTime: document.endTime,
       status: document.status,
-
       createdAt: document.createdAt,
 
       updatedAt: document.updatedAt,

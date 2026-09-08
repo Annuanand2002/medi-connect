@@ -45,8 +45,8 @@ const displayedError = blockedError || loginError;
 
       dispatch(
         loginPatientSuccess({
-          patient: response.result.patient,
-          accessToken: response.result.accessToken,
+          patient: response.data.patient,
+          accessToken: response.data.accessToken,
         }),
       );
 

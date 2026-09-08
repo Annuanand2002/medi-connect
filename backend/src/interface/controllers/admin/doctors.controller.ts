@@ -8,7 +8,7 @@ import HTTP_STATUS from "../../../shared/constants/httpStatusCode";
 import sendResponse from "../../../shared/utils/apiResponse";
 import { RESPONSE_MESSAGES } from "../../../shared/constants/message";
 import { IToggleDoctorStatus } from "../../../domain/repositories/doctor/repo.usecase/IToggleDoctorStatus";
-import logger from "../../../shared/loggers/logger";
+
 
 @injectable()
 export class DoctorController {
@@ -29,11 +29,12 @@ export class DoctorController {
       search,
       status,
     });
-    logger.info(logger.info(`Get all doctors result: ${JSON.stringify(result, null, 2)}`))
     return res
       .status(HTTP_STATUS.OK)
       .json(sendResponse(RESPONSE_MESSAGES.FETCH, result));
   });
+
+  //block and unblock
   toggleStatus = asyncHandler(async (req: Request, res: Response) => {
     const id = req.params.id as string;
     const result = await this._toggle.execute(id);

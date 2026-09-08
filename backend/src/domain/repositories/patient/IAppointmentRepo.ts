@@ -1,4 +1,8 @@
-import { GetDoctorAppointmentReqDTO, PaginationDoctorAppointmenttResDTO } from "../../../application/DTO/doctor/appointment";
+import {
+  GetDoctorAppointmentReqDTO,
+  PaginationDoctorAppointmenttResDTO,
+} from "../../../application/DTO/doctor/appointment";
+import { AppointmentDet } from "../../../application/DTO/patient/appointment";
 import {
   GetAppointmentReqDTO,
   PaginationAppointmenttResDTO,
@@ -8,23 +12,24 @@ import { IBaseRepository } from "../base/IBaseRepository";
 
 export interface IAppointmentRepo extends IBaseRepository<Appointment> {
   findPatientAppointment(
-    patientId : string,
+    patientId: string,
     dto: GetAppointmentReqDTO,
   ): Promise<PaginationAppointmenttResDTO>;
   findDoctorAppointment(
-    doctorId : string,
+    doctorId: string,
     dto: GetDoctorAppointmentReqDTO,
   ): Promise<PaginationDoctorAppointmenttResDTO>;
 
   findExistingAppointment(
-  doctorId: string,
-  date: Date,
-  startTime: string,
-  endTime: string,
-): Promise<Appointment | null>;
+    doctorId: string,
+    date: Date,
+    startTime: string,
+    endTime: string,
+  ): Promise<Appointment | null>;
 
-findAppointmentsByDoctorAndDate(
-  doctorId: string,
-  date: Date,
-): Promise<Appointment[]>;
+  findAppointmentsByDoctorAndDate(
+    doctorId: string,
+    date: Date,
+  ): Promise<Appointment[]>;
+  
 }

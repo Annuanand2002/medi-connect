@@ -5,6 +5,7 @@ import asyncHandler from "../../../shared/utils/asyncHandler";
 import { Request, Response } from "express";
 import {
   GetAppointmentDetailsDTO,
+  GetAppointmentRescheduleDetails,
   PatientRequestDate,
 } from "../../../application/DTO/patient/appointment";
 import HTTP_STATUS from "../../../shared/constants/httpStatusCode";
@@ -16,6 +17,9 @@ import { ICreateAppointmentUseCase } from "../../../domain/repositories/patient/
 import { IGetAppointmentDetailsUseCase } from "../../../domain/repositories/patient/repo.usecase/IAppointmentConfrim";
 import { IGetPatientAppointment } from "../../../domain/repositories/patient/repo.usecase/IGetAppoitment.Patient.usecase";
 import { AppointmentStatus } from "../../../shared/constants/appointmentEnum";
+import { IAppointmentDetails } from "../../../domain/repositories/patient/repo.usecase/IAppointmentDetails";
+import { IAppointmentCancel } from "../../../domain/repositories/patient/repo.usecase/IAppoinymentCancel";
+import { IAppointmentReschedule } from "../../../domain/repositories/patient/repo.usecase/IAppointmentREschedule";
 
 @injectable()
 export class AppointmentController {
@@ -30,6 +34,12 @@ export class AppointmentController {
     private _appointmentDetails: IGetAppointmentDetailsUseCase,
     @inject(TYPES.GetAppointmentHistory)
     private _appointmentHistory: IGetPatientAppointment,
+    @inject(TYPES.AppointmentDeatilsPage)
+    private _appointmentDetailsPage: IAppointmentDetails,
+    @inject(TYPES.AppointmentCancel)
+    private _appointmentCancel: IAppointmentCancel,
+    @inject(TYPES.AppointmentReschedule)
+    private _appointmentResch: IAppointmentReschedule,
   ) {}
   getDates = asyncHandler(async (req: Request, res: Response) => {
     const doctorId = req.params.doctorId as string;
@@ -106,8 +116,8 @@ export class AppointmentController {
     const patientId = req.user.id;
     const page = Number(req.query.page) || 1;
     const limit = Number(req.query.limit) || 10;
-    const search = req.query.search as string || undefined;
-    const status = req.query.status as AppointmentStatus || undefined;
+    const search = (req.query.search as string) || undefined;
+    const status = (req.query.status as AppointmentStatus) || undefined;
     const result = await this._appointmentHistory.execute(patientId, {
       page,
       limit,
@@ -117,5 +127,36 @@ export class AppointmentController {
     res
       .status(HTTP_STATUS.OK)
       .json(sendResponse(RESPONSE_MESSAGES.FETCH, result));
+  });
+  //getSinglePge
+  getAppointmentPage = asyncHandler(async (req: Request, res: Response) => {
+    const appointmentId = req.params.appointmentId as string;
+    const result = await this._appointmentDetailsPage.execute(appointmentId);
+    res
+      .status(HTTP_STATUS.OK)
+      .json(sendResponse(RESPONSE_MESSAGES.FETCH, result));
+  });
+
+  //cancel
+  cancel = asyncHandler(async (req: Request, res: Response) => {
+    const id = req.params.id as string;
+    const result = await this._appointmentCancel.execute(id);
+    res
+      .status(HTTP_STATUS.OK)
+      .json(sendResponse(RESPONSE_MESSAGES.UPDATED, result));
+  });
+
+  //reschedule
+  reschedule = asyncHandler(async (req: Request, res: Response) => {
+    const id = req.params.appointmentId as string;
+    const dto: GetAppointmentRescheduleDetails = {
+      date: new Date(req.body.date),
+      startTime: req.body.startTime,
+      endTime: req.body.endTime,
+    };
+    const result = await this._appointmentResch.execute(id, dto);
+    res
+      .status(HTTP_STATUS.OK)
+      .json(sendResponse(RESPONSE_MESSAGES.UPDATED, result));
   });
 }

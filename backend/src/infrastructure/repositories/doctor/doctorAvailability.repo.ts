@@ -41,7 +41,6 @@ export class DoctorAvailabilityRepo
       isAvailable: true,
       isDeleted: false,
     });
-    console.log("records:", records);
     return records.map((record) => DoctorAvailabilityMapper.toDomain(record));
   }
 

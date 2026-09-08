@@ -7,7 +7,7 @@ export interface Patient {
 export interface LoginPatientResponse {
   success: boolean;
   message: string;
-  result: {
+  data: {
     accessToken: string;
     refreshToken: string;
     patient: Patient;

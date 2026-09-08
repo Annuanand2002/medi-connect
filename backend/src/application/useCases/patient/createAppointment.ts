@@ -8,8 +8,6 @@ import { ICounterRepo } from "../../../domain/repositories/common/ICounter";
 import { generateCode } from "../../../shared/utils/GenerateCode";
 import AppError from "../../../shared/errors/appErrors";
 import HTTP_STATUS from "../../../shared/constants/httpStatusCode";
-import { IDoctorAvailabilityRepo } from "../../../domain/repositories/doctor/IDoctorAvailability";
-import { ILeaveDoctor } from "../../../domain/repositories/doctor/IDoctorLeave";
 
 @injectable()
 export class CreateAppointmentUsecase implements ICreateAppointmentUseCase {
@@ -18,10 +16,6 @@ export class CreateAppointmentUsecase implements ICreateAppointmentUseCase {
     private _appointment: IAppointmentRepo,
     @inject(TYPES.CounterRepo)
     private _counterRepo: ICounterRepo,
-    @inject(TYPES.DoctorAvailabilityRepo)
-    private _doctorAvail: IDoctorAvailabilityRepo,
-    @inject(TYPES.DoctorLeaveRepo)
-    private _doctorLeave: ILeaveDoctor,
   ) {}
 
   async execute(
@@ -45,6 +39,7 @@ export class CreateAppointmentUsecase implements ICreateAppointmentUseCase {
         HTTP_STATUS.CONFLICT,
       );
     }
+
     const sequence = await this._counterRepo.getNextSequence("appointment");
     const appointmentCode = generateCode(sequence, "APP");
     return await this._appointment.create({

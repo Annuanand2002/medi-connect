@@ -43,8 +43,10 @@ export class DoctorRequestController {
     private readonly _getAllDoctorRequestUseCase: IGetAllDoctorRequedstUseCase,
     @inject(TYPES.GetDoctorRequestUseCase)
     private readonly _getDoctorRequestUseCase: IGetDoctorRequestUseCase,
+
   ) {}
 
+  //create req
   applyDoctorRequest = asyncHandler(
     async (req: Request, res: Response): Promise<void> => {
       if (!req.files) {
@@ -96,6 +98,7 @@ export class DoctorRequestController {
         );
     },
   );
+  //getAll request
   getAllDoctorRequest = asyncHandler(async (req: Request, res: Response) => {
     const status = req.query.status as DoctorRequestStatus | undefined;
     const search = req.query.search as string | undefined;
@@ -111,11 +114,14 @@ export class DoctorRequestController {
       .status(HTTP_STATUS.OK)
       .json(sendResponse(RESPONSE_MESSAGES.FETCH, result));
   });
+  //getOnereq
   getDoctorReq = asyncHandler(async (req: Request, res: Response) => {
     const id = req.params.id as string;
+    console.log("token id",id)
     const result = await this._getDoctorRequestUseCase.execute(id);
     res
       .status(HTTP_STATUS.OK)
       .json(sendResponse(RESPONSE_MESSAGES.FETCH, result));
   });
+
 }

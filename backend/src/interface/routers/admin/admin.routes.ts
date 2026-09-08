@@ -4,14 +4,13 @@ import { TYPES } from "../../../di/types/types";
 import { authenticate } from "../../../shared/middlewares/authenticate";
 import { AdminController } from "../../controllers/admin/adminAuth.controller";
 import { DoctorRequestController } from "../../controllers/doctor/doctor.req.controller";
-import ApproveDoctorRequestController from "../../controllers/doctor/approveDoctorReq.controller";
 import { VerifyDoctorSetupTokenController } from "../../controllers/doctor/verifyDoctorSetupToken.controller";
-import { RejectDoctorRequestController } from "../../controllers/doctor/rejectDoctirRequest.controller";
 import { ITokenService } from "../../../domain/services/ITokenService";
 import { GetFileURlController } from "../../controllers/service/getFileUrl.controller";
 import { ROUTES } from "../../../shared/constants/routes";
-import { DoctorController } from "../../controllers/doctor/doctors.controller";
-import { PatientController } from "../../controllers/patient/patient.controller";
+import { DoctorController } from "../../controllers/admin/doctors.controller";
+import { PatientController } from "../../controllers/admin/patient.controller";
+import ActionDoctorRequestController from "../../controllers/admin/actionDoctorReq.controller";
 
 const router = Router();
 
@@ -21,17 +20,13 @@ const adminController = container.get<AdminController>(TYPES.AdminController);
 const doctorRequestController = container.get<DoctorRequestController>(
   TYPES.DoctorRequestController,
 );
-const approveDoctorReqController =
-  container.get<ApproveDoctorRequestController>(
-    TYPES.ApproveDoctorRequestController,
-  );
+const actionDoctorReqController = container.get<ActionDoctorRequestController>(
+  TYPES.ActionDoctorRequestController,
+);
 const verificationTokenController =
   container.get<VerifyDoctorSetupTokenController>(
     TYPES.VerifyDoctorSetupTokenController,
   );
-const rejectController = container.get<RejectDoctorRequestController>(
-  TYPES.RejectDoctorRequestController,
-);
 const getFileURlController = container.get<GetFileURlController>(
   TYPES.GetFileURlController,
 );
@@ -65,13 +60,13 @@ router.get(
 router.patch(
   "/doctor-request/approve",
   authenticateAdmin,
-  approveDoctorReqController.handle,
+  actionDoctorReqController.approve,
 );
 router.get("/setup-password", verificationTokenController.handle);
 router.patch(
   "/doctor-request/reject",
   authenticateAdmin,
-  rejectController.handle,
+  actionDoctorReqController.reject,
 );
 router.get(
   ROUTES.DOCTOR.GETALL,

@@ -1,4 +1,3 @@
-import { AvailableTimeSlot } from "../../../application/DTO/patient/appointment";
 import { Week } from "../../../shared/constants/week";
 import { DoctorAvailability } from "../../entities/doctor/doctorAvailability";
 import { IBaseRepository } from "../base/IBaseRepository";

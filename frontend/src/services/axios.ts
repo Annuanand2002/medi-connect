@@ -86,8 +86,9 @@ const authRoutes = [
   "/doctor/request-resetpassword",
   "/doctor/reset-password",
   "/doctor/setup-password",
+  "/doctor/retry",
 
-  "/patient/forgot-password",
+  "/patient/requeset-reset",
   "/patient/reset-password",
 ];
 

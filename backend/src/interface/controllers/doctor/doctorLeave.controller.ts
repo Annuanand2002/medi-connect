@@ -23,6 +23,8 @@ export class DoctorLeaveController {
     @inject(TYPES.GetAllDoctorLeaveUsecase)
     private _getLeave: IGetDoctorLeaveUseCase,
   ) {}
+
+  //create
   create = asyncHandler(async (req: Request, res: Response) => {
     if (!req.user) {
       throw new AppError("unauthorized", HTTP_STATUS.UNAUTHORIZED);
@@ -39,6 +41,8 @@ export class DoctorLeaveController {
       .status(HTTP_STATUS.CREATED)
       .json(sendResponse(RESPONSE_MESSAGES.CREATED, result));
   });
+
+  //update
   update = asyncHandler(async (req: Request, res: Response) => {
     const id = req.params.id as string;
     if (!req.user) {
@@ -57,6 +61,8 @@ export class DoctorLeaveController {
       .status(HTTP_STATUS.OK)
       .json(sendResponse(RESPONSE_MESSAGES.UPDATED, result));
   });
+
+  //delete
   delete = asyncHandler(async (req: Request, res: Response) => {
     if (!req.user) {
       throw new AppError("unathorized", HTTP_STATUS.UNAUTHORIZED);
@@ -68,6 +74,8 @@ export class DoctorLeaveController {
       .status(HTTP_STATUS.OK)
       .json(sendResponse(RESPONSE_MESSAGES.DELETED, result));
   });
+
+  //getAll
 
   getAll = asyncHandler(async (req: Request, res: Response) => {
     if (!req.user) {

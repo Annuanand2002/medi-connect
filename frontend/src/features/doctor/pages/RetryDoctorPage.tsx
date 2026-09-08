@@ -47,7 +47,7 @@ const RetryDoctorPage = () => {
     formData.append("email", data.email);
     formData.append("dateOfBirth", data.dateOfBirth);
     formData.append("qualification", data.qualification);
-    formData.append("specialization", data.specialization);
+    formData.append("specialization", data.department);
     formData.append("experience", data.experience.toString());
 
     if (data.profileImg?.length > 0) {
@@ -138,7 +138,7 @@ const RetryDoctorPage = () => {
             email: retryRequest.email,
             dateOfBirth: retryRequest.dateOfBirth,
             qualification: retryRequest.qualification,
-            specialization: retryRequest.specialization,
+            department: retryRequest.department,
             experience: retryRequest.experience,
           }}
           onSubmit={handleSubmit}

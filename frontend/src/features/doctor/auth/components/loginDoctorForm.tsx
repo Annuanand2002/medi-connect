@@ -51,8 +51,8 @@ const LoginDoctorForm = () => {
 
       dispatch(
         loginDoctorSuccess({
-          doctor: response.result.doctor,
-          accessToken: response.result.accessToken,
+          doctor: response.data.doctor,
+          accessToken: response.data.accessToken,
         }),
       );
 

@@ -1,6 +1,6 @@
 import axiosInstance from "@/services/axios";
 import type { LoginDoctorFormData } from "../schema/doctorLoginform.schema";
-import type { LoginDoctorResponse } from "../../types/login.type";
+import type { LoginDoctorResponse } from "../types/authAdmin.type";
 
 export const loginDoctor = async (
   credentials: LoginDoctorFormData,
@@ -9,5 +9,6 @@ export const loginDoctor = async (
     "/doctor/login",
     credentials,
   );
+  console.log("data",data)
   return data;
 };

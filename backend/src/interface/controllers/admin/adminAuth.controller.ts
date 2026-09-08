@@ -33,7 +33,21 @@ export class AdminController {
       .status(HTTP_STATUS.OK)
       .json(sendResponse(RESPONSE_MESSAGES.LOGIN_SUCCESS, result));
   });
-  //refreshtoken
+
+  //logout
+  logout = asyncHandler(async (req: Request, res: Response) => {
+    const refreshToken = req.cookies.refreshToken;
+    if (!refreshToken) {
+      throw new AppError("token is required", HTTP_STATUS.UNAUTHORIZED);
+    }
+    await this._adminLogoutUseCase.execute({ refreshToken });
+    clearRefershTokenCookie(res);
+    res
+      .status(HTTP_STATUS.OK)
+      .json(sendResponse(RESPONSE_MESSAGES.LOGIN_SUCCESS));
+  });
+
+    //refreshtoken
   refreshToken = asyncHandler(async (req: Request, res: Response) => {
     const refreshToken = req.cookies.refreshToken;
     if (!refreshToken) {
@@ -50,16 +64,5 @@ export class AdminController {
       result: response,
     });
   });
-  //logout
-  logout = asyncHandler(async (req: Request, res: Response) => {
-    const refreshToken = req.cookies.refreshToken;
-    if (!refreshToken) {
-      throw new AppError("token is required", HTTP_STATUS.UNAUTHORIZED);
-    }
-    await this._adminLogoutUseCase.execute({ refreshToken });
-    clearRefershTokenCookie(res);
-    res
-      .status(HTTP_STATUS.OK)
-      .json(sendResponse(RESPONSE_MESSAGES.LOGIN_SUCCESS));
-  });
+  
 }
