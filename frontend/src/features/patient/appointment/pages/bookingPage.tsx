@@ -1,17 +1,25 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import "@/styles/patient/appointmentBooking.css"
+import "@/styles/patient/appointmentBooking.css";
+
 import PatientLayout from "@/layout/PatientLayout";
 import { useAppDispatch, useAppSelector } from "@/hooks/hooks";
 
 import { fetchAvailableDates } from "../redux/getDates.Thunk";
+import { fetchRescheduleAvailableDates } from "../redux/resceduleDate.thunk";
+
 import AppointmentCalendar from "../components/appointmentCalnder";
 import DateRangeFilter from "../components/DateFilter";
 
 import type { AvailableTimeSlot } from "../type/appointmentTime";
-import { fetchTimeSlots } from "../redux/appointmentSlot.thunk";
+
+import {
+  fetchTimeSlots,
+} from "../redux/appointmentSlot.thunk";
+
 import { selectTimeSlot } from "../redux/appointmentSlot.slice";
 import TimeSlot from "../components/appointmentTimeSlot";
+import { fetchRescheduleTimeSlots } from "../redux/reschdeuleSlot.thunk";
 
 const formatDate = (date: Date): string => {
   const year = date.getFullYear();
@@ -35,17 +43,40 @@ const getCurrentMonthRange = () => {
 };
 
 const AppointmentBookingPage = () => {
-  const { doctorId } = useParams<{ doctorId: string }>();
+  /*
+   * Normal booking URL:
+   * /patient/appointment/dates/:doctorId
+   *
+   * Reschedule URL:
+   * /patient/appointment/reschedule/:appointmentId/dates/:doctorId
+   */
+
+  const { doctorId, appointmentId } = useParams<{
+    doctorId: string;
+    appointmentId?: string;
+  }>();
 
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
+  /*
+   * If appointmentId exists,
+   * this page is being used for rescheduling.
+   */
+  const isRescheduling = Boolean(appointmentId);
+
+  /*
+   * Available dates state
+   */
   const {
     dates,
     isLoading: dateLoading,
     error: dateError,
   } = useAppSelector((state) => state.appointmentDate);
 
+  /*
+   * Available time slots state
+   */
   const {
     slots,
     selectedStartTime,
@@ -54,17 +85,27 @@ const AppointmentBookingPage = () => {
     error: timeSlotError,
   } = useAppSelector((state) => state.timeSlots);
 
+  /*
+   * Current month
+   */
   const currentMonth = getCurrentMonthRange();
 
+  /*
+   * Selected calendar date
+   */
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
 
+  /*
+   * Date range filter
+   */
   const [startDate, setStartDate] = useState(currentMonth.startDate);
 
   const [endDate, setEndDate] = useState(currentMonth.endDate);
 
-  // Fetch current month's available dates
   useEffect(() => {
-    if (!doctorId) return;
+    if (!doctorId) {
+      return;
+    }
 
     const today = new Date();
 
@@ -72,61 +113,147 @@ const AppointmentBookingPage = () => {
 
     const end = new Date(today.getFullYear(), today.getMonth() + 1, 0);
 
-    dispatch(
-      fetchAvailableDates({
-        doctorId,
-        startDate: start.toISOString(),
-        endDate: end.toISOString(),
-      }),
-    );
-  }, [doctorId, dispatch]);
+    if (appointmentId) {
+      /*
+       * RESCHEDULE
+       */
+      dispatch(
+        fetchRescheduleAvailableDates({
+          appointmentId,
+          params: {
+            doctorId,
+            startDate: start.toISOString(),
+            endDate: end.toISOString(),
+          },
+        }),
+      );
+    } else {
+      /*
+       * NORMAL BOOKING
+       */
+      dispatch(
+        fetchAvailableDates({
+          doctorId,
+          startDate: start.toISOString(),
+          endDate: end.toISOString(),
+        }),
+      );
+    }
+  }, [doctorId, appointmentId, dispatch]);
 
-  // Apply custom date range
+  /*
+   * ------------------------------------------------
+   * APPLY DATE RANGE
+   * ------------------------------------------------
+   */
   const handleApplyDateRange = () => {
     if (!doctorId || !startDate || !endDate) {
       return;
     }
 
     const start = new Date(`${startDate}T00:00:00`);
+
     const end = new Date(`${endDate}T23:59:59`);
 
     if (start > end) {
       return;
     }
 
+    /*
+     * Clear previously selected date
+     */
     setSelectedDate(null);
 
-    dispatch(
-      fetchAvailableDates({
-        doctorId,
-        startDate: start.toISOString(),
-        endDate: end.toISOString(),
-      }),
-    );
+    /*
+     * RESCHEDULE
+     */
+    if (appointmentId) {
+      dispatch(
+        fetchRescheduleAvailableDates({
+          appointmentId,
+          params: {
+            doctorId,
+            startDate: start.toISOString(),
+            endDate: end.toISOString(),
+          },
+        }),
+      );
+    } else {
+      /*
+       * NORMAL BOOKING
+       */
+      dispatch(
+        fetchAvailableDates({
+          doctorId,
+          startDate: start.toISOString(),
+          endDate: end.toISOString(),
+        }),
+      );
+    }
   };
 
-  // Select calendar date
-  const handleDateSelect = (date: Date) => {
-    if (!doctorId) return;
 
+  const handleDateSelect = (date: Date) => {
+    if (!doctorId) {
+      return;
+    }
+
+    /*
+     * Store selected date
+     */
     setSelectedDate(date);
 
+    /*
+     * Convert Date object to YYYY-MM-DD
+     */
     const formattedDate = formatDate(date);
 
-    dispatch(
-      fetchTimeSlots({
-        doctorId,
-        date: formattedDate,
-      }),
-    );
+    /*
+     * RESCHEDULE
+     */
+    if (appointmentId) {
+      dispatch(
+        fetchRescheduleTimeSlots({
+          doctorId,
+          date: formattedDate,
+        }),
+      );
+    } else {
+      /*
+       * NORMAL BOOKING
+       */
+      dispatch(
+        fetchTimeSlots({
+          doctorId,
+          date: formattedDate,
+        }),
+      );
+    }
   };
 
-  // Select time slot
+  /*
+   * ------------------------------------------------
+   * SELECT TIME SLOT
+   * ------------------------------------------------
+   */
   const handleTimeSelect = (slot: AvailableTimeSlot) => {
     dispatch(selectTimeSlot(slot));
   };
 
+  /*
+   * ------------------------------------------------
+   * AVAILABLE DATES
+   * ------------------------------------------------
+   */
   const availableDates = dates.map((item) => item.date);
+  console.log("API dates:", dates);
+console.log("Available dates:", availableDates);
+
+  /*
+   * ------------------------------------------------
+   * CONFIRM DATE + TIME
+   * ------------------------------------------------
+   */
   const handleConfirm = () => {
     if (!doctorId || !selectedDate || !selectedStartTime || !selectedEndTime) {
       return;
@@ -134,23 +261,48 @@ const AppointmentBookingPage = () => {
 
     const date = formatDate(selectedDate);
 
-    navigate(
-      `/patient/appointment/${doctorId}/details?date=${date}&startTime=${selectedStartTime}&endTime=${selectedEndTime}`,
-    );
+    /*
+     * RESCHEDULE
+     */
+    if (isRescheduling && appointmentId) {
+  navigate(
+    `/patient/appointment/${appointmentId}/${doctorId}/reschedule-details?date=${date}&startTime=${selectedStartTime}&endTime=${selectedEndTime}`,
+  );
+    } else {
+      /*
+       * NORMAL BOOKING
+       */
+      navigate(
+        `/patient/appointment/${doctorId}/details?date=${date}&startTime=${selectedStartTime}&endTime=${selectedEndTime}`,
+      );
+    }
   };
 
   return (
     <PatientLayout
-      title="Book Appointment"
-      subtitle="Select an available date and time for your appointment."
+      title={isRescheduling ? "Reschedule Appointment" : "Book Appointment"}
+      subtitle={
+        isRescheduling
+          ? "Select a new date and time for your appointment."
+          : "Select an available date and time for your appointment."
+      }
     >
       <div className="appointment-booking-page">
+        {/* -----------------------------------------
+            DATE API ERROR
+        ------------------------------------------ */}
         {dateError && <div className="appointment-error">{dateError}</div>}
 
+        {/* -----------------------------------------
+            TIME SLOT API ERROR
+        ------------------------------------------ */}
         {timeSlotError && (
           <div className="appointment-error">{timeSlotError}</div>
         )}
 
+        {/* -----------------------------------------
+            DATE RANGE FILTER
+        ------------------------------------------ */}
         <DateRangeFilter
           startDate={startDate}
           endDate={endDate}
@@ -160,14 +312,23 @@ const AppointmentBookingPage = () => {
         />
 
         <div className="appointment-booking-content">
-          {/* Calendar */}
+          {/* ---------------------------------------
+              CALENDAR
+          ---------------------------------------- */}
           <AppointmentCalendar
             availableDates={availableDates}
             selectedDate={selectedDate}
             onDateSelect={handleDateSelect}
           />
 
+          {/* ---------------------------------------
+              DATE LOADING
+          ---------------------------------------- */}
           {dateLoading && <p>Loading available dates...</p>}
+
+          {/* ---------------------------------------
+              TIME SLOTS
+          ---------------------------------------- */}
           <TimeSlot
             slots={slots}
             selectedStartTime={selectedStartTime}
@@ -175,13 +336,17 @@ const AppointmentBookingPage = () => {
             onSelect={handleTimeSelect}
             isLoading={timeSlotLoading}
           />
+
+          {/* ---------------------------------------
+              CONFIRM BUTTON
+          ---------------------------------------- */}
           {selectedStartTime && selectedEndTime && (
             <button
               type="button"
               onClick={handleConfirm}
               className="confirm-appointment-button"
             >
-              Confirm Appointment
+              {isRescheduling ? "Confirm Reschedule" : "Confirm Appointment"}
             </button>
           )}
         </div>

@@ -13,11 +13,12 @@ import patientListReducer from "@/features/admin/redux/patientListSlice";
 import doctorAvailabilityListReducer from "@/features/doctor/Mange-availability/redux/getAvail.slice";
 import doctorLeaveReducer from "@/features/doctor/manage-leave/redux/doctorLeave.slice";
 import doctorBlockReducer from "@/features/doctor/manage-block/redux/doctorBlock.slice";
-import patientDoctorsReducer from "@/features/patient/appointment/redux/doctorList.slice"
+import patientDoctorsReducer from "@/features/patient/appointment/redux/doctorList.slice";
 import appointmentDateReducer from "@/features/patient/appointment/redux/appointmentDate.slice";
 import timeSlotReducer from "@/features/patient/appointment/redux/appointmentSlot.slice";
 import appointmentHistoryReducer from "@/features/patient/appointment/redux/appointmentHistory.slice";
-import doctorAppointmentReducer from "@/features/doctor/appointment/redux/appointment.slice"
+import doctorAppointmentReducer from "@/features/doctor/appointment/redux/appointment.slice";
+import appointmentSinglePageReducer from "@/features/patient/appointment/redux/appintmentSinglePage.slice";
 
 export const store = configureStore({
   reducer: {
@@ -35,11 +36,12 @@ export const store = configureStore({
     availability: doctorAvailabilityListReducer,
     doctorLeave: doctorLeaveReducer,
     doctorBlock: doctorBlockReducer,
-    patientDoctors : patientDoctorsReducer,
-    appointmentDate : appointmentDateReducer,
+    patientDoctors: patientDoctorsReducer,
+    appointmentDate: appointmentDateReducer,
     timeSlots: timeSlotReducer,
-    appointmentHistory : appointmentHistoryReducer,
-    doctorAppointment : doctorAppointmentReducer
+    appointmentHistory: appointmentHistoryReducer,
+    doctorAppointment: doctorAppointmentReducer,
+    appointmentSinglePage: appointmentSinglePageReducer,
   },
 });
 

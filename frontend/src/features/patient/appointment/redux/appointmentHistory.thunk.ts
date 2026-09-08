@@ -15,8 +15,6 @@ export const fetchAppointmentHistory = createAsyncThunk<
     try {
       const response = await getAppointmentHistory(params);
 
-      console.log("Appointment History API result:", response);
-
       return response;
     } catch (error) {
       const axiosError = error as AxiosError<ApiResponse>;

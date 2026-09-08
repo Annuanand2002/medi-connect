@@ -1,14 +1,8 @@
 import type { TableColumn } from "@/types/dataTable";
-import {
-  CalendarDays,
-  Clock,
-  Code,
-  Stethoscope,
-  UserRound,
-} from "lucide-react";
-
+import { CalendarDays, Clock, Code, UserRound } from "lucide-react";
 import DataTable from "@/components/dataTable";
 import type { PatientAppointment } from "../type/appointmentList";
+import { useNavigate } from "react-router-dom";
 
 interface AppointmentHistoryTableProps {
   appointments: PatientAppointment[];
@@ -17,6 +11,10 @@ interface AppointmentHistoryTableProps {
 const AppointmentHistoryTable = ({
   appointments,
 }: AppointmentHistoryTableProps) => {
+  const navigate = useNavigate()
+  const handleViewAppointment = (id: string) => {
+  navigate(`/patient/appointment/singlePage/${id}`);
+};
   const columns: TableColumn<PatientAppointment>[] = [
     {
       key: "doctor",
@@ -29,7 +27,7 @@ const AppointmentHistoryTable = ({
           </div>
 
           <div className="doctor-info">
-            <strong>{appointment.doctorName}</strong>
+            <strong>Dr.{appointment.doctorName}</strong>
 
             <span>
               <Code size={12} />
@@ -46,18 +44,6 @@ const AppointmentHistoryTable = ({
 
       render: (appointment) => (
         <span className="doctor-specialization">{appointment.department}</span>
-      ),
-    },
-
-    {
-      key: "appointmentCode",
-      header: "Appointment",
-
-      render: (appointment) => (
-        <span className="appointment-code">
-          <Stethoscope size={14} />
-          {appointment.appointmentCode}
-        </span>
       ),
     },
 
@@ -96,6 +82,18 @@ const AppointmentHistoryTable = ({
         >
           {appointment.status}
         </span>
+      ),
+    },
+    {
+      key: "view",
+      header: "Action",
+      render: (appointment) => (
+        <button
+          onClick={() => handleViewAppointment(appointment.id)}
+          className="view-button"
+        >
+          VIEW
+        </button>
       ),
     },
   ];

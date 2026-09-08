@@ -2,6 +2,7 @@ import type { TableColumn } from "@/types/dataTable";
 import type { Doctor } from "../type/getDoctorList";
 import { ArrowUpRight, Code, Mail, UserRound } from "lucide-react";
 import DataTable from "@/components/dataTable";
+import "@/styles/patient/doctorListPage.css";
 
 interface DoctorTableProps {
   requests: Doctor[];
@@ -21,20 +22,24 @@ const DoctorListTable = ({ requests, onBook }: DoctorTableProps) => {
           </div>
 
           <div className="doctor-info">
-            <strong>{request.fullName}</strong>
+            <strong>Dr.{request.fullName}</strong>
 
             <span>
               <Code size={12} />
               {request.doctorCode}
             </span>
-
-            <span>
-              <Mail size={12} />
-              {request.email}
-            </span>
           </div>
         </div>
       ),
+    },
+    {
+      key : "email",
+      header : "Email",
+      render : (request)=>(
+        <span>
+          <Mail size={12} />
+          {request.email}</span>
+      )
     },
 
     {

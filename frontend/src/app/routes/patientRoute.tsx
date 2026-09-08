@@ -12,6 +12,9 @@ import AppointmentBookingPage from "@/features/patient/appointment/pages/booking
 import ConfirmationPage from "@/features/patient/appointment/pages/confirmationPage";
 import AppointmentConfirmedPage from "@/features/patient/appointment/pages/confirmed";
 import AppointmentHistoryPage from "@/features/patient/appointment/pages/appointmentHistory.page";
+import AppointmentSinglePage from "@/features/patient/appointment/pages/appointmentSinglePage";
+import RescheduleConfirmPage from "@/features/patient/appointment/pages/rescheduleConfirmationPage";
+import AppointmentRescheduleConfirmedPage from "@/features/patient/appointment/pages/reschudleConfirmed";
 
 const PatientRoute = () => {
   return (
@@ -42,7 +45,26 @@ const PatientRoute = () => {
           path="/appointment/confirmed"
           element={<AppointmentConfirmedPage />}
         />
-        <Route path="/appointment-history" element={<AppointmentHistoryPage />} />
+        <Route
+          path="/appointment/RescheduleConfirmed"
+          element={<AppointmentRescheduleConfirmedPage />}
+        />
+        <Route
+          path="/appointment-history"
+          element={<AppointmentHistoryPage />}
+        />
+        <Route
+          path="/appointment/singlePage/:id"
+          element={<AppointmentSinglePage />}
+        />
+        <Route
+          path="/appointment/reschedule/:appointmentId/dates/:doctorId"
+          element={<AppointmentBookingPage />}
+        />
+        <Route
+          path="/appointment/:appointmentId/:doctorId/reschedule-details"
+          element={<RescheduleConfirmPage />}
+        />
       </Route>
     </Routes>
   );

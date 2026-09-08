@@ -38,10 +38,10 @@ export const ROUTES = {
       GETPAGE : '/appointment/:appointmentId',
       CANCEL : '/appointment/cancel/:id',
       RESCHEDULE :{
-        DATE : '/appointment/reschedule/dates/:doctorId',
+        DATE : '/appointment/:appointmentId/reschedule/dates/:doctorId',
         TIMESLOT : "/appointment/reschedule/time-slots/:doctorId",
         UPDATE : '/appointment/reschedule/:appointmentId',
-        CONFIRM : '/appointment/reschedule/:doctorId'
+        CONFIRM : '/appointment/reschedule/:appointmentId/:doctorId'
       } 
     }
   },

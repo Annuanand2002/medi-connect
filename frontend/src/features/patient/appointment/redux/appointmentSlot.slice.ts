@@ -1,6 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import type { AvailableTimeSlot } from "../type/appointmentTime";
 import { fetchTimeSlots } from "./appointmentSlot.thunk";
+import { fetchRescheduleTimeSlots } from "./reschdeuleSlot.thunk";
 
 interface TimeSlotState {
   slots: AvailableTimeSlot[];
@@ -48,6 +49,7 @@ const timeSlotSlice = createSlice({
   extraReducers: (builder) => {
     builder
 
+      // NORMAL BOOKING
       .addCase(fetchTimeSlots.pending, (state) => {
         state.isLoading = true;
         state.error = null;
@@ -66,6 +68,27 @@ const timeSlotSlice = createSlice({
         state.isLoading = false;
         state.slots = [];
         state.error = action.payload || "Failed to fetch time slots";
+      })
+
+      // RESCHEDULE
+      .addCase(fetchRescheduleTimeSlots.pending, (state) => {
+        state.isLoading = true;
+        state.error = null;
+        state.slots = [];
+        state.selectedStartTime = null;
+        state.selectedEndTime = null;
+      })
+
+      .addCase(fetchRescheduleTimeSlots.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.slots = action.payload.slots;
+        state.selectedDate = action.payload.date;
+      })
+
+      .addCase(fetchRescheduleTimeSlots.rejected, (state, action) => {
+        state.isLoading = false;
+        state.slots = [];
+        state.error = action.payload || "Failed to fetch reschedule time slots";
       });
   },
 });

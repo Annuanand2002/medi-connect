@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { fetchAvailableDates } from "./getDates.Thunk";
+import { fetchRescheduleAvailableDates } from "./resceduleDate.thunk";
 import type { AppointmentDateState } from "../type/appointmentDate";
-
 
 const initialState: AppointmentDateState = {
   dates: [],
@@ -27,6 +27,8 @@ const appointmentDateSlice = createSlice({
 
   extraReducers: (builder) => {
     builder
+
+      // NORMAL BOOKING
       .addCase(fetchAvailableDates.pending, (state) => {
         state.isLoading = true;
         state.error = null;
@@ -43,13 +45,32 @@ const appointmentDateSlice = createSlice({
       .addCase(fetchAvailableDates.rejected, (state, action) => {
         state.isLoading = false;
         state.error =
+          (action.payload as string) || "Failed to fetch available dates";
+      })
+
+      // RESCHEDULE
+      .addCase(fetchRescheduleAvailableDates.pending, (state) => {
+        state.isLoading = true;
+        state.error = null;
+      })
+
+      .addCase(fetchRescheduleAvailableDates.fulfilled, (state, action) => {
+        state.isLoading = false;
+
+        state.dates = action.payload.dates;
+        state.startDate = action.payload.startDate;
+        state.endDate = action.payload.endDate;
+      })
+
+      .addCase(fetchRescheduleAvailableDates.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error =
           (action.payload as string) ||
-          "Failed to fetch available dates";
+          "Failed to fetch reschedule available dates";
       });
   },
 });
 
-export const { clearAvailableDates } =
-  appointmentDateSlice.actions;
+export const { clearAvailableDates } = appointmentDateSlice.actions;
 
 export default appointmentDateSlice.reducer;

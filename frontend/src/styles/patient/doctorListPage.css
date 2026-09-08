@@ -1,0 +1,319 @@
+
+/* =========================================
+   DOCTOR TABLE - MODERN PROFESSIONAL
+========================================= */
+
+.doctor-cell {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  min-width: 260px;
+}
+
+/* -----------------------------------------
+   Doctor Avatar
+----------------------------------------- */
+
+.doctor-avatar {
+  width: 44px;
+  height: 44px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  flex-shrink: 0;
+
+  border-radius: 10px;
+
+  background: #eef2ff;
+  color: #4f46e5;
+
+  font-size: 16px;
+  font-weight: 700;
+
+  border: 1px solid #e0e7ff;
+}
+
+/* -----------------------------------------
+   Doctor Info
+----------------------------------------- */
+
+.doctor-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+
+  min-width: 0;
+}
+
+.doctor-info strong {
+  color: #111827;
+
+  font-size: 14px;
+  font-weight: 650;
+
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.doctor-info span {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+
+  color: #9ca3af;
+
+  font-size: 11px;
+  font-weight: 500;
+}
+
+.doctor-info span svg {
+  color: #9ca3af;
+}
+
+/* -----------------------------------------
+   Department
+----------------------------------------- */
+
+.doctor-specialization {
+  display: inline-flex;
+  align-items: center;
+
+  width: fit-content;
+
+  padding: 5px 9px;
+
+  border-radius: 5px;
+
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+
+  color: #475569;
+
+  font-size: 11px;
+  font-weight: 600;
+
+  letter-spacing: 0.01em;
+
+  white-space: nowrap;
+}
+
+/* -----------------------------------------
+   Experience
+----------------------------------------- */
+
+.doctor-experience {
+  position: relative;
+
+  display: inline-flex;
+  align-items: baseline;
+  gap: 3px;
+
+  color: #1f2937;
+
+  font-size: 14px;
+  font-weight: 650;
+}
+
+.doctor-experience::before {
+  content: "";
+
+  width: 5px;
+  height: 5px;
+
+  margin-right: 5px;
+
+  border-radius: 50%;
+
+  background: #6366f1;
+}
+
+.doctor-experience small {
+  color: #9ca3af;
+
+  font-size: 11px;
+  font-weight: 500;
+}
+
+/* -----------------------------------------
+   Action Column
+----------------------------------------- */
+
+.doctor-action-heading {
+  text-align: right;
+}
+
+.doctor-action-cell {
+  display: flex;
+  justify-content: flex-end;
+}
+
+/* -----------------------------------------
+   Book Appointment Button
+----------------------------------------- */
+
+.doctor-view-buttons {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+
+  height: 35px;
+
+  padding: 0 13px;
+
+  border: 1px solid #c7d2fe;
+  border-radius: 7px;
+
+  background: #ffffff;
+  color: #4f46e5;
+
+  font-size: 12px;
+  font-weight: 600;
+
+  white-space: nowrap;
+
+  cursor: pointer;
+
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease,
+    color 0.2s ease,
+    box-shadow 0.2s ease,
+    transform 0.15s ease;
+}
+
+.doctor-view-buttons:hover {
+  background: #eef2ff;
+  border-color: #818cf8;
+  color: #4338ca;
+
+  box-shadow: 0 3px 8px rgba(79, 70, 229, 0.08);
+
+  transform: translateY(-1px);
+}
+
+.doctor-view-buttons:active {
+  transform: translateY(0);
+}
+
+.doctor-view-buttons svg {
+  transition: transform 0.2s ease;
+}
+
+.doctor-view-buttons:hover svg {
+  transform: translate(2px, -2px);
+}
+
+/* -----------------------------------------
+   DataTable Row Hover
+----------------------------------------- */
+
+.doctor-table tbody tr {
+  transition: background 0.15s ease;
+}
+
+.doctor-table tbody tr:hover {
+  background: #fafbff;
+}
+
+/* -----------------------------------------
+   Empty State
+----------------------------------------- */
+
+.doctor-request-empty {
+  min-height: 280px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  padding: 40px 20px;
+
+  text-align: center;
+}
+
+.doctor-request-empty-icon {
+  width: 50px;
+  height: 50px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  margin-bottom: 14px;
+
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+
+  background: #f9fafb;
+  color: #9ca3af;
+}
+
+.doctor-request-empty > span {
+  margin-bottom: 7px;
+
+  color: #9ca3af;
+
+  font-size: 10px;
+  font-weight: 700;
+
+  letter-spacing: 0.1em;
+}
+
+.doctor-request-empty h3 {
+  margin: 0 0 6px;
+
+  color: #1f2937;
+
+  font-size: 16px;
+  font-weight: 650;
+}
+
+.doctor-request-empty p {
+  margin: 0;
+
+  color: #9ca3af;
+
+  font-size: 13px;
+}
+
+/* -----------------------------------------
+   Responsive
+----------------------------------------- */
+
+@media (max-width: 768px) {
+  .doctor-cell {
+    min-width: 220px;
+  }
+
+  .doctor-avatar {
+    width: 40px;
+    height: 40px;
+  }
+
+  .doctor-view-buttons {
+    padding: 0 10px;
+
+    font-size: 11px;
+  }
+}
+
+@media (max-width: 600px) {
+  .doctor-info span:last-child {
+    display: none;
+  }
+
+  .doctor-specialization {
+    padding: 4px 7px;
+    font-size: 10px;
+  }
+
+  .doctor-experience::before {
+    display: none;
+  }
+}
+
+
