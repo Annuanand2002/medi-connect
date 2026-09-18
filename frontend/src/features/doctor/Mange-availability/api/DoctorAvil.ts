@@ -6,12 +6,12 @@ import type {
   UpdateDoctorAvailability,
   UpdateDoctorAvailResponse,
 } from "../types/addDoctorAvail.type";
+import { ROUTES } from "@/constants/route";
 
 export const getDoctorAvailability = async (): Promise<DoctorAvailResponse> => {
   const response = await axiosInstance.get<DoctorAvailResponse>(
-    "/doctor/doctorAvail",
+    ROUTES.DOCTOR.AVAIL.GET,
   );
-  console.log(response.data);
   return response.data;
 };
 
@@ -20,7 +20,7 @@ export const createDoctorAvailability = async (
 ): Promise<CreateDoctorAvailResponse> => {
   const response =
     await axiosInstance.post<CreateDoctorAvailResponse>(
-      "/doctor/doctorAvail/create",
+      ROUTES.DOCTOR.AVAIL.CREATE,
       data,
     );
 
@@ -33,7 +33,7 @@ export const updateDoctorAvailability = async (
 ): Promise<UpdateDoctorAvailResponse> => {
   const response =
     await axiosInstance.post<UpdateDoctorAvailResponse>(
-      `/doctor/doctorAvail/${id}`,
+      `${ROUTES.DOCTOR.AVAIL.UPDATE}/${id}`,
       data,
     );
 
@@ -43,7 +43,6 @@ export const updateDoctorAvailability = async (
 export const delteDoctorAvailability = async (
   id: string,
 ): Promise<CreateDoctorAvailResponse> => {
-  const response = await axiosInstance.patch(`/doctor/doctorAvail/${id}`);
-  console.log(response.data)
+  const response = await axiosInstance.patch(`${ROUTES.DOCTOR.AVAIL.UPDATE}/${id}`);
   return response.data;
 };

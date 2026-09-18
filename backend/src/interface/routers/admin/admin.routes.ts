@@ -37,9 +37,9 @@ const patientController = container.get<PatientController>(
   TYPES.PatientController,
 );
 
-router.post("/login", adminController.login);
-router.post("/refresh-token", adminController.refreshToken);
-router.post("/logout", adminController.logout);
+router.post(ROUTES.AUTH.LOGIN, adminController.login);
+router.post(ROUTES.AUTH.REFRESH_TOKEN, adminController.refreshToken);
+router.post(ROUTES.AUTH.LOGOUT, adminController.logout);
 
 //doctor-req
 router.get(

@@ -13,9 +13,9 @@ import {
   logoutPatient,
 } from "@/features/patient/auth/redux/patient.auth.slice";
 
-import { refreshToken } from "@/features/admin/auth/api/refreshTokenApi";
-import { refreshPatientToken } from "@/features/patient/auth/api/refreshPatientToken";
-import { refreshDoctorToken } from "@/features/doctor/auth/api/refreshDoctorToken";
+import { refreshToken } from "@/features/admin/auth/api/authentication";
+import { refreshDoctorToken } from "@/features/doctor/auth/api/doctorauthentication.api";
+import { refreshPatientToken } from "@/features/patient/auth/api/patientauthentication.api";
 
 interface RetryRequestConfig extends InternalAxiosRequestConfig {
   _retry?: boolean;
@@ -50,6 +50,11 @@ axiosInstance.interceptors.request.use((config) => {
 
   if (token) {
     config.headers.Authorization = `Bearer ${token}`;
+  }
+  if (config.data instanceof FormData) {
+    delete config.headers["Content-Type"];
+  } else {
+    config.headers["Content-Type"] = "application/json";
   }
 
   return config;
@@ -90,6 +95,7 @@ const authRoutes = [
 
   "/patient/requeset-reset",
   "/patient/reset-password",
+  "/patient/create-patient",
 ];
 
 const DOCTOR_BLOCKED_MESSAGE =
@@ -192,8 +198,6 @@ axiosInstance.interceptors.response.use(
         // Retry original request
         return axiosInstance(originalRequest);
       } catch (err) {
-
-
         const role = getRoleFromUrl(originalRequest.url);
 
         if (role === "admin") {

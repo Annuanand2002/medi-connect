@@ -2,6 +2,7 @@ import axiosInstance from "@/services/axios";
 import type { DoctorRequestListResponse } from "../types/doctorRequestList.types";
 import type { DoctorRequestDetails } from "../types/doctorRequestDetials.types";
 import type { Doctor, DoctorListResponse } from "../types/doctorList";
+import { ROUTES } from "@/constants/route";
 
 
 interface GetDoctorRequestsParams {
@@ -18,7 +19,7 @@ export const getDoctorRequests = async ({
   search,
 }: GetDoctorRequestsParams) => {
   const response = await axiosInstance.get<DoctorRequestListResponse>(
-    "/admin/doctor-request",
+    ROUTES.ADMIN.DOCTORREQUEST.GETREQUESTS,
     {
       params: {
         page,
@@ -33,7 +34,7 @@ export const getDoctorRequests = async ({
 export const getDoctorRequestById = async (
   id: string,
 ): Promise<DoctorRequestDetails> => {
-  const response = await axiosInstance.get(`/admin/doctor-request/${id}`);
+  const response = await axiosInstance.get(`${ROUTES.ADMIN.DOCTORREQUEST.GETREQUEST}/${id}`);
   return response.data.data!;
 };
 
@@ -44,7 +45,7 @@ export const getDoctor = async ({
   search,
 }: GetDoctorRequestsParams) => {
   const response = await axiosInstance.get<DoctorListResponse>(
-    "/admin/doctor",
+    ROUTES.ADMIN.DOCTOR.GET,
     {
       params: {
         page,
@@ -61,7 +62,7 @@ export const toggleDoctorStatus = async (
   id: string,
 ):Promise<Doctor> => {
   const response = await axiosInstance.patch(
-    `/admin/doctor/${id}`,
+    `${ROUTES.ADMIN.DOCTOR.GET}/${id}`,
   );
   return response.data.data;
 };

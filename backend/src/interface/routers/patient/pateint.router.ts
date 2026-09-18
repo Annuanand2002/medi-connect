@@ -42,14 +42,14 @@ const appointmentController = container.get<AppointmentController>(
 );
 
 //auth
-router.post("/create-patient", createPatientController.createPatient);
-router.patch("/verify-otp/:patientId", createPatientController.verifyOTP);
-router.post("/resend-otp/:patientId", createPatientController.resendOTP);
-router.post("/login", authPatientController.login);
-router.post("/logout", authPatientController.logout);
-router.post("/refresh-token", refreshPatientTokenController.refreshToken);
-router.patch("/requeset-reset", resetPatientPasswordController.requestReset);
-router.patch("/reset-password", resetPatientPasswordController.resetPassword);
+router.post(ROUTES.PATIENT.CREATE, createPatientController.createPatient);
+router.patch(ROUTES.PATIENT.VERIFY_OTP, createPatientController.verifyOTP);
+router.post(ROUTES.PATIENT.RESEND_OTP, createPatientController.resendOTP);
+router.post(ROUTES.AUTH.LOGIN, authPatientController.login);
+router.post(ROUTES.AUTH.LOGOUT, authPatientController.logout);
+router.post(ROUTES.AUTH.REFRESH_TOKEN, refreshPatientTokenController.refreshToken);
+router.patch(ROUTES.PATIENT.PASSWORD.REQUEST, resetPatientPasswordController.requestReset);
+router.patch(ROUTES.PATIENT.PASSWORD.RESET, resetPatientPasswordController.resetPassword);
 
 //appointment
 router.use(authenticatePatient, checkPatientBlocked);

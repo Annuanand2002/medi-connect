@@ -1,11 +1,11 @@
 import { useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "@/hooks/hooks";
-import { refreshPatientToken } from "../api/refreshPatientToken";
 import {
   loginPatientSuccess,
   logoutPatient,
 } from "../redux/patient.auth.slice";
 import { finishPatientLoading } from "../redux/patient.auth.slice";
+import { refreshPatientToken } from "../api/patientauthentication.api";
 
 interface Props {
   children: React.ReactNode;

@@ -23,5 +23,5 @@ export interface PatientRegistrationResult {
 export interface PatientRegistrationResponse {
   success: boolean;
   message: string;
-  result: PatientRegistrationResult;
+  data: PatientRegistrationResult;
 }

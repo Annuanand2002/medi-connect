@@ -19,6 +19,7 @@ import timeSlotReducer from "@/features/patient/appointment/redux/appointmentSlo
 import appointmentHistoryReducer from "@/features/patient/appointment/redux/appointmentHistory.slice";
 import doctorAppointmentReducer from "@/features/doctor/appointment/redux/appointment.slice";
 import appointmentSinglePageReducer from "@/features/patient/appointment/redux/appintmentSinglePage.slice";
+import appointmentDetailsPageReducer from "@/features/doctor/appointment/redux/appointmentDetails.slice"
 
 export const store = configureStore({
   reducer: {
@@ -42,6 +43,7 @@ export const store = configureStore({
     appointmentHistory: appointmentHistoryReducer,
     doctorAppointment: doctorAppointmentReducer,
     appointmentSinglePage: appointmentSinglePageReducer,
+    appointmentDetailsPage : appointmentDetailsPageReducer
   },
 });
 

@@ -106,5 +106,7 @@ export const TYPES = {
   DoctorAppointmentCOntroller : Symbol.for("DoctorAppointmentCOntroller"),
   AppointmentDeatilsPage : Symbol.for("AppointmentDeatilsPage"),
   AppointmentCancel : Symbol.for("AppointmentCancel"),
-  AppointmentReschedule : Symbol.for("AppointmentReschedule")
+  AppointmentReschedule : Symbol.for("AppointmentReschedule"),
+  SingleAppointmenytDetails : Symbol.for("SingleAppointmenytDetails"),
+  AppointmentDoctorReschedule : Symbol.for("AppointmentDoctorReschedule")
 };

@@ -30,3 +30,16 @@ export interface GetDoctorAppointmentParams {
   search?: string;
   date?: string;
 }
+
+export interface SingleAppointmentDetails {
+  id : string
+  patientId: string;
+  appointmentCode: string;
+  patientName: string;
+  gender: string;
+  email: string;
+  appointmentDate: Date;
+  startTime: string;
+  endTime: string;
+  status: AppointmentStatus;
+}

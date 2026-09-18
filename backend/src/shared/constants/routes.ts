@@ -4,8 +4,11 @@ export const ROUTES = {
     LOGOUT: "/logout",
     REFRESH_TOKEN: "/refresh-token",
   },
-
   DOCTOR: {
+    PASSWORD: {
+      RETRY: "/request-resetpassword",
+      RESET: "reset-password",
+    },
     REQUEST: "/doctor-request",
     PROFILE: "/profile",
     GETALL: "/doctor",
@@ -13,36 +16,49 @@ export const ROUTES = {
     GET: "/doctorAvail",
     CREATE: "/doctorAvail/create",
     UPDATE: "/doctorAvail/:id",
-    CREATELEAVE : '/doctorLeave/create',
-    UPDATELEAVE : '/doctorLeave/update/:id',
-    GETLEAVE : "/doctorLeave",
-    BLOCK : {
-      CREATE : '/doctorBlock/create',
-      UPDATE :'/doctorBlock/:id',
-      GET : '/doctorBlock'
+    CREATELEAVE: "/doctorLeave/create",
+    UPDATELEAVE: "/doctorLeave/update/:id",
+    GETLEAVE: "/doctorLeave",
+    BLOCK: {
+      CREATE: "/doctorBlock/create",
+      UPDATE: "/doctorBlock/:id",
+      GET: "/doctorBlock",
     },
-    APPOINTMENT : {
-      GET :'/appointment'
-    }
+    APPOINTMENT: {
+      GET: "/appointment",
+      DETAILS : "/appointment/:id",
+      RESCHEDULE : {
+        UPDATE : '/appointment/reschedule/:id',
+        
+      }
+    },
   },
+
   PATIENT: {
+    PASSWORD: {
+      REQUEST: "/requeset-reset",
+      RESET: "/reset-password",
+    },
+    CREATE: "/create-patient",
+    VERIFY_OTP: "/verify-otp/:patientId",
+    RESEND_OTP: "/resend-otp/:patientId",
     GETALL: "/patient",
     TOGGLE: "/patient/:id",
-    DOCTOTLIST : '/doctors',
-    GETDATES : '/dates/:doctorId',
-    GETTIMESLOT : '/timeslots/:doctorId',
-    GETDETAIlS : '/appointment/:doctorId/details',
-    APPOINTMENT : {
-      CREATE : '/appointment/create',
-      GET : '/appointment',
-      GETPAGE : '/appointment/:appointmentId',
-      CANCEL : '/appointment/cancel/:id',
-      RESCHEDULE :{
-        DATE : '/appointment/:appointmentId/reschedule/dates/:doctorId',
-        TIMESLOT : "/appointment/reschedule/time-slots/:doctorId",
-        UPDATE : '/appointment/reschedule/:appointmentId',
-        CONFIRM : '/appointment/reschedule/:appointmentId/:doctorId'
-      } 
-    }
+    DOCTOTLIST: "/doctors",
+    GETDATES: "/dates/:doctorId",
+    GETTIMESLOT: "/timeslots/:doctorId",
+    GETDETAIlS: "/appointment/:doctorId/details",
+    APPOINTMENT: {
+      CREATE: "/appointment/create",
+      GET: "/appointment",
+      GETPAGE: "/appointment/:appointmentId",
+      CANCEL: "/appointment/cancel/:id",
+      RESCHEDULE: {
+        DATE: "/appointment/:appointmentId/reschedule/dates/:doctorId",
+        TIMESLOT: "/appointment/reschedule/time-slots/:doctorId",
+        UPDATE: "/appointment/reschedule/:appointmentId",
+        CONFIRM: "/appointment/reschedule/:appointmentId/:doctorId",
+      },
+    },
   },
 } as const;

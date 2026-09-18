@@ -1,7 +1,7 @@
 import { useAppDispatch } from "@/hooks/hooks";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { Link, useNavigate,useSearchParams } from "react-router-dom";
+import { Link, useNavigate, useSearchParams } from "react-router-dom";
 
 import {
   loginDoctorSchema,
@@ -10,7 +10,7 @@ import {
 
 import { zodResolver } from "@hookform/resolvers/zod";
 
-import { loginDoctor } from "../api/loginDoctor.api";
+import { loginDoctor } from "../api/doctorauthentication.api";
 import { loginDoctorSuccess } from "../redux/authDoctor.slice";
 
 import axios from "axios";
@@ -25,25 +25,20 @@ const LoginDoctorForm = () => {
 
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const [searchParams] = useSearchParams()
+  const [searchParams] = useSearchParams();
   const blockedError = searchParams.get("error");
   const displayedError = blockedError || loginError;
 
   const {
     register,
     handleSubmit,
-    formState: {
-      errors,
-      isSubmitting,
-    },
+    formState: { errors, isSubmitting },
   } = useForm<LoginDoctorFormData>({
     resolver: zodResolver(loginDoctorSchema),
     mode: "all",
   });
 
-  const onSubmit = async (
-    data: LoginDoctorFormData,
-  ) => {
+  const onSubmit = async (data: LoginDoctorFormData) => {
     try {
       setLoginError("");
 
@@ -59,46 +54,32 @@ const LoginDoctorForm = () => {
       navigate("/doctor/dashboard", {
         replace: true,
       });
-
     } catch (error) {
       console.log(error);
 
       if (axios.isAxiosError(error)) {
-        setLoginError(
-          error.response?.data?.message ||
-            "Something went wrong.",
-        );
+        setLoginError(error.response?.data?.message || "Something went wrong.");
       } else {
-        setLoginError(
-          "Something went wrong.",
-        );
+        setLoginError("Something went wrong.");
       }
     }
   };
 
   return (
     <section className="doctor-login-form-section">
-
       <div className="doctor-login-form-container">
-
         {/* Mobile Brand */}
         <div className="doctor-mobile-brand">
-
-          <div className="doctor-mobile-brand-mark">
-            MC
-          </div>
+          <div className="doctor-mobile-brand-mark">MC</div>
 
           <div>
             <strong>MediConnect</strong>
             <span>Doctor Portal</span>
           </div>
-
         </div>
-
 
         {/* Header */}
         <header className="doctor-login-header">
-
           <div className="doctor-login-label">
             <span />
             DOCTOR SIGN IN
@@ -108,20 +89,11 @@ const LoginDoctorForm = () => {
             Welcome back<span>,</span>
           </h1>
 
-          <p>
-            Sign in to continue to your MediConnect
-            doctor dashboard.
-          </p>
-
+          <p>Sign in to continue to your MediConnect doctor dashboard.</p>
         </header>
 
-
         {/* Login Form */}
-        <form
-          onSubmit={handleSubmit(onSubmit)}
-          className="doctor-login-form"
-        >
-
+        <form onSubmit={handleSubmit(onSubmit)} className="doctor-login-form">
           {/* Email */}
           <Input
             id="doctor-email"
@@ -134,7 +106,6 @@ const LoginDoctorForm = () => {
             {...register("email")}
           />
 
-
           {/* Password */}
           <PasswordInput
             id="doctor-password"
@@ -145,64 +116,39 @@ const LoginDoctorForm = () => {
             {...register("password")}
           />
 
-
           {/* Forgot Password */}
           <div className="doctor-form-options">
-
             <Link
               to="/doctor/request-resetpassword"
               className="doctor-forgot-password"
             >
               Forgot password?
             </Link>
-
           </div>
-
 
           {/* Login Error */}
           {displayedError && (
-            <div
-              className="doctor-login-error"
-              role="alert"
-            >
-              <div className="doctor-error-icon">
-                !
-              </div>
+            <div className="doctor-login-error" role="alert">
+              <div className="doctor-error-icon">!</div>
 
-              <p>
-                {displayedError}
-              </p>
+              <p>{displayedError}</p>
             </div>
           )}
 
-
           {/* Submit */}
-          <Button
-            type="submit"
-            loading={isSubmitting}
-          >
-            {isSubmitting
-              ? "Signing In..."
-              : "SIGN IN"}
+          <Button type="submit" loading={isSubmitting}>
+            {isSubmitting ? "Signing In..." : "SIGN IN"}
           </Button>
-                    <div className="doctor-form-options">
-
-            <Link
-              to="/doctor/apply"
-              className="doctor-forgot-password"
-            >
+          <div className="doctor-form-options">
+            <Link to="/doctor/apply" className="doctor-forgot-password">
               New here?
             </Link>
-
           </div>
         </form>
 
-
         {/* Security */}
         <div className="doctor-security-note">
-
           <span className="doctor-security-icon">
-
             <svg
               width="14"
               height="14"
@@ -225,19 +171,12 @@ const LoginDoctorForm = () => {
                 strokeLinecap="round"
                 strokeLinejoin="round"
               />
-
             </svg>
-
           </span>
 
-          <span>
-            Secure doctor access
-          </span>
-
+          <span>Secure doctor access</span>
         </div>
-
       </div>
-
     </section>
   );
 };

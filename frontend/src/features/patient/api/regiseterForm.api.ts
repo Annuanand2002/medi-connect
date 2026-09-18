@@ -3,12 +3,14 @@ import type {
   PatientRegistrationRequest,
   PatientRegistrationResponse,
 } from "../types/registerForm.Patient";
+import { ROUTES } from "@/constants/route";
 
 export const createPatient = async (
   data: PatientRegistrationRequest,
 ): Promise<PatientRegistrationResponse> => {
+  console.log("Startong....");
   const response = await axiosInstance.post<PatientRegistrationResponse>(
-    "/patient/create-patient",
+    ROUTES.PATIENT.REGISTER.CREATE,
     data,
   );
   return response.data;

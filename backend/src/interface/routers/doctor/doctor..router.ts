@@ -83,14 +83,20 @@ router.post(
   retryDoctorRequestController.handle,
 );
 //authentication
-router.post("/login", authDoctorController.login);
-router.post("/refresh-token", refreshTokenDoctorController.refreshToken);
-router.post("/logout", authDoctorController.logout);
+router.post(ROUTES.AUTH.LOGIN, authDoctorController.login);
+router.post(
+  ROUTES.AUTH.REFRESH_TOKEN,
+  refreshTokenDoctorController.refreshToken,
+);
+router.post(ROUTES.AUTH.LOGOUT, authDoctorController.logout);
 router.patch(
-  "/request-resetpassword",
+  ROUTES.DOCTOR.PASSWORD.RETRY,
   resetDoctorPasswordController.requestReset,
 );
-router.patch("/reset-password", resetDoctorPasswordController.resetPassword);
+router.patch(
+  ROUTES.DOCTOR.PASSWORD.RESET,
+  resetDoctorPasswordController.resetPassword,
+);
 
 router.use(authenticateDoctor, checkDoctorBlocked);
 //availability
@@ -116,5 +122,7 @@ router.patch(ROUTES.DOCTOR.BLOCK.UPDATE, doctorBlockController.delete);
 
 //appointment
 router.get(ROUTES.DOCTOR.APPOINTMENT.GET, appointmentController.getAll);
+router.get(ROUTES.DOCTOR.APPOINTMENT.DETAILS, appointmentController.getDetails);
+router.patch(ROUTES.DOCTOR.APPOINTMENT.RESCHEDULE.UPDATE,appointmentController.reschedule)
 
 export default router;

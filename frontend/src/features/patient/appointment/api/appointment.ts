@@ -21,13 +21,14 @@ import type {
   AppointmentSinglePage,
   ReschudelRequest,
 } from "../type/appointmentSinglePage";
+import { ROUTES } from "@/constants/route";
 
 //doctorList
 export const getPatientDoctors = async (
   params: GetDoctorsParams,
 ): Promise<GetDoctorsResponse> => {
   const response = await axiosInstance.get<GetDoctorsResponse>(
-    "/patient/doctors",
+    ROUTES.PATIENT.APPOINTMENT.GET,
     {
       params,
     },
@@ -40,7 +41,7 @@ export const getAvailableDates = async (
   params: PatientRequestDate,
 ): Promise<GetDatesResponse> => {
   const response = await axiosInstance.get<GetDatesResponse>(
-    `/patient/dates/${params.doctorId}`,
+    `${ROUTES.PATIENT.APPOINTMENT.DATES}/${params.doctorId}`,
     {
       params: {
         startDate: params.startDate,
@@ -58,7 +59,7 @@ export const getTimeSlotsApi = async (
   date: string,
 ): Promise<AvailableTimeSlot[]> => {
   const response = await axiosInstance.get(
-    `/patient/timeslots/${doctorId}?date=${date}`,
+    `${ROUTES.PATIENT.APPOINTMENT.TIMESLOT}/${doctorId}?date=${date}`,
   );
 
   return response.data.data;
@@ -72,7 +73,7 @@ export const getAppointmentDetailsApi = async (
   endTime: string,
 ): Promise<AppointmentDetails> => {
   const response = await axiosInstance.get(
-    `/patient/appointment/${doctorId}/details`,
+    `${ROUTES.PATIENT.APPOINTMENT.DETAILS}/${doctorId}/details`,
     {
       params: {
         date,
@@ -90,7 +91,7 @@ export const createAppointmentApi = async (
   data: CreateAppointmentRequest,
 ): Promise<CreatedAppointment> => {
   const response = await axiosInstance.post(
-    "/patient/appointment/create",
+    ROUTES.PATIENT.APPOINTMENT.CREATE,
     data,
   );
 
@@ -101,7 +102,7 @@ export const createAppointmentApi = async (
 export const getAppointmentHistory = async (
   params: GetPatientAppointmentParams,
 ): Promise<PatientAppointmentResponse> => {
-  const response = await axiosInstance.get("/patient/appointment", {
+  const response = await axiosInstance.get(ROUTES.PATIENT.APPOINTMENT.DETAILS, {
     params,
   });
 
@@ -113,7 +114,7 @@ export const singleAppointmentPage = async (
   appointmentId: string,
 ): Promise<AppointmentSinglePage> => {
   const response = await axiosInstance.get(
-    `/patient/appointment/${appointmentId}`,
+    `${ROUTES.PATIENT.APPOINTMENT.DETAILS}/${appointmentId}`,
   );
   return response.data.data;
 };
@@ -123,7 +124,7 @@ export const cancelAppointment = async (
   id: string,
 ): Promise<AppointmentSinglePage> => {
   const response = await axiosInstance.patch(
-    `/patient/appointment/cancel/${id}`,
+    `${ROUTES.PATIENT.APPOINTMENT.CANCEL}/${id}`,
   );
   return response.data.data;
 };
@@ -135,7 +136,7 @@ export const getRescheduleAvailableDates = async (
   params: PatientRequestDate,
 ): Promise<GetDatesResponse> => {
   const response = await axiosInstance.get<GetDatesResponse>(
-    `/patient/appointment/${appointmentId}/reschedule/dates/${params.doctorId}`,
+    `${ROUTES.PATIENT.APPOINTMENT.DETAILS}/${appointmentId}/${ROUTES.PATIENT.APPOINTMENT.RESCHEDULE.DATE}/${params.doctorId}`,
     {
       params: {
         startDate: params.startDate,
@@ -152,7 +153,7 @@ export const getRescheduleTimeSlotsApi = async (
   date: string,
 ): Promise<AvailableTimeSlot[]> => {
   const response = await axiosInstance.get(
-    `/patient/appointment/reschedule/time-slots/${doctorId}?date=${date}`,
+    `${ROUTES.PATIENT.APPOINTMENT.RESCHEDULE.TIMESLOT}/${doctorId}?date=${date}`,
   );
 
   return response.data.data;
@@ -167,7 +168,7 @@ export const getRescheduleAppointmentDetailsApi = async (
   endTime: string,
 ): Promise<AppointmentDetails> => {
   const response = await axiosInstance.get(
-    `/patient/appointment/reschedule/${appointmentId}/${doctorId}`,
+    `${ROUTES.PATIENT.APPOINTMENT.RESCHEDULE.GET}/${appointmentId}/${doctorId}`,
     {
       params: {
         date,
@@ -185,7 +186,7 @@ export const reschedule = async (
   data: ReschudelRequest,
 ): Promise<AppointmentSinglePage> => {
   const response = await axiosInstance.patch(
-    `/patient/appointment/reschedule/${appointmentId}`,
+    `${ROUTES.PATIENT.APPOINTMENT.RESCHEDULE.CONFIRM}/${appointmentId}`,
     data,
   );
   return response.data.data;

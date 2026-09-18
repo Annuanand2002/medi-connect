@@ -12,6 +12,7 @@ import {
 import DataTable from "@/components/dataTable";
 
 import type { DoctorAppointment } from "../types/appointmentHistory";
+import { useNavigate } from "react-router-dom";
 
 interface DoctorAppointmentHistoryTableProps {
   appointments: DoctorAppointment[];
@@ -20,6 +21,10 @@ interface DoctorAppointmentHistoryTableProps {
 const DoctorAppointmentHistoryTable = ({
   appointments,
 }: DoctorAppointmentHistoryTableProps) => {
+    const navigate = useNavigate()
+  const handleViewAppointment = (id: string) => {
+  navigate(`/doctor/appointment/singlePage/${id}`);
+};
   const columns: TableColumn<DoctorAppointment>[] = [
     {
       key: "patient",
@@ -43,17 +48,6 @@ const DoctorAppointmentHistoryTable = ({
       ),
     },
 
-    {
-      key: "email",
-      header: "Email",
-
-      render: (appointment) => (
-        <span className="appointment-email">
-          <Mail size={14} />
-          {appointment.email}
-        </span>
-      ),
-    },
 
     {
       key: "gender",
@@ -109,6 +103,18 @@ const DoctorAppointmentHistoryTable = ({
         >
           {appointment.status}
         </span>
+      ),
+    },
+        {
+      key: "view",
+      header: "Action",
+      render: (appointment) => (
+        <button
+          onClick={() => handleViewAppointment(appointment.id)}
+          className="view-button"
+        >
+          VIEW
+        </button>
       ),
     },
   ];

@@ -3,12 +3,13 @@ import type {
   VerifyPatientOtpRequest,
   VerifyPatientOtpResponse,
 } from "../types/patientOtp";
+import { ROUTES } from "@/constants/route";
 
 export const verifyPateintOTP = async (
   data: VerifyPatientOtpRequest,
 ): Promise<VerifyPatientOtpResponse> => {
   const response = await axiosInstance.patch<VerifyPatientOtpResponse>(
-    `/patient/verify-otp/${data.patientId}`,
+    `${ROUTES.PATIENT.REGISTER.VERIFY}/${data.patientId}`,
     {
       otp: data.otp,
     },

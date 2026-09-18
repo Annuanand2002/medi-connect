@@ -40,7 +40,7 @@ const PatientRegisterationForm = () => {
     const result = await dispatch(createPatientThunk(data));
 
     if (createPatientThunk.fulfilled.match(result)) {
-      const { patientId, email } = result.payload.result;
+      const { patientId, email } = result.payload.data;
 
       navigate("/patient/verify-otp", {
         state: {

@@ -1,7 +1,7 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import type { AxiosError } from "axios";
-import { logoutDoctor } from "../api/logoutDoctor.api";
 import type { ApiResponse } from "@/types/api";
+import { logoutDoctor } from "../api/doctorauthentication.api";
 
 export const logoutDoctorThunk = createAsyncThunk(
   "doctor/logout",

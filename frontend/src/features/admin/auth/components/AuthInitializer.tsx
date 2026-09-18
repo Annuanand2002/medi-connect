@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "@/hooks/hooks";
-import { refreshToken } from "../api/refreshTokenApi";
 import { finishLoading, loginSuccess, logout } from "../redux/authSlice";
+import { refreshToken } from "../api/authentication";
 
 interface Props {
   children: React.ReactNode;

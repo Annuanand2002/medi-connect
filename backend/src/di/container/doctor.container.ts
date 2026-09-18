@@ -51,6 +51,7 @@ import { DoctorBlockController } from "../../interface/controllers/doctor/doctor
 import { GetAppointmentDoctorHistory } from "../../application/useCases/doctor/IAppointmentHistory";
 import { DoctorAppointmentCOntroller } from "../../interface/controllers/doctor/appointment.doctor.controlller";
 import ActionDoctorRequestController from "../../interface/controllers/admin/actionDoctorReq.controller";
+import { AppointmentDoctorReschedule } from "../../application/useCases/doctor/AppointmentDoctorReschdule.usecase";
 
 export function doctorBinding(container: Container) {
   container.bind(TYPES.DoctorRepo).to(DoctorRepo);
@@ -136,4 +137,6 @@ export function doctorBinding(container: Container) {
   container
     .bind(TYPES.DoctorAppointmentCOntroller)
     .to(DoctorAppointmentCOntroller);
+    container
+    .bind(TYPES.AppointmentDoctorReschedule).to(AppointmentDoctorReschedule)
 }

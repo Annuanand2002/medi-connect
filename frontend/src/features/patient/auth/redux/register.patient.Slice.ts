@@ -38,8 +38,8 @@ const patientRegistrationSlice = createSlice({
 
       .addCase(createPatientThunk.fulfilled, (state, action) => {
         state.isLoading = false;
-        state.patientId = action.payload.result.patientId;
-        state.email = action.payload.result.email;
+        state.patientId = action.payload.data.patientId;
+        state.email = action.payload.data.email;
       })
 
       .addCase(createPatientThunk.rejected, (state, action) => {

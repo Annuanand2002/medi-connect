@@ -1,11 +1,12 @@
 import axiosInstance from "@/services/axios";
 import type { RequestResetPasswordResponse } from "../types/requestResetPassword";
+import { ROUTES } from "@/constants/route";
 
 export const resetDoctorPasswordRequest = async (
   email: string,
 ): Promise<RequestResetPasswordResponse> => {
   const response = await axiosInstance.patch<RequestResetPasswordResponse>(
-    "/doctor/request-resetpassword",
+    ROUTES.DOCTOR.PASSWORD.REQUEST,
     {
       email,
     },

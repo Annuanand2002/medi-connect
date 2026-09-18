@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "@/hooks/hooks";
-import { refreshDoctorToken } from "../api/refreshDoctorToken";
 import { finishDoctorLoading, loginDoctorSuccess, logoutDoctor } from "../redux/authDoctor.slice";
+import { refreshDoctorToken } from "../api/doctorauthentication.api";
 
 
 

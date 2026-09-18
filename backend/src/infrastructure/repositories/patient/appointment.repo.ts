@@ -17,7 +17,7 @@ import {
   GetDoctorAppointmentReqDTO,
   PaginationDoctorAppointmenttResDTO,
 } from "../../../application/DTO/doctor/appointment";
-import { AppointmentDet } from "../../../application/DTO/patient/appointment";
+
 
 @injectable()
 export class AppoitmentRepo
@@ -117,11 +117,15 @@ export class AppoitmentRepo
     dto: GetDoctorAppointmentReqDTO,
   ): Promise<PaginationDoctorAppointmenttResDTO> {
     const { page, limit, search, date } = dto;
+    console.log(dto,"dto")
 
     const query: Record<string, unknown> = {
       doctorId: new Types.ObjectId(doctorId),
-      status: "BOOKED",
+      status: {
+        $in: ["BOOKED", "RESCHEDULED"],
+      },
     };
+    console.log(query,"query")
     const selectedDate = date ?? new Date();
     const startOfDay = new Date(selectedDate);
     startOfDay.setHours(0, 0, 0, 0);
@@ -140,6 +144,7 @@ export class AppoitmentRepo
     }
 
     const result = await super.findAll(page, limit, query);
+    console.log(result,"resultrepo")
     const patientIds = result.data.map((appointment) => appointment.patientId);
     const patients = await PatientModel.find({
       _id: {

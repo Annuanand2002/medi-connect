@@ -1,3 +1,4 @@
+import AppointmentDetailsPage from "@/features/doctor/appointment/pages/appointmentDetailsPage";
 import DoctorAppointmentHistoryPage from "@/features/doctor/appointment/pages/appointmnetList";
 import ProtectedDoctorRoute from "@/features/doctor/auth/components/protectedDoctorRoute";
 import PublicDoctorRoute from "@/features/doctor/auth/components/publicDoctorRoute";
@@ -33,6 +34,10 @@ const DoctorRoute = () => {
         <Route path="/leaves" element={<DoctorLeavePageList />} />
         <Route path="/block-time" element={<DoctorBlockPageList />} />
         <Route path="/appointments" element={<DoctorAppointmentHistoryPage />} />
+                <Route
+          path="/appointment/singlePage/:id"
+          element={<AppointmentDetailsPage/>}
+        />
       </Route>
     </Routes>
   );

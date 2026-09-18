@@ -15,7 +15,7 @@ import {
   type LoginPatientFormData,
 } from "../schema/loginPatient.svhema";
 import { loginPatientSuccess } from "../redux/patient.auth.slice";
-import { loginPatient } from "../api/login.patient";
+import { loginPatient } from "../api/patientauthentication.api";
 
 const LoginPatientForm = () => {
   const [loginError, setLoginError] = useState("");

@@ -1,5 +1,6 @@
 import axiosInstance from "@/services/axios";
 import type { PatientListResponse, Patients } from "../types/patientList";
+import { ROUTES } from "@/constants/route";
 
 interface GetPatientRequestParams {
   page: number;
@@ -15,7 +16,7 @@ export const getPatient = async ({
   search,
 }: GetPatientRequestParams) => {
   const response = await axiosInstance.get<PatientListResponse>(
-    "/admin/patient",
+    ROUTES.ADMIN.PATIENT.GET,
     {
       params: {
         page,
@@ -32,7 +33,7 @@ export const togglePatientStatus = async (
   id: string,
 ):Promise<Patients> => {
   const response = await axiosInstance.patch(
-    `/admin/patient/${id}`,
+    `${ROUTES.ADMIN.PATIENT.GET}/${id}`,
   );
   return response.data.data;
 };

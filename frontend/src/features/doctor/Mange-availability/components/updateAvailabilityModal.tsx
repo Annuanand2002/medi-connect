@@ -70,62 +70,92 @@ const UpdateAvailabilityForm = ({
   // -------------------------
 
   const [dayOfWeek, setDayOfWeek] =
-    useState<Week>(
-      availability.dayOfWeek,
-    );
+    useState<Week>(availability.dayOfWeek);
 
-  const [startDate, setStartDate] =
-    useState(
-      availability.startDate
-        ? String(
-            availability.startDate,
-          ).slice(0, 10)
-        : "",
-    );
+  const [startDate, setStartDate] = useState(
+    availability.startDate
+      ? String(availability.startDate).slice(0, 10)
+      : "",
+  );
 
-  const [endDate, setEndDate] =
-    useState(
-      availability.endDate
-        ? String(
-            availability.endDate,
-          ).slice(0, 10)
-        : "",
-    );
+  const [endDate, setEndDate] = useState(
+    availability.endDate
+      ? String(availability.endDate).slice(0, 10)
+      : "",
+  );
 
-  const [startTime, setStartTime] =
-    useState(
-      availability.startTime,
-    );
+  const [startTime, setStartTime] = useState(
+    availability.startTime,
+  );
 
-  const [endTime, setEndTime] =
-    useState(
-      availability.endTime,
-    );
+  const [endTime, setEndTime] = useState(
+    availability.endTime,
+  );
 
-  const [duration, setDuration] =
-    useState(
-      String(availability.duration),
-    );
+  const [duration, setDuration] = useState(
+    String(availability.duration),
+  );
 
-  const [breakStartTime, setBreakStartTime] =
-    useState(
-      availability.breaks[0]
-        ?.startTime ?? "",
-    );
+  // -------------------------
+  // MULTIPLE BREAKS
+  // -------------------------
 
-  const [breakEndTime, setBreakEndTime] =
-    useState(
-      availability.breaks[0]
-        ?.endTime ?? "",
-    );
+  const [breaks, setBreaks] = useState(
+    availability.breaks ?? [],
+  );
 
   const [errors, setErrors] =
-    useState<Record<string, string>>(
-      {},
-    );
+    useState<Record<string, string>>({});
 
   const [backendError, setBackendError] =
     useState("");
+
+  // -------------------------
+  // ADD BREAK
+  // -------------------------
+
+  const addBreak = () => {
+    setBreaks((previous) => [
+      ...previous,
+      {
+        startTime: "",
+        endTime: "",
+      },
+    ]);
+  };
+
+  // -------------------------
+  // UPDATE BREAK
+  // -------------------------
+
+  const updateBreak = (
+    index: number,
+    field: "startTime" | "endTime",
+    value: string,
+  ) => {
+    setBreaks((previous) =>
+      previous.map((breakItem, breakIndex) =>
+        breakIndex === index
+          ? {
+              ...breakItem,
+              [field]: value,
+            }
+          : breakItem,
+      ),
+    );
+  };
+
+  // -------------------------
+  // REMOVE BREAK
+  // -------------------------
+
+  const removeBreak = (index: number) => {
+    setBreaks((previous) =>
+      previous.filter(
+        (_, breakIndex) => breakIndex !== index,
+      ),
+    );
+  };
 
   // -------------------------
   // SUBMIT
@@ -140,43 +170,24 @@ const UpdateAvailabilityForm = ({
     setBackendError("");
 
     // -------------------------
-    // CREATE BREAKS ARRAY
-    // -------------------------
-
-    const breaks =
-      breakStartTime && breakEndTime
-        ? [
-            {
-              startTime:
-                breakStartTime,
-              endTime:
-                breakEndTime,
-            },
-          ]
-        : [];
-
-    // -------------------------
     // CREATE UPDATE DATA
     // -------------------------
 
-    const data: UpdateDoctorAvailability =
-      {
-        dayOfWeek,
+    const data: UpdateDoctorAvailability = {
+      dayOfWeek,
 
-        startTime,
+      startTime,
 
-        endTime,
+      endTime,
 
-        duration: Number(
-          duration,
-        ),
+      duration: Number(duration),
 
-        breaks,
+      breaks,
 
-        startDate,
+      startDate,
 
-        endDate,
-      };
+      endDate,
+    };
 
     console.log(
       "UPDATE AVAILABILITY DATA:",
@@ -188,9 +199,7 @@ const UpdateAvailabilityForm = ({
     // -------------------------
 
     const validation =
-      updateAvailabilitySchema.safeParse(
-        data,
-      );
+      updateAvailabilitySchema.safeParse(data);
 
     if (!validation.success) {
       const fieldErrors: Record<
@@ -228,228 +237,372 @@ const UpdateAvailabilityForm = ({
 
     if (error) {
       setBackendError(error);
-
       return;
     }
-
-    // Parent should normally close
-    // the modal after successful update.
   };
 
-return (
-  <div className="availability-modal-overlay">
-    <div className="availability-modal availability-modal-update">
-      {/* Header */}
-      <div className="modal-header">
-        <div>
-          <span className="modal-eyebrow">SCHEDULE</span>
-          <h2>Update Availability</h2>
-          <p>Modify the doctor's weekly availability.</p>
-        </div>
+  return (
+    <div className="availability-modal-overlay">
+      <div className="availability-modal availability-modal-update">
 
-        <button
-          type="button"
-          className="modal-close"
-          onClick={onClose}
-          disabled={isLoading}
-        >
-          ×
-        </button>
-      </div>
+        {/* Header */}
+        <div className="modal-header">
+          <div>
+            <span className="modal-eyebrow">
+              SCHEDULE
+            </span>
 
-      <form onSubmit={handleSubmit} className="availability-form">
-        {/* Backend Error */}
-        {backendError && (
-          <div className="form-error-box">
-            {backendError}
-          </div>
-        )}
+            <h2>Update Availability</h2>
 
-        {/* Day */}
-        <div className="availability-form-group">
-          <label>Day</label>
-
-          <select
-            value={dayOfWeek}
-            onChange={(e) =>
-              setDayOfWeek(e.target.value as Week)
-            }
-            disabled={isLoading}
-          >
-            <option value="MONDAY">Monday</option>
-            <option value="TUESDAY">Tuesday</option>
-            <option value="WEDNESDAY">Wednesday</option>
-            <option value="THURSDAY">Thursday</option>
-            <option value="FRIDAY">Friday</option>
-            <option value="SATURDAY">Saturday</option>
-            <option value="SUNDAY">Sunday</option>
-          </select>
-
-          {errors.dayOfWeek && (
-            <p className="field-error">{errors.dayOfWeek}</p>
-          )}
-        </div>
-
-        {/* Date Range */}
-        <div className="availability-form-row">
-          <div className="availability-form-group">
-            <label>Start Date</label>
-
-            <input
-              type="date"
-              value={startDate}
-              onChange={(e) => setStartDate(e.target.value)}
-              disabled={isLoading}
-            />
-
-            {errors.startDate && (
-              <p className="field-error">{errors.startDate}</p>
-            )}
+            <p>
+              Modify the doctor's weekly availability.
+            </p>
           </div>
 
-          <div className="availability-form-group">
-            <label>End Date</label>
-
-            <input
-              type="date"
-              value={endDate}
-              onChange={(e) => setEndDate(e.target.value)}
-              disabled={isLoading}
-            />
-
-            {errors.endDate && (
-              <p className="field-error">{errors.endDate}</p>
-            )}
-          </div>
-        </div>
-
-        {/* Time */}
-        <div className="availability-form-row">
-          <div className="availability-form-group">
-            <label>Start Time</label>
-
-            <input
-              type="time"
-              value={startTime}
-              onChange={(e) => setStartTime(e.target.value)}
-              disabled={isLoading}
-            />
-
-            {errors.startTime && (
-              <p className="field-error">{errors.startTime}</p>
-            )}
-          </div>
-
-          <div className="availability-form-group">
-            <label>End Time</label>
-
-            <input
-              type="time"
-              value={endTime}
-              onChange={(e) => setEndTime(e.target.value)}
-              disabled={isLoading}
-            />
-
-            {errors.endTime && (
-              <p className="field-error">{errors.endTime}</p>
-            )}
-          </div>
-        </div>
-
-        {/* Duration */}
-        <div className="availability-form-group">
-          <label>Duration</label>
-
-          <input
-            type="number"
-            min="1"
-            value={duration}
-            onChange={(e) => setDuration(e.target.value)}
-            disabled={isLoading}
-          />
-
-          <span className="input-hint">
-            Duration of each appointment slot in minutes.
-          </span>
-
-          {errors.duration && (
-            <p className="field-error">{errors.duration}</p>
-          )}
-        </div>
-
-        {/* Break */}
-        <div className="availability-section">
-          <div className="availability-section-title">
-            <div>
-              <h3>Break Time</h3>
-              <p>Set the break period during this availability.</p>
-            </div>
-          </div>
-
-          <div className="availability-form-row">
-            <div className="availability-form-group">
-              <label>Break Start</label>
-
-              <input
-                type="time"
-                value={breakStartTime}
-                onChange={(e) =>
-                  setBreakStartTime(e.target.value)
-                }
-                disabled={isLoading}
-              />
-
-              {errors["breaks.0.startTime"] && (
-                <p className="field-error">
-                  {errors["breaks.0.startTime"]}
-                </p>
-              )}
-            </div>
-
-            <div className="availability-form-group">
-              <label>Break End</label>
-
-              <input
-                type="time"
-                value={breakEndTime}
-                onChange={(e) =>
-                  setBreakEndTime(e.target.value)
-                }
-                disabled={isLoading}
-              />
-
-              {errors["breaks.0.endTime"] && (
-                <p className="field-error">
-                  {errors["breaks.0.endTime"]}
-                </p>
-              )}
-            </div>
-          </div>
-        </div>
-
-        {/* Buttons */}
-        <div className="availability-modal-actions">
           <button
             type="button"
-            className="availability-cancel-btn"
+            className="modal-close"
             onClick={onClose}
             disabled={isLoading}
           >
-            Cancel
-          </button>
-
-          <button
-            type="submit"
-            className="availability-submit-btn"
-            disabled={isLoading}
-          >
-            {isLoading ? "Updating..." : "Update Availability"}
+            ×
           </button>
         </div>
-      </form>
+
+        <form
+          onSubmit={handleSubmit}
+          className="availability-form"
+        >
+
+          {/* Backend Error */}
+          {backendError && (
+            <div className="form-error-box">
+              {backendError}
+            </div>
+          )}
+
+          {/* Day */}
+          <div className="availability-form-group">
+            <label>Day</label>
+
+            <select
+              value={dayOfWeek}
+              onChange={(e) =>
+                setDayOfWeek(
+                  e.target.value as Week,
+                )
+              }
+              disabled={isLoading}
+            >
+              <option value="MONDAY">
+                Monday
+              </option>
+
+              <option value="TUESDAY">
+                Tuesday
+              </option>
+
+              <option value="WEDNESDAY">
+                Wednesday
+              </option>
+
+              <option value="THURSDAY">
+                Thursday
+              </option>
+
+              <option value="FRIDAY">
+                Friday
+              </option>
+
+              <option value="SATURDAY">
+                Saturday
+              </option>
+
+              <option value="SUNDAY">
+                Sunday
+              </option>
+            </select>
+
+            {errors.dayOfWeek && (
+              <p className="field-error">
+                {errors.dayOfWeek}
+              </p>
+            )}
+          </div>
+
+          {/* Date Range */}
+          <div className="availability-form-row">
+
+            <div className="availability-form-group">
+              <label>Start Date</label>
+
+              <input
+                type="date"
+                value={startDate}
+                onChange={(e) =>
+                  setStartDate(e.target.value)
+                }
+                disabled={isLoading}
+              />
+
+              {errors.startDate && (
+                <p className="field-error">
+                  {errors.startDate}
+                </p>
+              )}
+            </div>
+
+            <div className="availability-form-group">
+              <label>End Date</label>
+
+              <input
+                type="date"
+                value={endDate}
+                onChange={(e) =>
+                  setEndDate(e.target.value)
+                }
+                disabled={isLoading}
+              />
+
+              {errors.endDate && (
+                <p className="field-error">
+                  {errors.endDate}
+                </p>
+              )}
+            </div>
+
+          </div>
+
+          {/* Time */}
+          <div className="availability-form-row">
+
+            <div className="availability-form-group">
+              <label>Start Time</label>
+
+              <input
+                type="time"
+                value={startTime}
+                onChange={(e) =>
+                  setStartTime(e.target.value)
+                }
+                disabled={isLoading}
+              />
+
+              {errors.startTime && (
+                <p className="field-error">
+                  {errors.startTime}
+                </p>
+              )}
+            </div>
+
+            <div className="availability-form-group">
+              <label>End Time</label>
+
+              <input
+                type="time"
+                value={endTime}
+                onChange={(e) =>
+                  setEndTime(e.target.value)
+                }
+                disabled={isLoading}
+              />
+
+              {errors.endTime && (
+                <p className="field-error">
+                  {errors.endTime}
+                </p>
+              )}
+            </div>
+
+          </div>
+
+          {/* Duration */}
+          <div className="availability-form-group">
+            <label>Duration</label>
+
+            <input
+              type="number"
+              min="1"
+              value={duration}
+              onChange={(e) =>
+                setDuration(e.target.value)
+              }
+              disabled={isLoading}
+            />
+
+            <span className="input-hint">
+              Duration of each appointment slot
+              in minutes.
+            </span>
+
+            {errors.duration && (
+              <p className="field-error">
+                {errors.duration}
+              </p>
+            )}
+          </div>
+
+          {/* ========================= */}
+          {/* MULTIPLE BREAKS */}
+          {/* ========================= */}
+
+          <div className="availability-section">
+
+            <div className="availability-section-title">
+
+              <div>
+                <h3>Break Times</h3>
+
+                <p>
+                  Add one or more break periods
+                  during this availability.
+                </p>
+              </div>
+
+              <button
+                type="button"
+                className="add-break-btn"
+                onClick={addBreak}
+                disabled={isLoading}
+              >
+                + Add Break
+              </button>
+
+            </div>
+
+            {/* No breaks */}
+            {breaks.length === 0 && (
+              <p className="input-hint">
+                No breaks added.
+              </p>
+            )}
+
+            {/* Break List */}
+            {breaks.map(
+              (breakItem, index) => (
+                <div
+                  key={index}
+                  className="availability-form-row"
+                >
+
+                  {/* Break Start */}
+                  <div className="availability-form-group">
+
+                    <label>
+                      Break {index + 1} Start
+                    </label>
+
+                    <input
+                      type="time"
+                      value={
+                        breakItem.startTime
+                      }
+                      onChange={(e) =>
+                        updateBreak(
+                          index,
+                          "startTime",
+                          e.target.value,
+                        )
+                      }
+                      disabled={isLoading}
+                    />
+
+                    {errors[
+                      `breaks.${index}.startTime`
+                    ] && (
+                      <p className="field-error">
+                        {
+                          errors[
+                            `breaks.${index}.startTime`
+                          ]
+                        }
+                      </p>
+                    )}
+
+                  </div>
+
+                  {/* Break End */}
+                  <div className="availability-form-group">
+
+                    <label>
+                      Break {index + 1} End
+                    </label>
+
+                    <input
+                      type="time"
+                      value={
+                        breakItem.endTime
+                      }
+                      onChange={(e) =>
+                        updateBreak(
+                          index,
+                          "endTime",
+                          e.target.value,
+                        )
+                      }
+                      disabled={isLoading}
+                    />
+
+                    {errors[
+                      `breaks.${index}.endTime`
+                    ] && (
+                      <p className="field-error">
+                        {
+                          errors[
+                            `breaks.${index}.endTime`
+                          ]
+                        }
+                      </p>
+                    )}
+
+                  </div>
+
+                  {/* Remove */}
+                  <button
+                    type="button"
+                    className="remove-break-btn"
+                    onClick={() =>
+                      removeBreak(index)
+                    }
+                    disabled={isLoading}
+                  >
+                    Remove
+                  </button>
+
+                </div>
+              ),
+            )}
+
+          </div>
+
+          {/* Buttons */}
+          <div className="availability-modal-actions">
+
+            <button
+              type="button"
+              className="availability-cancel-btn"
+              onClick={onClose}
+              disabled={isLoading}
+            >
+              Cancel
+            </button>
+
+            <button
+              type="submit"
+              className="availability-submit-btn"
+              disabled={isLoading}
+            >
+              {isLoading
+                ? "Updating..."
+                : "Update Availability"}
+            </button>
+
+          </div>
+
+        </form>
+      </div>
     </div>
-  </div>
-);
+  );
 };
 
 export default UpdateAvailabilityModal;

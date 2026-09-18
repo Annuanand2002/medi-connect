@@ -29,6 +29,7 @@ import { AuthPatientController } from "../../interface/controllers/patient/patie
 import { AppointmentDeatilsPage } from "../../application/useCases/patient/getSingleAppointmentHistory";
 import { AppointmentCancel } from "../../application/useCases/patient/appointmentCancel";
 import { AppointmentReschedule } from "../../application/useCases/patient/AppointmentReschedule.usecase";
+import { SingleAppointmenytDetails } from "../../application/useCases/doctor/SingleAppointmentDetails";
 
 export function patientBinding(container: Container) {
   container.bind(TYPES.PatientRepo).to(PatientRepo);
@@ -68,4 +69,5 @@ export function patientBinding(container: Container) {
   container.bind(TYPES.AppointmentDeatilsPage).to(AppointmentDeatilsPage);
   container.bind(TYPES.AppointmentCancel).to(AppointmentCancel);
   container.bind(TYPES.AppointmentReschedule).to(AppointmentReschedule);
+  container.bind(TYPES.SingleAppointmenytDetails).to(SingleAppointmenytDetails)
 }

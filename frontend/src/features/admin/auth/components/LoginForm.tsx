@@ -4,7 +4,7 @@ import PasswordInput from "@/components/passwordInpur";
 import {  Mail } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { loginAdmin } from "../api/loginApi";
+import { loginAdmin } from "../api/authentication";
 import {
   loginSchema,
   type LoginFormData,

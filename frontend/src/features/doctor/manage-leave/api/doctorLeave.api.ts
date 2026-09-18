@@ -4,6 +4,7 @@ import type {
   CreateDoctorLeaveResponse,
   DoctorLeaveListResponse,
 } from "../types/doctorLeave.type";
+import { ROUTES } from "@/constants/route";
 
 interface GetDoctorLeaveRequestsParams {
   page: number;
@@ -18,7 +19,7 @@ export const getDoctorLeave = async ({
   search,
 }: GetDoctorLeaveRequestsParams): Promise<DoctorLeaveListResponse> => {
   const response = await axiosInstance.get<DoctorLeaveListResponse>(
-    "/doctor/doctorLeave",
+    ROUTES.DOCTOR.LEAVE.GET,
     {
       params: {
         page,
@@ -35,7 +36,7 @@ export const createDoctorLeave = async (
   data: CreateDoctorLeave,
 ): Promise<CreateDoctorLeaveResponse> => {
   const response = await axiosInstance.post<CreateDoctorLeaveResponse>(
-    "/doctor/doctorLeave/create",
+    ROUTES.DOCTOR.LEAVE.CREATE,
     data,
   );
   return response.data;
@@ -46,7 +47,7 @@ export const updateDoctorLeave = async (
   data: CreateDoctorLeave,
 ): Promise<CreateDoctorLeaveResponse> => {
   const response = await axiosInstance.put<CreateDoctorLeaveResponse>(
-    `/doctor/doctorLeave/update/${id}`,
+    `${ROUTES.DOCTOR.LEAVE.UPDATE}/${id}`,
     data,
   );
   return response.data;
@@ -56,7 +57,7 @@ export const deleteDoctorLeave = async (
   id: string,
 ): Promise<CreateDoctorLeaveResponse> => {
   const response = await axiosInstance.patch<CreateDoctorLeaveResponse>(
-    `/doctor/doctorLeave/update/${id}`,
+    `${ROUTES.DOCTOR.LEAVE.UPDATE}/${id}`,
   );
   return response.data;
 };

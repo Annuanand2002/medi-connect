@@ -4,6 +4,7 @@ import type {
   CreateDoctorBlockResponse,
   DoctorBlockListResponse,
 } from "../types/doctorBlock";
+import { ROUTES } from "@/constants/route";
 
 interface GetDoctorBlockRequestsParams {
   page: number;
@@ -19,7 +20,7 @@ export const getDoctorBlock = async ({
   search,
 }: GetDoctorBlockRequestsParams): Promise<DoctorBlockListResponse> => {
   const response = await axiosInstance.get<DoctorBlockListResponse>(
-    "/doctor/doctorBlock",
+   ROUTES.DOCTOR.BLOCK.GET,
     {
       params: {
         page,
@@ -36,7 +37,7 @@ export const createDoctorBlock = async (
   data: CreateDoctorBlock,
 ): Promise<CreateDoctorBlockResponse> => {
   const response = await axiosInstance.post<CreateDoctorBlockResponse>(
-    "/doctor/doctorBlock/create",
+    ROUTES.DOCTOR.BLOCK.CREATE,
     data,
   );
   return response.data;
@@ -47,7 +48,7 @@ export const updateDoctorBlock = async (
   data: CreateDoctorBlock,
 ): Promise<CreateDoctorBlockResponse> => {
   const response = await axiosInstance.put<CreateDoctorBlockResponse>(
-    `/doctor/doctorBlock/${id}`,
+    `${ROUTES.DOCTOR.BLOCK.UPDATE}/${id}`,
     data,
   );
   return response.data;
@@ -57,7 +58,7 @@ export const deleteDoctorBlock = async (
   id: string,
 ): Promise<CreateDoctorBlockResponse> => {
   const response = await axiosInstance.patch<CreateDoctorBlockResponse>(
-    `/doctor/doctorBlock/${id}`,
+    `${ROUTES.DOCTOR.BLOCK.GET}/${id}`,
   );
   return response.data;
 };
