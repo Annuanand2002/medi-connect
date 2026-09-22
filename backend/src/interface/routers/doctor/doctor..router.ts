@@ -15,7 +15,7 @@ import { ITokenService } from "../../../domain/services/ITokenService";
 import { DoctorLeaveController } from "../../controllers/doctor/doctorLeave.controller";
 import { checkDoctorBlocked } from "../../../shared/middlewares/doctorBlock";
 import { DoctorBlockController } from "../../controllers/doctor/doctorBlock.controller";
-import { DoctorAppointmentCOntroller } from "../../controllers/doctor/appointment.doctor.controlller";
+import { AppointmentController } from "../../controllers/appoinment.controller";
 
 const router = Router();
 
@@ -55,8 +55,8 @@ const doctorBlockController = container.get<DoctorBlockController>(
   TYPES.DoctorBlockController,
 );
 
-const appointmentController = container.get<DoctorAppointmentCOntroller>(
-  TYPES.DoctorAppointmentCOntroller,
+const appointmentController = container.get<AppointmentController>(
+  TYPES.AppointmentController,
 );
 
 //account set-up
@@ -121,8 +121,33 @@ router.put(ROUTES.DOCTOR.BLOCK.UPDATE, doctorBlockController.update);
 router.patch(ROUTES.DOCTOR.BLOCK.UPDATE, doctorBlockController.delete);
 
 //appointment
-router.get(ROUTES.DOCTOR.APPOINTMENT.GET, appointmentController.getAll);
-router.get(ROUTES.DOCTOR.APPOINTMENT.DETAILS, appointmentController.getDetails);
-router.patch(ROUTES.DOCTOR.APPOINTMENT.RESCHEDULE.UPDATE,appointmentController.reschedule)
+router.get(ROUTES.DOCTOR.APPOINTMENT.GET, appointmentController.doctorGetAll);
+router.get(
+  ROUTES.DOCTOR.APPOINTMENT.DETAILS,
+  appointmentController.doctorGetDetails,
+);
+router.get(
+  ROUTES.DOCTOR.APPOINTMENT.RESCHEDULE.DATE,
+  appointmentController.doctorGetDates,
+);
+router.get(
+  ROUTES.DOCTOR.APPOINTMENT.RESCHEDULE.TIMESLOT,
+  appointmentController.doctorTimeSlot,
+);
+router.patch(
+  ROUTES.DOCTOR.APPOINTMENT.RESCHEDULE.UPDATE,
+  appointmentController.doctorReschedule,
+);
+
+router.get(
+  ROUTES.DOCTOR.APPOINTMENT.RESCHEDULE.CONFIRM,
+  (req, res, next) => {
+    console.log("🔥 CONFIRM ROUTE HIT");
+    console.log("params:", req.params);
+    console.log("query:", req.query);
+    next();
+  },
+  appointmentController.getDoctorAppointmentDetails,
+);
 
 export default router;

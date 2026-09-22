@@ -27,3 +27,23 @@ export interface SingleAppointmentDetails {
   endTime: string;
   status: AppointmentStatus;
 }
+
+export interface DoctorGetAppointmentDetailsDTO {
+  appointmentId: string;
+  date: Date;
+  startTime: string;
+  endTime: string;
+}
+
+export interface DoctorAppointmentDet {
+  id: string
+  patientId: string;
+  patientCode ?: string;
+  patientName: string;
+  gender: string;
+  date: Date;
+  startTime: string;
+  endTime: string;
+  status: AppointmentStatus;
+  appointmentCode: string;
+}

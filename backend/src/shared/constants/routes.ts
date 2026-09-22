@@ -28,7 +28,10 @@ export const ROUTES = {
       GET: "/appointment",
       DETAILS : "/appointment/:id",
       RESCHEDULE : {
+        DATE: "/appointment/:appointmentId/reschedule/dates",
+        TIMESLOT: "/appointment/reschedule/time-slots",
         UPDATE : '/appointment/reschedule/:id',
+        CONFIRM : "/appointment/reschedule/:appointmentId",
         
       }
     },

@@ -5,11 +5,13 @@ import AuthDoctorInitializer from "./features/doctor/auth/components/authDoctorI
 import DoctorRoute from "./app/routes/doctorRoute";
 import AuthPatientInitializer from "./features/patient/auth/components/authPatientInitalizer";
 import PatientRoute from "./app/routes/patientRoute";
+import LandingPage from "./pages/ladningPage";
 
 function App() {
   return (
     <BrowserRouter>
     <Routes>
+      <Route path="/" element={<LandingPage/>}/>
       <Route path="/admin/*" element={
         <AuthInitializer><AdminRoute/></AuthInitializer>
       }/>

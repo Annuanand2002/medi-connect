@@ -1,5 +1,8 @@
 import AppointmentDetailsPage from "@/features/doctor/appointment/pages/appointmentDetailsPage";
 import DoctorAppointmentHistoryPage from "@/features/doctor/appointment/pages/appointmnetList";
+import AppointmentRescheduledPage from "@/features/doctor/appointment/pages/confimred";
+import DoctorRescheduleConfirmationPage from "@/features/doctor/appointment/pages/confirmationPage";
+import DoctorReschedulePage from "@/features/doctor/appointment/pages/rescheduleBookingPage";
 import ProtectedDoctorRoute from "@/features/doctor/auth/components/protectedDoctorRoute";
 import PublicDoctorRoute from "@/features/doctor/auth/components/publicDoctorRoute";
 import LoginDoctorPage from "@/features/doctor/auth/pages/DcotorLogin";
@@ -38,9 +41,20 @@ const DoctorRoute = () => {
           path="/appointment/singlePage/:id"
           element={<AppointmentDetailsPage/>}
         />
+                <Route
+          path="/appointments/reschedule/:appointmentId"
+          element={<DoctorReschedulePage/>}
+        />
+                <Route
+          path="/appointments/reschedule/confirm/:appointmentId"
+          element={<DoctorRescheduleConfirmationPage />}
+        />
       </Route>
+      <Route path="/appointments/rescheduled" element={<AppointmentRescheduledPage/>}/>
     </Routes>
   );
 };
 
 export default DoctorRoute;
+
+

@@ -49,9 +49,9 @@ import { DeleteDoctorBlockUsecase } from "../../application/useCases/doctor/Dele
 import { GetDoctorBlockUsecase } from "../../application/useCases/doctor/GetDoctorBlock.usecase";
 import { DoctorBlockController } from "../../interface/controllers/doctor/doctorBlock.controller";
 import { GetAppointmentDoctorHistory } from "../../application/useCases/doctor/IAppointmentHistory";
-import { DoctorAppointmentCOntroller } from "../../interface/controllers/doctor/appointment.doctor.controlller";
 import ActionDoctorRequestController from "../../interface/controllers/admin/actionDoctorReq.controller";
 import { AppointmentDoctorReschedule } from "../../application/useCases/doctor/AppointmentDoctorReschdule.usecase";
+import { DoctorGetRescheduleDetailsUseCase } from "../../application/useCases/doctor/rescheduleConfirm";
 
 export function doctorBinding(container: Container) {
   container.bind(TYPES.DoctorRepo).to(DoctorRepo);
@@ -135,8 +135,9 @@ export function doctorBinding(container: Container) {
     .bind(TYPES.GetAppointmentDoctorHistory)
     .to(GetAppointmentDoctorHistory);
   container
-    .bind(TYPES.DoctorAppointmentCOntroller)
-    .to(DoctorAppointmentCOntroller);
-    container
-    .bind(TYPES.AppointmentDoctorReschedule).to(AppointmentDoctorReschedule)
+    .bind(TYPES.AppointmentDoctorReschedule)
+    .to(AppointmentDoctorReschedule);
+  container
+    .bind(TYPES.DoctorGetRescheduleDetailsUseCase)
+    .to(DoctorGetRescheduleDetailsUseCase);
 }

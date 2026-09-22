@@ -19,7 +19,7 @@ import { PatientController } from "../../interface/controllers/admin/patient.con
 import { TogglePatientUsecase } from "../../application/useCases/patient/toggle.usecase";
 import { GetDoctorsController } from "../../interface/controllers/patient/GetDoctorsController";
 import { GetDatesForAppointment } from "../../application/useCases/patient/getDateForAppointment";
-import { AppointmentController } from "../../interface/controllers/patient/appoinment.controller";
+import { AppointmentController } from "../../interface/controllers/appoinment.controller";
 import { GetTimeSlotUseCase } from "../../application/useCases/patient/getTimeSlotForAppointment.usecase";
 import { AppoitmentRepo } from "../../infrastructure/repositories/patient/appointment.repo";
 import { CreateAppointmentUsecase } from "../../application/useCases/patient/createAppointment";
@@ -69,5 +69,5 @@ export function patientBinding(container: Container) {
   container.bind(TYPES.AppointmentDeatilsPage).to(AppointmentDeatilsPage);
   container.bind(TYPES.AppointmentCancel).to(AppointmentCancel);
   container.bind(TYPES.AppointmentReschedule).to(AppointmentReschedule);
-  container.bind(TYPES.SingleAppointmenytDetails).to(SingleAppointmenytDetails)
+  container.bind(TYPES.SingleAppointmenytDetails).to(SingleAppointmenytDetails);
 }

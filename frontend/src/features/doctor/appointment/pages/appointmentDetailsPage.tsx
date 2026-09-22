@@ -1,10 +1,14 @@
 import { useAppDispatch, useAppSelector } from "@/hooks/hooks";
 import { useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import PatientLayout from "@/layout/PatientLayout";
-import { ArrowLeft, CalendarDays, Clock, UserRound } from "lucide-react";
+import {
+  ArrowLeft,
+  CalendarDays,
+  Clock,
+  UserRound,
+} from "lucide-react";
 import { fetchAppointmentDetails } from "../redux/appointmentSinglePage.thunk";
-
+import DoctorLayout from "@/layout/DoctorLayout";
 
 const AppointmentDetailsPage = () => {
   const { id } = useParams();
@@ -24,46 +28,50 @@ const AppointmentDetailsPage = () => {
   // Loading
   if (isLoading) {
     return (
-      <PatientLayout
+      <DoctorLayout
         title="Appointment Details"
         subtitle="View your appointment details"
       >
-        <div className="appointment-loading">Loading appointment...</div>
-      </PatientLayout>
+        <div className="appointment-loading">
+          Loading appointment...
+        </div>
+      </DoctorLayout>
     );
   }
 
   // Error
   if (error) {
     return (
-      <PatientLayout
+      <DoctorLayout
         title="Appointment Details"
         subtitle="View your appointment details"
       >
         <div className="appointment-error">{error}</div>
-      </PatientLayout>
+      </DoctorLayout>
     );
   }
 
   // No appointment
   if (!singleAppointment) {
     return (
-      <PatientLayout
+      <DoctorLayout
         title="Appointment Details"
         subtitle="View your appointment details"
       >
-        <div className="appointment-empty">Appointment not found</div>
-      </PatientLayout>
+        <div className="appointment-empty">
+          Appointment not found
+        </div>
+      </DoctorLayout>
     );
   }
 
-
   return (
-    <PatientLayout
+    <DoctorLayout
       title="Appointment Details"
       subtitle="View your appointment details"
     >
       <div className="appointment-page">
+
         {/* Back button */}
         <button
           type="button"
@@ -90,11 +98,14 @@ const AppointmentDetailsPage = () => {
 
         {/* Appointment Card */}
         <div className="appointment-card">
-          {/* Doctor */}
+
+          {/* Patient */}
           <div className="appointment-doctor">
             <div className="doctor-avatar">
               <strong>
-                {singleAppointment.patientName.charAt(0).toUpperCase()}
+                {singleAppointment.patientName
+                  .charAt(0)
+                  .toUpperCase()}
               </strong>
             </div>
 
@@ -104,7 +115,8 @@ const AppointmentDetailsPage = () => {
               <h3>{singleAppointment.patientName}</h3>
 
               <p>
-                Email: <strong>{singleAppointment.email}</strong>
+                Email:{" "}
+                <strong>{singleAppointment.email}</strong>
               </p>
             </div>
           </div>
@@ -113,6 +125,7 @@ const AppointmentDetailsPage = () => {
 
           {/* Appointment information */}
           <div className="appointment-info-grid">
+
             {/* Date */}
             <div className="appointment-info-item">
               <div className="info-icon">
@@ -120,18 +133,19 @@ const AppointmentDetailsPage = () => {
               </div>
 
               <div>
-                <span className="info-label">Appointment Date</span>
+                <span className="info-label">
+                  Appointment Date
+                </span>
 
                 <strong>
-                  {new Date(singleAppointment.appointmentDate).toLocaleDateString(
-                    undefined,
-                    {
-                      weekday: "short",
-                      year: "numeric",
-                      month: "short",
-                      day: "numeric",
-                    },
-                  )}
+                  {new Date(
+                    singleAppointment.appointmentDate,
+                  ).toLocaleDateString(undefined, {
+                    weekday: "short",
+                    year: "numeric",
+                    month: "short",
+                    day: "numeric",
+                  })}
                 </strong>
               </div>
             </div>
@@ -143,15 +157,18 @@ const AppointmentDetailsPage = () => {
               </div>
 
               <div>
-                <span className="info-label">Appointment Time</span>
+                <span className="info-label">
+                  Appointment Time
+                </span>
 
                 <strong>
-                  {singleAppointment.startTime} - {singleAppointment.endTime}
+                  {singleAppointment.startTime} -{" "}
+                  {singleAppointment.endTime}
                 </strong>
               </div>
             </div>
 
-            {/* Department */}
+            {/* Gender */}
             <div className="appointment-info-item">
               <div className="info-icon">
                 <UserRound size={20} />
@@ -160,7 +177,9 @@ const AppointmentDetailsPage = () => {
               <div>
                 <span className="info-label">Gender</span>
 
-                <strong>{singleAppointment.gender}</strong>
+                <strong>
+                  {singleAppointment.gender}
+                </strong>
               </div>
             </div>
 
@@ -171,16 +190,41 @@ const AppointmentDetailsPage = () => {
               </div>
 
               <div>
-                <span className="info-label">Appointment Code</span>
+                <span className="info-label">
+                  Appointment Code
+                </span>
 
-                <strong>{singleAppointment.appointmentCode}</strong>
+                <strong>
+                  {singleAppointment.appointmentCode}
+                </strong>
               </div>
             </div>
           </div>
 
+          {/* Reschedule button */}
+          {singleAppointment.status === "BOOKED" && (
+            <>
+              <div className="appointment-divider" />
+
+              <div className="appointment-actions">
+                <button
+                  type="button"
+                  className="confirm-appointment-button"
+                  onClick={() =>
+                    navigate(
+                      `/doctor/appointments/reschedule/${id}`,
+                    )
+                  }
+                >
+                  <CalendarDays size={18} />
+                  Reschedule Appointment
+                </button>
+              </div>
+            </>
+          )}
         </div>
       </div>
-    </PatientLayout>
+    </DoctorLayout>
   );
 };
 

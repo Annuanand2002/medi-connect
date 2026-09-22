@@ -7,10 +7,14 @@ import doctorRequestRouter from "./interface/routers/doctor/doctor..router";
 import patientRouter from "./interface/routers/patient/pateint.router";
 
 const app = express();
+const allowedOrigins = [
+  "http://localhost:5173",
+  "http://localhost:5174",
+];
 
 app.use(
   cors({
-    origin: "http://localhost:5173",
+    origin: allowedOrigins,
     credentials: true,
   }),
 );

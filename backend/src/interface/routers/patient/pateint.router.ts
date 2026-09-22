@@ -10,7 +10,7 @@ import { ITokenService } from "../../../domain/services/ITokenService";
 import { authenticate } from "../../../shared/middlewares/authenticate";
 import { ROUTES } from "../../../shared/constants/routes";
 import { GetDoctorsController } from "../../controllers/patient/GetDoctorsController";
-import { AppointmentController } from "../../controllers/patient/appoinment.controller";
+import { AppointmentController } from "../../controllers/appoinment.controller";
 
 const router = Router();
 
@@ -47,9 +47,18 @@ router.patch(ROUTES.PATIENT.VERIFY_OTP, createPatientController.verifyOTP);
 router.post(ROUTES.PATIENT.RESEND_OTP, createPatientController.resendOTP);
 router.post(ROUTES.AUTH.LOGIN, authPatientController.login);
 router.post(ROUTES.AUTH.LOGOUT, authPatientController.logout);
-router.post(ROUTES.AUTH.REFRESH_TOKEN, refreshPatientTokenController.refreshToken);
-router.patch(ROUTES.PATIENT.PASSWORD.REQUEST, resetPatientPasswordController.requestReset);
-router.patch(ROUTES.PATIENT.PASSWORD.RESET, resetPatientPasswordController.resetPassword);
+router.post(
+  ROUTES.AUTH.REFRESH_TOKEN,
+  refreshPatientTokenController.refreshToken,
+);
+router.patch(
+  ROUTES.PATIENT.PASSWORD.REQUEST,
+  resetPatientPasswordController.requestReset,
+);
+router.patch(
+  ROUTES.PATIENT.PASSWORD.RESET,
+  resetPatientPasswordController.resetPassword,
+);
 
 //appointment
 router.use(authenticatePatient, checkPatientBlocked);

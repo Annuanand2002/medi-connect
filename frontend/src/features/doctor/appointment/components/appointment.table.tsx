@@ -4,7 +4,6 @@ import {
   CalendarDays,
   Clock,
   Code,
-  Mail,
   Stethoscope,
   UserRound,
 } from "lucide-react";
