@@ -90,5 +90,5 @@ jobs:
           file: ./frontend/Dockerfile
           push: true
           build-args: |
-            VITE_API_URL: http://13.60.44.112:5000
+            VITE_API_URL=http://13.60.44.112:5000
           tags: annuanand/medi-connect-frontend:latest
