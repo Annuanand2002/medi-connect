@@ -1,4 +1,5 @@
 export type AppointmentStatus =
   | "BOOKED"
   | "CANCELLED"
-  | "RESCHEDULED";
+  | "RESCHEDULED"
+  | "COMPLETED"

@@ -94,4 +94,10 @@ export const TYPES = {
   DoctorController: Symbol.for("DoctorController"),
   DoctorRequestController: Symbol.for("DoctorRequestController"),
   PatientController: Symbol.for("PatientController"),
+  ReviewRepo: Symbol.for("ReviewRepo"),
+  UpdateReview: Symbol.for("UpdateReview"),
+  CreateReview : Symbol.for("CreateReview"),
+  DeleteReview : Symbol.for("DeleteReview"),
+  GetReviews : Symbol.for("GetReviews")
+   
 };

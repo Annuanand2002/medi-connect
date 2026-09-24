@@ -42,6 +42,11 @@ import { DoctorGetRescheduleDetailsUseCase } from "../../application/useCases/do
 import { DoctorRequestController } from "../../interface/controllers/doctorRequest.controller";
 import { DoctorController } from "../../interface/controllers/doctor.controller";
 import { RefreshDoctorUseCase } from "../../application/useCases/doctor/auth/doctorRefreshToken.usecase";
+import { ReviewRepo } from "../../infrastructure/repositories/doctor/review.repo";
+import { UpdateReview } from "../../application/useCases/doctor/updateReview";
+import { CreateReview } from "../../application/useCases/doctor/CreateReview.usecase";
+import { DeleteReview } from "../../application/useCases/doctor/DeleteReview";
+import { GetReviews } from "../../application/useCases/doctor/GetReviews.usecase";
 
 export function doctorBinding(container: Container) {
   container.bind(TYPES.DoctorRepo).to(DoctorRepo);
@@ -108,7 +113,10 @@ export function doctorBinding(container: Container) {
     .to(DoctorGetRescheduleDetailsUseCase);
   container.bind(TYPES.DoctorController).to(DoctorController);
   container.bind(TYPES.DoctorRequestController).to(DoctorRequestController);
-  container
-    .bind<RefreshDoctorUseCase>(TYPES.RefreshDoctorUseCase)
-    .to(RefreshDoctorUseCase);
+  container.bind(TYPES.RefreshDoctorUseCase).to(RefreshDoctorUseCase);
+  container.bind(TYPES.ReviewRepo).to(ReviewRepo);
+  container.bind(TYPES.UpdateReview).to(UpdateReview);
+  container.bind(TYPES.CreateReview).to(CreateReview);
+  container.bind(TYPES.DeleteReview).to(DeleteReview);
+  container.bind(TYPES.GetReviews).to(GetReviews)
 }

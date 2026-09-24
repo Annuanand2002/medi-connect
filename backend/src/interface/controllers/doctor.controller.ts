@@ -37,6 +37,8 @@ import { ICreateDoctorLeaveUsecase } from "../../domain/repositories/doctor/repo
 import { IUpdateDoctorLeaveUseCase } from "../../domain/repositories/doctor/repo.usecase/IUpdateDoctorLeave";
 import { IDeleteDoctorLeaveUsecase } from "../../domain/repositories/doctor/repo.usecase/IDeleteDoctorLeave.usecase";
 import { IGetDoctorLeaveUseCase } from "../../domain/repositories/doctor/repo.usecase/IGetAllDoctorLeave.usecase";
+import { IGetReviews } from "../../domain/repositories/doctor/repo.usecase/IGetReviews.usecase";
+import { GetReviewReqDTO } from "../../application/DTO/doctor/review.DTO";
 
 @injectable()
 export class DoctorController {
@@ -85,6 +87,8 @@ export class DoctorController {
     private _deleteLeave: IDeleteDoctorLeaveUsecase,
     @inject(TYPES.GetAllDoctorLeaveUsecase)
     private _getLeave: IGetDoctorLeaveUseCase,
+    @inject(TYPES.GetReviews)
+    private _getReviews: IGetReviews,
   ) {}
 
   //login
@@ -416,6 +420,33 @@ export class DoctorController {
       limit,
     });
 
+    res
+      .status(HTTP_STATUS.OK)
+      .json(sendResponse(RESPONSE_MESSAGES.FETCH, result));
+  });
+
+  //reviws
+  //get
+  //getALl
+  getReviews = asyncHandler(async (req: Request, res: Response) => {
+    if (!req.user) {
+      throw new AppError("unauthorized", HTTP_STATUS.UNAUTHORIZED);
+    }
+    const doctorId = req.user.id;
+    const search =
+      typeof req.query.search === "string" ? req.query.search : undefined;
+    const page =
+      typeof req.query.page === "string" ? Number(req.query.page) : 1;
+
+    const limit =
+      typeof req.query.limit === "string" ? Number(req.query.limit) : 10;
+    const dto: GetReviewReqDTO = {
+      doctorId,
+      search,
+      page,
+      limit,
+    };
+    const result = await this._getReviews.execute(dto);
     res
       .status(HTTP_STATUS.OK)
       .json(sendResponse(RESPONSE_MESSAGES.FETCH, result));

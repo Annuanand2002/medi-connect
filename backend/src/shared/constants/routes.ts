@@ -5,13 +5,13 @@ export const ROUTES = {
     REFRESH_TOKEN: "/refresh-token",
   },
   DOCTOR: {
-    REGISTER : "/apply",
+    REGISTER: "/apply",
     PASSWORD: {
       RETRY: "/request-resetpassword",
       RESET: "reset-password",
-      SET : "/setup-password"
+      SET: "/setup-password",
     },
-    RETRYREQUEST : "/retry",
+    RETRYREQUEST: "/retry",
     REQUEST: "/doctor-request",
     PROFILE: "/profile",
     GETALL: "/doctor",
@@ -29,14 +29,16 @@ export const ROUTES = {
     },
     APPOINTMENT: {
       GET: "/appointment",
-      DETAILS : "/appointment/:id",
-      RESCHEDULE : {
+      DETAILS: "/appointment/:id",
+      RESCHEDULE: {
         DATE: "/appointment/:appointmentId/reschedule/dates",
         TIMESLOT: "/appointment/reschedule/time-slots",
-        UPDATE : '/appointment/reschedule/:id',
-        CONFIRM : "/appointment/reschedule/:appointmentId",
-        
-      }
+        UPDATE: "/appointment/reschedule/:id",
+        CONFIRM: "/appointment/reschedule/:appointmentId",
+      },
+    },
+    REVIEW: {
+      GET: "/review",
     },
   },
 
@@ -65,6 +67,10 @@ export const ROUTES = {
         UPDATE: "/appointment/reschedule/:appointmentId",
         CONFIRM: "/appointment/reschedule/:appointmentId/:doctorId",
       },
+    },
+    REVIEW: {
+      CREATE: "/review/:appointmentId/:doctorId",
+      UPDATE: "/review/:id",
     },
   },
 } as const;

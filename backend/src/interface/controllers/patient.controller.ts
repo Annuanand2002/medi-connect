@@ -21,6 +21,11 @@ import { IVerifyPatientOTPUsecase } from "../../domain/repositories/patient/repo
 import { IResentOTPUseCase } from "../../domain/repositories/patient/repo.usecase/IResendOTP.usecase";
 import { IResetPasswordUsecase } from "../../domain/repositories/common/IResetPassword.usecase";
 import { IRequestForgetPassword } from "../../domain/repositories/common/IRequestForgetPassword.usecase";
+import { ICreateReview } from "../../domain/repositories/doctor/repo.usecase/ICreateReview.usecase";
+import { IUpdateReview } from "../../domain/repositories/doctor/repo.usecase/IUpdateReview.usecase";
+import { IGetReviews } from "../../domain/repositories/doctor/repo.usecase/IGetReviews.usecase";
+import { IDeleteReview } from "../../domain/repositories/doctor/repo.usecase/IDeleteReview.useCase";
+import { CreateReviewDTO, UpdateReviewDTO } from "../../application/DTO/doctor/review.DTO";
 
 @injectable()
 export class PatientController {
@@ -45,6 +50,13 @@ export class PatientController {
     private _resetPassword: IResetPasswordUsecase,
     @inject(TYPES.RequestPatientForgetPasswordUseCase)
     private _requestResetUSeCase: IRequestForgetPassword,
+        @inject(TYPES.CreateReview)
+        private _createReview: ICreateReview,
+        @inject(TYPES.UpdateReview)
+        private _updateReview: IUpdateReview,
+        @inject(TYPES.DeleteReview)
+        private _deleteReview: IDeleteReview,
+
   ) {}
 
   getAllPatient = asyncHandler(async (req: Request, res: Response) => {
@@ -161,4 +173,40 @@ export class PatientController {
     await this._resetPassword.execute({ password, token });
     res.status(HTTP_STATUS.OK).json(sendResponse(RESPONSE_MESSAGES.UPDATED));
   });
+  //reviews
+  
+  //reviews
+//create
+  createReview = asyncHandler(async (req: Request, res: Response) => {
+    if (!req.user) {
+      throw new AppError("unauthorized", HTTP_STATUS.UNAUTHORIZED);
+    }
+    const dto: CreateReviewDTO = {
+      patientId: req.user.id,
+      doctorId: req.params.doctorId as string,
+      appointmentId: req.params.appointmentId as string,
+      review: req.body.review,
+      rating: req.body.rating,
+    };
+
+    const result = await this._createReview.execute(dto);
+    res.status(HTTP_STATUS.CREATED).json(sendResponse(RESPONSE_MESSAGES.CREATED,result))
+  });
+
+  //update
+  updateReview = asyncHandler(async(req:Request,res:Response)=>{
+    const id = req.params.id as string
+    const dto :UpdateReviewDTO = {
+        review : req.body.reveiw,
+        rating : req.body.rating
+    }
+    const result = await this._updateReview.execute(id,dto);
+    res.status(HTTP_STATUS.OK).json(sendResponse(RESPONSE_MESSAGES.UPDATED,result))
+  })
+  //delete 
+  deleteReview = asyncHandler(async(req:Request,res:Response)=>{
+    const id = req.params.id as string;
+    const result = await this._deleteReview.execute(id)
+    res.status(HTTP_STATUS.OK).json(sendResponse(RESPONSE_MESSAGES.DELETED,result))
+  })
 }

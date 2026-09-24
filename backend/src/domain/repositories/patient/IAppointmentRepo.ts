@@ -2,7 +2,6 @@ import {
   GetDoctorAppointmentReqDTO,
   PaginationDoctorAppointmenttResDTO,
 } from "../../../application/DTO/doctor/appointment";
-import { AppointmentDet } from "../../../application/DTO/patient/appointment";
 import {
   GetAppointmentReqDTO,
   PaginationAppointmenttResDTO,

@@ -14,11 +14,15 @@ const router = Router();
 const tokenService = container.get<ITokenService>(TYPES.JWTService);
 const authenticatePatient = authenticate(tokenService, "patient");
 
-const patientController = container.get<PatientController>(TYPES.PatientController)
+const patientController = container.get<PatientController>(
+  TYPES.PatientController,
+);
 const appointmentController = container.get<AppointmentController>(
   TYPES.AppointmentController,
 );
-const doctorController = container.get<DoctorController>(TYPES.DoctorController)
+const doctorController = container.get<DoctorController>(
+  TYPES.DoctorController,
+);
 
 //auth
 router.post(ROUTES.PATIENT.CREATE, patientController.createPatient);
@@ -26,18 +30,9 @@ router.patch(ROUTES.PATIENT.VERIFY_OTP, patientController.verifyOTP);
 router.post(ROUTES.PATIENT.RESEND_OTP, patientController.resendOTP);
 router.post(ROUTES.AUTH.LOGIN, patientController.login);
 router.post(ROUTES.AUTH.LOGOUT, patientController.logout);
-router.post(
-  ROUTES.AUTH.REFRESH_TOKEN,
-  patientController.refreshToken,
-);
-router.patch(
-  ROUTES.PATIENT.PASSWORD.REQUEST,
-  patientController.requestReset,
-);
-router.patch(
-  ROUTES.PATIENT.PASSWORD.RESET,
-  patientController.resetPassword,
-);
+router.post(ROUTES.AUTH.REFRESH_TOKEN, patientController.refreshToken);
+router.patch(ROUTES.PATIENT.PASSWORD.REQUEST, patientController.requestReset);
+router.patch(ROUTES.PATIENT.PASSWORD.RESET, patientController.resetPassword);
 
 //appointment
 router.use(authenticatePatient, checkPatientBlocked);
@@ -87,5 +82,9 @@ router.patch(
   ROUTES.PATIENT.APPOINTMENT.RESCHEDULE.UPDATE,
   appointmentController.reschedule,
 );
+//review
+router.post(ROUTES.PATIENT.REVIEW.CREATE, patientController.createReview);
+router.patch(ROUTES.PATIENT.REVIEW.UPDATE, patientController.updateReview);
+router.patch(ROUTES.PATIENT.REVIEW.UPDATE, patientController.deleteReview);
 
 export default router;

@@ -18,8 +18,9 @@ const doctorRequestController = container.get<DoctorRequestController>(
 const tokenService = container.get<ITokenService>(TYPES.JWTService);
 const authenticateDoctor = authenticate(tokenService, "doctor");
 
-const doctorController = container.get<DoctorController>(TYPES.DoctorController)
-
+const doctorController = container.get<DoctorController>(
+  TYPES.DoctorController,
+);
 
 const appointmentController = container.get<AppointmentController>(
   TYPES.AppointmentController,
@@ -50,19 +51,10 @@ router.post(
 );
 //authentication
 router.post(ROUTES.AUTH.LOGIN, doctorController.login);
-router.post(
-  ROUTES.AUTH.REFRESH_TOKEN,
-  doctorController.refreshToken,
-);
+router.post(ROUTES.AUTH.REFRESH_TOKEN, doctorController.refreshToken);
 router.post(ROUTES.AUTH.LOGOUT, doctorController.logout);
-router.patch(
-  ROUTES.DOCTOR.PASSWORD.RETRY,
-  doctorController.requestReset,
-);
-router.patch(
-  ROUTES.DOCTOR.PASSWORD.RESET,
-  doctorController.resetPassword,
-);
+router.patch(ROUTES.DOCTOR.PASSWORD.RETRY, doctorController.requestReset);
+router.patch(ROUTES.DOCTOR.PASSWORD.RESET, doctorController.resetPassword);
 
 router.use(authenticateDoctor, checkDoctorBlocked);
 //availability
@@ -107,13 +99,8 @@ router.patch(
 
 router.get(
   ROUTES.DOCTOR.APPOINTMENT.RESCHEDULE.CONFIRM,
-  (req, res, next) => {
-    console.log("🔥 CONFIRM ROUTE HIT");
-    console.log("params:", req.params);
-    console.log("query:", req.query);
-    next();
-  },
   appointmentController.getDoctorAppointmentDetails,
 );
+router.get(ROUTES.DOCTOR.REVIEW.GET, doctorController.getReviews);
 
 export default router;
