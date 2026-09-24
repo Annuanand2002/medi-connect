@@ -2,15 +2,13 @@ import { Router } from "express";
 import container from "../../../di/container/container";
 import { TYPES } from "../../../di/types/types";
 import { authenticate } from "../../../shared/middlewares/authenticate";
-import { AdminController } from "../../controllers/admin/adminAuth.controller";
-import { DoctorRequestController } from "../../controllers/doctor/doctor.req.controller";
-import { VerifyDoctorSetupTokenController } from "../../controllers/doctor/verifyDoctorSetupToken.controller";
 import { ITokenService } from "../../../domain/services/ITokenService";
 import { GetFileURlController } from "../../controllers/service/getFileUrl.controller";
 import { ROUTES } from "../../../shared/constants/routes";
-import { DoctorController } from "../../controllers/admin/doctors.controller";
-import { PatientController } from "../../controllers/admin/patient.controller";
-import ActionDoctorRequestController from "../../controllers/admin/actionDoctorReq.controller";
+import { AdminController } from "../../controllers/admin.controller";
+import { DoctorRequestController } from "../../controllers/doctorRequest.controller";
+import { DoctorController } from "../../controllers/doctor.controller";
+import { PatientController } from "../../controllers/patient.controller";
 
 const router = Router();
 
@@ -20,19 +18,11 @@ const adminController = container.get<AdminController>(TYPES.AdminController);
 const doctorRequestController = container.get<DoctorRequestController>(
   TYPES.DoctorRequestController,
 );
-const actionDoctorReqController = container.get<ActionDoctorRequestController>(
-  TYPES.ActionDoctorRequestController,
-);
-const verificationTokenController =
-  container.get<VerifyDoctorSetupTokenController>(
-    TYPES.VerifyDoctorSetupTokenController,
-  );
+
 const getFileURlController = container.get<GetFileURlController>(
   TYPES.GetFileURlController,
 );
-const doctorController = container.get<DoctorController>(
-  TYPES.DoctorController,
-);
+const doctorController = container.get<DoctorController>(TYPES.DoctorController)
 const patientController = container.get<PatientController>(
   TYPES.PatientController,
 );
@@ -60,13 +50,13 @@ router.get(
 router.patch(
   "/doctor-request/approve",
   authenticateAdmin,
-  actionDoctorReqController.approve,
+  doctorRequestController.approve,
 );
-router.get("/setup-password", verificationTokenController.handle);
+router.get("/setup-password", doctorController.verify);
 router.patch(
   "/doctor-request/reject",
   authenticateAdmin,
-  actionDoctorReqController.reject,
+  doctorRequestController.reject,
 );
 router.get(
   ROUTES.DOCTOR.GETALL,

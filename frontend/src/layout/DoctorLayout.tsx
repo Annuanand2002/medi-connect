@@ -1,4 +1,4 @@
-import type { ReactNode } from "react";
+import { useEffect, type ReactNode } from "react";
 
 import "@/styles/admin/adminLayout.css";
 import DoctorSidebar from "@/features/doctor/components/doctorSidebat";
@@ -11,6 +11,12 @@ interface DoctorLayoutProps {
 }
 
 const DoctorLayout = ({ children, title, subtitle }: DoctorLayoutProps) => {
+    useEffect(()=>{
+      document.title = "Doctor | Mediconnect "
+      return ()=>{
+        document.title = "Mediconnect"
+      }
+    },[])
   return (
     <div className="admin-layout">
       {/* Fixed Sidebar */}

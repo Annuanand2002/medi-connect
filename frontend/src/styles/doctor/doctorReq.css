@@ -331,7 +331,33 @@
   font-size: 11px;
   line-height: 1.45;
 }
+.form-input {
+  width: 100%;
+  height: 58px;
+  box-sizing: border-box;
+  padding: 0 14px;
+  border: 1px solid #d9d8e5;
+  border-radius: 10px;
+  background: #ffffff;
+  color: #2a274e;
+  font-size: 13px;
+  font-family: inherit;
+  outline: none;
+}
+.form-input:focus {
+  border-color: #7567db;
+  box-shadow: 0 0 0 3px rgba(117, 103, 219, 0.1);
+}
+.doctor-request-select-field {
+  display: flex;
+  flex-direction: column;
+}
 
+.doctor-request-select-field label {
+  font-size: 12px;
+  font-weight: 600;
+  color: #29264e;
+}
 .doctor-request-fields,
 .doctor-request-upload-grid {
   display: grid;

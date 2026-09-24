@@ -1,4 +1,4 @@
-import type { ReactNode } from "react";
+import { useEffect, type ReactNode } from "react";
 import AdminSidebar from "../features/admin/components/adminSidebar";
 import AdminHeader from "../features/admin/components/adminHeader";
 import "@/styles/admin/adminLayout.css";
@@ -14,6 +14,12 @@ const AdminLayout = ({
   title,
   subtitle,
 }: AdminLayoutProps) => {
+  useEffect(()=>{
+    document.title = "Admin | Mediconnect"
+    return ()=>{
+      document.title = "Mediconnect"
+    }
+  },[])
   return (
     <div className="admin-layout">
 

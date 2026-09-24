@@ -5,10 +5,13 @@ export const ROUTES = {
     REFRESH_TOKEN: "/refresh-token",
   },
   DOCTOR: {
+    REGISTER : "/apply",
     PASSWORD: {
       RETRY: "/request-resetpassword",
       RESET: "reset-password",
+      SET : "/setup-password"
     },
+    RETRYREQUEST : "/retry",
     REQUEST: "/doctor-request",
     PROFILE: "/profile",
     GETALL: "/doctor",

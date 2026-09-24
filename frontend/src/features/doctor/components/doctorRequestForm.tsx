@@ -111,21 +111,25 @@ const DoctorRequestForm = ({
             error={errors.qualification?.message}
           />
 
-          <select
-            {...register("department")}
-            className="form-input"
-            defaultValue=""
-          >
-            <option value="" disabled>
-              Select Department
-            </option>
+          <div className="doctor-request-select-field">
+            <label>Department</label>
 
-            {Object.values(Department).map((department) => (
-              <option key={department} value={department}>
-                {department}
+            <select
+              {...register("department")}
+              className="form-input"
+              defaultValue=""
+            >
+              <option value="" disabled>
+                Select Department
               </option>
-            ))}
-          </select>
+
+              {Object.values(Department).map((department) => (
+                <option key={department} value={department}>
+                  {department}
+                </option>
+              ))}
+            </select>
+          </div>
 
           <Input
             label="Years of Experience"

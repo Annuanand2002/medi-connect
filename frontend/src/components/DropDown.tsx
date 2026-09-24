@@ -13,29 +13,33 @@ interface DropdownProps extends SelectHTMLAttributes<HTMLSelectElement> {
 
 const Dropdown = ({ label, options, error, ...props }: DropdownProps) => {
   return (
-    <div className="w-full">
+    <div className="input-group">
       {label && (
-        <label className="mb-2 block text-sm font-medium text-gray-700">
+        <label className="input-label">
           {label}
         </label>
       )}
 
-      <select
-        {...props}
-        className={`w-full rounded-lg border bg-white px-4 py-3 text-sm outline-none transition
-          ${error ? "border-red-500" : "border-gray-300 focus:border-black"}
-        `}
-      >
-        <option value="">Select {label}</option>
+      <div className={`input-wrapper ${error ? "input-error" : ""}`}>
+        <select
+          {...props}
+          className="custom-input"
+        >
+          <option value="">Select {label}</option>
 
-        {options.map((option) => (
-          <option key={option.value} value={option.value}>
-            {option.label}
-          </option>
-        ))}
-      </select>
+          {options.map((option) => (
+            <option key={option.value} value={option.value}>
+              {option.label}
+            </option>
+          ))}
+        </select>
+      </div>
 
-      {error && <p className="mt-1 text-sm text-red-500">{error}</p>}
+      {error && (
+        <p className="input-error-message" role="alert">
+          {error}
+        </p>
+      )}
     </div>
   );
 };

@@ -1,63 +1,42 @@
 import { Router } from "express";
 import container from "../../../di/container/container";
 import { TYPES } from "../../../di/types/types";
-import { CreatePatientController } from "../../controllers/patient/createPatientController";
-import { AuthPatientController } from "../../controllers/patient/patientauth.controller";
-import { RefreshPatientTokenController } from "../../controllers/patient/refreshToken.controller";
-import { ResetPatientPasswordController } from "../../controllers/patient/resetPassword";
 import { checkPatientBlocked } from "../../../shared/middlewares/patientBlock";
 import { ITokenService } from "../../../domain/services/ITokenService";
 import { authenticate } from "../../../shared/middlewares/authenticate";
 import { ROUTES } from "../../../shared/constants/routes";
-import { GetDoctorsController } from "../../controllers/patient/GetDoctorsController";
 import { AppointmentController } from "../../controllers/appoinment.controller";
+import { PatientController } from "../../controllers/patient.controller";
+import { DoctorController } from "../../controllers/doctor.controller";
 
 const router = Router();
 
 const tokenService = container.get<ITokenService>(TYPES.JWTService);
 const authenticatePatient = authenticate(tokenService, "patient");
-const createPatientController = container.get<CreatePatientController>(
-  TYPES.CreatePatientController,
-);
 
-const authPatientController = container.get<AuthPatientController>(
-  TYPES.AuthPatientController,
-);
-const refreshPatientTokenController =
-  container.get<RefreshPatientTokenController>(
-    TYPES.RefreshPatientTokenController,
-  );
-
-const resetPatientPasswordController =
-  container.get<ResetPatientPasswordController>(
-    TYPES.ResetPatientPasswordController,
-  );
-
-const getDoctorController = container.get<GetDoctorsController>(
-  TYPES.GetDoctorsController,
-);
-
+const patientController = container.get<PatientController>(TYPES.PatientController)
 const appointmentController = container.get<AppointmentController>(
   TYPES.AppointmentController,
 );
+const doctorController = container.get<DoctorController>(TYPES.DoctorController)
 
 //auth
-router.post(ROUTES.PATIENT.CREATE, createPatientController.createPatient);
-router.patch(ROUTES.PATIENT.VERIFY_OTP, createPatientController.verifyOTP);
-router.post(ROUTES.PATIENT.RESEND_OTP, createPatientController.resendOTP);
-router.post(ROUTES.AUTH.LOGIN, authPatientController.login);
-router.post(ROUTES.AUTH.LOGOUT, authPatientController.logout);
+router.post(ROUTES.PATIENT.CREATE, patientController.createPatient);
+router.patch(ROUTES.PATIENT.VERIFY_OTP, patientController.verifyOTP);
+router.post(ROUTES.PATIENT.RESEND_OTP, patientController.resendOTP);
+router.post(ROUTES.AUTH.LOGIN, patientController.login);
+router.post(ROUTES.AUTH.LOGOUT, patientController.logout);
 router.post(
   ROUTES.AUTH.REFRESH_TOKEN,
-  refreshPatientTokenController.refreshToken,
+  patientController.refreshToken,
 );
 router.patch(
   ROUTES.PATIENT.PASSWORD.REQUEST,
-  resetPatientPasswordController.requestReset,
+  patientController.requestReset,
 );
 router.patch(
   ROUTES.PATIENT.PASSWORD.RESET,
-  resetPatientPasswordController.resetPassword,
+  patientController.resetPassword,
 );
 
 //appointment
@@ -66,7 +45,7 @@ router.use(authenticatePatient, checkPatientBlocked);
 router.get(
   ROUTES.PATIENT.DOCTOTLIST,
 
-  getDoctorController.getAll,
+  doctorController.getAll,
 );
 
 router.get(

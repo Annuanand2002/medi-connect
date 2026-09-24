@@ -1,4 +1,4 @@
-import type { ReactNode } from "react";
+import { useEffect, type ReactNode } from "react";
 
 import "@/styles/admin/adminLayout.css";
 import PatientSidebar from "@/features/patient/components/patientSideBar";
@@ -11,6 +11,12 @@ interface PatientLayoutProps {
 }
 
 const PatientLayout = ({ children, title, subtitle }: PatientLayoutProps) => {
+    useEffect(()=>{
+      document.title = "Patient | Mediconnect"
+      return ()=>{
+        document.title = "Mediconnect"
+      }
+    },[])
   return (
     <div className="admin-layout">
       <PatientSidebar />
